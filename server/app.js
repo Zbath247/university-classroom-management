@@ -57,7 +57,15 @@ app.use(cors({
 
 // ─── Serve Uploaded Files & Static Frontend Files ────────────────────────────
 app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
-app.use(express.static(path.join(__dirname, '../client')));
+app.use(express.static(path.join(__dirname, '../client'), {
+  maxAge: 0,
+  etag: true,
+  setHeaders: (res, filePath) => {
+    if (filePath.endsWith('.html') || filePath.endsWith('.js') || filePath.endsWith('.css')) {
+      res.setHeader('Cache-Control', 'no-cache, must-revalidate');
+    }
+  }
+}));
 
 // ─── API Routes ───────────────────────────────────────────────────────────────
 // Protected by API rate limiting

@@ -1013,7 +1013,7 @@ function initMobileEnhancements() {
   if (document.getElementById('mobile-enhancements-script')) return;
   const script = document.createElement('script');
   script.id = 'mobile-enhancements-script';
-  script.src = '/js/mobile.js?v=2.4';
+  script.src = '/js/mobile.js?v=2.6';
   document.head.appendChild(script);
 }
 
