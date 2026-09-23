@@ -27,14 +27,6 @@
 // and the API from the same server.
 const API_BASE_URL = '/api';
 
-// ─── Core Fetch Function ──────────────────────────────────────────────────────
-/**
- * Makes an HTTP request to the backend API.
- * Automatically adds Content-Type and Authorization headers.
- *
- * @param {string} endpoint - The API path, e.g. '/students' or '/auth/login'
- * @param {string} method   - HTTP method: 'GET', 'POST', 'PUT', 'DELETE'
- * @param {object} body     - Request body data (for POST/PUT requests)
 // ─── Fast In-Memory & Session Cache for 0ms Navigation ───────────────────────
 const CACHE_PREFIX = 'duc_api_cache_';
 const CACHE_TTL_MS = 60 * 1000; // 60s cache for instant page switches
