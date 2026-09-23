@@ -368,16 +368,9 @@
                   <span style="font-size:0.75rem; color:var(--text-muted);">${r.created_at ? formatDate(r.created_at) : ''}</span>
                 </div>
                 
-                <h3 style="font-size:1.1rem; font-weight:700; margin-bottom:0.4rem; color:var(--text-dark); line-height:1.4;">
+                <h3 style="font-size:1.1rem; font-weight:700; margin-bottom:0.75rem; color:var(--text-dark); line-height:1.4;">
                   ${r.title}
                 </h3>
-
-                ${r.file_name ? `
-                  <div style="font-size:0.78rem; color:var(--text-muted); margin-bottom:0.6rem; display:flex; align-items:center; gap:0.35rem;">
-                    <span>📎</span> <span style="font-weight:500;">${r.file_name}</span>
-                    ${r.file_size ? `<span>(${formatBytes(r.file_size)})</span>` : ''}
-                  </div>
-                ` : ''}
 
                 <div style="margin-bottom:0.75rem;">
                   <span class="badge badge-primary" style="font-size:0.75rem;">${r.subject_code}</span>
