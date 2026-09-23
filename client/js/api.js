@@ -35,9 +35,66 @@ const API_BASE_URL = '/api';
  * @param {string} endpoint - The API path, e.g. '/students' or '/auth/login'
  * @param {string} method   - HTTP method: 'GET', 'POST', 'PUT', 'DELETE'
  * @param {object} body     - Request body data (for POST/PUT requests)
+// ─── Fast In-Memory & Session Cache for 0ms Navigation ───────────────────────
+const CACHE_PREFIX = 'duc_api_cache_';
+const CACHE_TTL_MS = 60 * 1000; // 60s cache for instant page switches
+
+function getFromCache(endpoint) {
+  try {
+    const raw = sessionStorage.getItem(CACHE_PREFIX + endpoint);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw);
+    if (Date.now() - parsed.timestamp < CACHE_TTL_MS) {
+      return JSON.parse(JSON.stringify(parsed.data));
+    }
+  } catch (_) {}
+  return null;
+}
+
+function setInCache(endpoint, data) {
+  try {
+    sessionStorage.setItem(CACHE_PREFIX + endpoint, JSON.stringify({
+      timestamp: Date.now(),
+      data: data
+    }));
+  } catch (_) {}
+}
+
+function clearApiCache() {
+  try {
+    const toRemove = [];
+    for (let i = 0; i < sessionStorage.length; i++) {
+      const k = sessionStorage.key(i);
+      if (k && k.startsWith(CACHE_PREFIX)) toRemove.push(k);
+    }
+    toRemove.forEach(k => sessionStorage.removeItem(k));
+  } catch (_) {}
+}
+
+/**
+ * Makes an HTTP request to the backend API.
+ * Automatically adds Content-Type and Authorization headers.
+ *
+ * @param {string} endpoint - The API path, e.g. '/students' or '/auth/login'
+ * @param {string} method   - HTTP method: 'GET', 'POST', 'PUT', 'DELETE'
+ * @param {object} body     - Request body data (for POST/PUT requests)
+ * @param {boolean} skipCache - Skip cache read
  * @returns {Promise<object>} - The JSON response from the server
  */
-async function request(endpoint, method = 'GET', body = null) {
+async function request(endpoint, method = 'GET', body = null, skipCache = false) {
+  // If GET request and cached, return immediately to eliminate latency
+  if (method === 'GET' && !skipCache) {
+    const cached = getFromCache(endpoint);
+    if (cached) {
+      return cached;
+    }
+  }
+
+  // Clear cache on any data modification so UI is always accurate
+  if (method !== 'GET') {
+    clearApiCache();
+  }
+
   const isFormData = (typeof FormData !== 'undefined' && body instanceof FormData);
 
   // Build request options
@@ -71,18 +128,24 @@ async function request(endpoint, method = 'GET', body = null) {
     throw error;
   }
 
+  // Save successful GET responses to cache
+  if (method === 'GET' && data && data.success) {
+    setInCache(endpoint, data);
+  }
+
   return data;
 }
 
 // ─── Convenient HTTP Method Shortcuts ─────────────────────────────────────────
 const api = {
-  get:    (endpoint)         => request(endpoint, 'GET'),
-  post:   (endpoint, body)   => request(endpoint, 'POST', body),
-  put:    (endpoint, body)   => request(endpoint, 'PUT', body),
-  delete: (endpoint)         => request(endpoint, 'DELETE'),
-  patch:  (endpoint, body)   => request(endpoint, 'PATCH', body),
-  upload: (endpoint, formData) => request(endpoint, 'POST', formData),
-  uploadPut: (endpoint, formData) => request(endpoint, 'PUT', formData)
+  get:        (endpoint, skipCache = false) => request(endpoint, 'GET', null, skipCache),
+  post:       (endpoint, body)   => request(endpoint, 'POST', body),
+  put:        (endpoint, body)   => request(endpoint, 'PUT', body),
+  delete:     (endpoint)         => request(endpoint, 'DELETE'),
+  patch:      (endpoint, body)   => request(endpoint, 'PATCH', body),
+  upload:     (endpoint, formData) => request(endpoint, 'POST', formData),
+  uploadPut:  (endpoint, formData) => request(endpoint, 'PUT', formData),
+  clearCache: clearApiCache
 };
 
 // ─── Auth Helpers ─────────────────────────────────────────────────────────────

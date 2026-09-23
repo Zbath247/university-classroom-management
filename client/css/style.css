@@ -5,8 +5,6 @@
    Digital University of Cambodia · G1-NW-B
    ═══════════════════════════════════════════════════════════════════════════ */
 
-@import url('/css/mobile.css?v=2.4');
-
 /* ─── Embedded Fonts: Calisto MT, Khmer OS Moul Light & Khmer OS Battambang ─── */
 @font-face {
   font-family: 'Calisto MT';
@@ -822,18 +820,14 @@ p { color: var(--text-secondary); }
   .hide-desktop { display: none !important; }
 }
 
-/* ─── Ultra-Smooth Jitter-Free Animations ─────────────────────────────────── */
-@view-transition {
-  navigation: auto;
-}
-
+/* ─── Ultra-Smooth Jitter-Free Transitions ─────────────────────────────────── */
 @keyframes fadeIn {
-  from { opacity: 0.88; }
+  from { opacity: 0.95; }
   to   { opacity: 1; }
 }
 
 .fade-in {
-  animation: fadeIn 0.12s ease-out both;
+  animation: fadeIn 0.1s ease-out both;
 }
 
 /* ─── Instant Navigation Progress Bar (0ms Feedback) ───────────────────────── */

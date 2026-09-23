@@ -1387,29 +1387,9 @@
   }
 
   // Setup lightweight debounced MutationObserver for dynamic table rows and cards
-  let observerTimeout = null;
   function initObserver() {
-    if (!window.MutationObserver) return;
-    const target = document.getElementById('main-content') || document.body;
-    if (!target) return;
-
-    const observer = new MutationObserver(mutations => {
-      let hasAdded = false;
-      for (let i = 0; i < mutations.length; i++) {
-        if (mutations[i].addedNodes && mutations[i].addedNodes.length > 0) {
-          hasAdded = true;
-          break;
-        }
-      }
-      if (hasAdded) {
-        if (observerTimeout) clearTimeout(observerTimeout);
-        observerTimeout = setTimeout(() => {
-          autoTranslate(target);
-        }, 50);
-      }
-    });
-
-    observer.observe(target, { childList: true, subtree: true });
+    // Disabled continuous observer to prevent jittery layout reflow loops with icons and charts
+    return;
   }
 
   // Global I18n Object

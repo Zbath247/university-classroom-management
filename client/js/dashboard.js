@@ -991,6 +991,21 @@ function setupInstantFeedbackAndPrefetch() {
     const a = e.target.closest('a[href]');
     if (a && a.href) prefetch(a.href);
   }, { passive: true });
+
+  // 4. Idle prefetch of portal sibling pages for 0ms transitions
+  const runIdlePrefetch = () => {
+    document.querySelectorAll('.sidebar-nav .nav-link, .dock-tab').forEach(el => {
+      const h = el.getAttribute('href');
+      if (h && !h.startsWith('#') && !h.includes('login') && !h.includes('logout')) {
+        prefetch(el.href);
+      }
+    });
+  };
+  if ('requestIdleCallback' in window) {
+    requestIdleCallback(runIdlePrefetch, { timeout: 2000 });
+  } else {
+    setTimeout(runIdlePrefetch, 1000);
+  }
 }
 
 // ─── Initialize Mobile Enhancements ───────────────────────────────────────────

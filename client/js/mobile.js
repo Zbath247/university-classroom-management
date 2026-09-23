@@ -203,7 +203,7 @@
       ];
     }
 
-    const currentLang = localStorage.getItem('duc_language') || 'km';
+    const currentLang = localStorage.getItem('duc_lang') || localStorage.getItem('duc_language') || 'km';
 
     tabs.forEach(tab => {
       const isActive = tab.href && path.endsWith(tab.href);

@@ -183,43 +183,10 @@
      * Start observing DOM mutations to automatically upgrade dynamic tables
      */
     initAutoObserver() {
-      if (window._appIconsObserverActive) return;
-      window._appIconsObserverActive = true;
-
-      // Initial run
+      if (window._appIconsRanInitial) return;
+      window._appIconsRanInitial = true;
+      // Run clean replacement once on initial document load
       AppIcons.replaceIcons(document);
-
-      // Observe dynamic changes (e.g. table data load inside main-content)
-      const observer = new MutationObserver((mutations) => {
-        let shouldUpdate = false;
-        for (const m of mutations) {
-          if (m.addedNodes.length > 0) {
-            for (let i = 0; i < m.addedNodes.length; i++) {
-              const node = m.addedNodes[i];
-              if (node.nodeType === 1 && !node.classList.contains('app-svg-icon') && node.tagName.toLowerCase() !== 'svg') {
-                shouldUpdate = true;
-                break;
-              }
-            }
-          }
-          if (shouldUpdate) break;
-        }
-        if (shouldUpdate) {
-          clearTimeout(window._appIconsDebounce);
-          window._appIconsDebounce = setTimeout(() => {
-            const main = document.getElementById('main-content');
-            if (main) AppIcons.replaceIcons(main);
-          }, 30);
-        }
-      });
-
-      const target = document.getElementById('main-content') || document.body;
-      if (target) {
-        observer.observe(target, {
-          childList: true,
-          subtree: true
-        });
-      }
     }
   };
 
