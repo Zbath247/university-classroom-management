@@ -1,0 +1,378 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   client/css/mobile.css
+   Modern Mobile Optimization for iOS (iPhone/iPad) & Android Devices
+   University Classroom Management System · Digital University of Cambodia
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ─── 1. GLOBAL TOUCH & VIEWPORT OPTIMIZATIONS ───────────────────────────── */
+html, body {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+/* Fix iOS Safari 100vh viewport jumping bug */
+@supports (min-height: 100dvh) {
+  body, .dashboard-layout {
+    min-height: 100dvh;
+  }
+}
+
+/* ─── 2. PREVENT UNWANTED IOS SAFARI ZOOM ON INPUT FOCUS ─────────────────── */
+@media (max-width: 768px) {
+  input[type="text"],
+  input[type="password"],
+  input[type="email"],
+  input[type="number"],
+  input[type="search"],
+  input[type="tel"],
+  input[type="url"],
+  input[type="date"],
+  input[type="time"],
+  select,
+  textarea {
+    font-size: 16px !important; /* Critical for iOS Safari: stops automatic zooming */
+    touch-action: manipulation;
+  }
+}
+
+/* ─── 3. SAFE AREA INSET COMPLIANCE (NOTCH / DYNAMIC ISLAND / HOME BAR) ───── */
+:root {
+  --safe-area-top: env(safe-area-inset-top, 0px);
+  --safe-area-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-area-left: env(safe-area-inset-left, 0px);
+  --safe-area-right: env(safe-area-inset-right, 0px);
+  --bottom-dock-height: 64px;
+}
+
+/* ─── 4. MODERN MOBILE BOTTOM NAVIGATION DOCK (APP-LIKE DOCK) ─────────────── */
+.mobile-bottom-dock {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .mobile-bottom-dock {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: calc(var(--bottom-dock-height) + var(--safe-area-bottom));
+    padding-bottom: var(--safe-area-bottom);
+    background: rgba(11, 19, 41, 0.92);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.4);
+    z-index: 90;
+    align-items: center;
+    justify-content: space-around;
+    user-select: none;
+  }
+
+  [data-theme="light"] .mobile-bottom-dock {
+    background: rgba(255, 255, 255, 0.94);
+    border-top-color: rgba(0, 0, 0, 0.08);
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.06);
+  }
+
+  /* Make room for bottom dock in main content */
+  .main-content,
+  .dashboard-main {
+    padding-bottom: calc(var(--bottom-dock-height) + var(--safe-area-bottom) + 1.25rem) !important;
+  }
+
+  .dock-tab {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    height: 100%;
+    color: #94a3b8;
+    text-decoration: none;
+    font-size: 0.68rem;
+    font-weight: 600;
+    gap: 4px;
+    transition: color 0.2s ease, transform 0.15s ease;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 0;
+  }
+
+  .dock-tab:active {
+    transform: scale(0.92);
+  }
+
+  .dock-tab.active {
+    color: #38bdf8;
+  }
+
+  [data-theme="light"] .dock-tab {
+    color: #64748b;
+  }
+
+  [data-theme="light"] .dock-tab.active {
+    color: #1e40af;
+  }
+
+  .dock-icon {
+    width: 22px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    transition: transform 0.2s ease;
+  }
+
+  .dock-tab.active .dock-icon {
+    transform: translateY(-2px);
+  }
+
+  .dock-tab.active .dock-icon svg {
+    stroke: currentColor;
+    filter: drop-shadow(0 0 6px rgba(56, 189, 248, 0.5));
+  }
+
+  .dock-label {
+    font-size: 0.65rem;
+    line-height: 1;
+    letter-spacing: 0.01em;
+    font-family: var(--font-battambang, 'Kantumruy Pro', sans-serif);
+  }
+}
+
+/* ─── 5. RESPONSIVE DATA TABLES WITH TOUCH MOMENTUM ───────────────────────── */
+@media (max-width: 768px) {
+  .table-responsive {
+    -webkit-overflow-scrolling: touch;
+    border-radius: var(--radius-lg, 12px);
+    position: relative;
+    margin-bottom: 1rem;
+    scrollbar-width: thin;
+  }
+
+  .table-responsive table {
+    min-width: 620px; /* Ensures columns stay nicely readable */
+  }
+
+  .table th,
+  .table td {
+    padding: 0.75rem 0.6rem !important;
+    font-size: 0.85rem;
+  }
+
+  /* Table action buttons on mobile */
+  .table td .btn-sm {
+    padding: 6px 10px !important;
+    font-size: 0.75rem !important;
+    border-radius: 8px !important;
+  }
+}
+
+/* ─── 6. MOBILE BOTTOM-SHEET MODALS (MODERN APP FEEL) ─────────────────────── */
+@media (max-width: 640px) {
+  .modal-backdrop,
+  .modal-overlay,
+  .modal {
+    padding: 0 !important;
+    align-items: flex-end !important; /* Slide up from bottom */
+  }
+
+  .modal-dialog,
+  .modal-content,
+  .modal-box {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    border-bottom-left-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+    border-top-left-radius: 24px !important;
+    border-top-right-radius: 24px !important;
+    max-height: 90vh !important;
+    max-height: 90dvh !important;
+    display: flex !important;
+    flex-direction: column !important;
+    padding-bottom: max(1rem, var(--safe-area-bottom)) !important;
+    animation: slideUpSheet 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+    box-shadow: 0 -8px 40px rgba(0, 0, 0, 0.5) !important;
+  }
+
+  @keyframes slideUpSheet {
+    from {
+      transform: translateY(100%);
+    }
+    to {
+      transform: translateY(0);
+    }
+  }
+
+  /* Grab handle indicator for bottom sheets */
+  .modal-dialog::before,
+  .modal-content::before {
+    content: '';
+    width: 40px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.25);
+    border-radius: 99px;
+    margin: 10px auto 4px auto;
+    display: block;
+  }
+
+  [data-theme="light"] .modal-dialog::before,
+  [data-theme="light"] .modal-content::before {
+    background: rgba(0, 0, 0, 0.2);
+  }
+
+  .modal-body {
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch;
+    flex: 1;
+    padding: 1rem 1.25rem !important;
+  }
+
+  .modal-footer {
+    padding: 0.75rem 1.25rem !important;
+    gap: 8px !important;
+    flex-direction: column-reverse !important;
+  }
+
+  .modal-footer .btn {
+    width: 100% !important;
+    height: 48px !important;
+    font-size: 0.95rem !important;
+  }
+}
+
+/* ─── 7. MOBILE SIDEBAR DRAWER WITH GESTURE FEEL ──────────────────────────── */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 82% !important;
+    max-width: 320px !important;
+    height: 100vh !important;
+    height: 100dvh !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    bottom: 0 !important;
+    transform: translateX(-100%);
+    transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    z-index: 1000 !important;
+    box-shadow: none;
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .sidebar.mobile-open {
+    transform: translateX(0) !important;
+    box-shadow: 10px 0 40px rgba(0, 0, 0, 0.7) !important;
+  }
+
+  .sidebar-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.65);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    z-index: 999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+  }
+
+  .sidebar-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* Freeze body scroll when drawer is open */
+  body.sidebar-locked {
+    overflow: hidden !important;
+    touch-action: none !important;
+  }
+}
+
+/* ─── 8. FLUID MOBILE STATS & CARDS ───────────────────────────────────────── */
+@media (max-width: 600px) {
+  .stats-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 0.75rem !important;
+  }
+
+  .stat-card {
+    padding: 0.85rem !important;
+    border-radius: 14px !important;
+  }
+
+  .stat-value {
+    font-size: 1.45rem !important;
+  }
+
+  .stat-title {
+    font-size: 0.75rem !important;
+  }
+
+  .stat-icon {
+    width: 38px !important;
+    height: 38px !important;
+    border-radius: 10px !important;
+  }
+}
+
+@media (max-width: 380px) {
+  .stats-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ─── 9. RESPONSIVE TOPBAR HEADER ─────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .topbar {
+    height: 60px !important;
+    padding: 0 1rem !important;
+    padding-top: var(--safe-area-top) !important;
+  }
+
+  .topbar-left {
+    gap: 0.5rem !important;
+  }
+
+  .sidebar-toggle {
+    width: 38px !important;
+    height: 38px !important;
+    border-radius: 10px !important;
+    font-size: 1.15rem !important;
+  }
+
+  .topbar-title {
+    font-size: 0.95rem !important;
+    max-width: 160px !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+}
+
+/* ─── 10. TOUCH-FRIENDLY BUTTONS & MICRO-INTERACTIONS ─────────────────────── */
+@media (max-width: 768px) {
+  .btn,
+  button,
+  .nav-link {
+    min-height: 42px;
+    touch-action: manipulation;
+  }
+
+  .btn:active {
+    transform: scale(0.97);
+  }
+
+  .card {
+    border-radius: 16px !important;
+    margin-bottom: 1rem !important;
+  }
+
+  .card-header,
+  .card-body {
+    padding: 1rem !important;
+  }
+}

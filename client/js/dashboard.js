@@ -56,6 +56,9 @@ function initDashboard(requiredRole) {
 
   // 8. Initialize Dual-Language (Khmer/English) & Dark/Light Mode
   initThemeAndBilingualEngine();
+
+  // 9. Initialize Modern Mobile Experience (iOS & Android Bottom Dock, Gestures, Safe-Area)
+  initMobileEnhancements();
 }
 
 // ─── Get Formatted Display Name ───────────────────────────────────────────────
@@ -938,10 +941,21 @@ async function navigateToPage(url, pushState = true) {
   }
 }
 
+// ─── Initialize Mobile Enhancements ───────────────────────────────────────────
+function initMobileEnhancements() {
+  if (document.getElementById('mobile-enhancements-script')) return;
+  const script = document.createElement('script');
+  script.id = 'mobile-enhancements-script';
+  script.src = '/js/mobile.js?v=2.4';
+  document.head.appendChild(script);
+}
+
 // ─── Active Nav Link on Page Load ────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
   setActiveNavLink();
   setupSeamlessNavigation();
+  initMobileEnhancements();
 });
+
 
 

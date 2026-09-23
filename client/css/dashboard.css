@@ -4,6 +4,8 @@
    University Classroom Management System
    ═══════════════════════════════════════════════════════════════════════════ */
 
+@import url('/css/mobile.css?v=2.4');
+
 /* ─── Anti-FOUC Instant Theme Background ─────────────────────────────────── */
 html[data-theme="dark"],
 html[data-theme="dark"] body {

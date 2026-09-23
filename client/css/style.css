@@ -5,6 +5,8 @@
    Digital University of Cambodia · G1-NW-B
    ═══════════════════════════════════════════════════════════════════════════ */
 
+@import url('/css/mobile.css?v=2.4');
+
 /* ─── Embedded Fonts: Calisto MT, Khmer OS Moul Light & Khmer OS Battambang ─── */
 @font-face {
   font-family: 'Calisto MT';
