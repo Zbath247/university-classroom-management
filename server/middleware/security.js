@@ -21,9 +21,6 @@ const securityHeaders = (req, res, next) => {
   // Control referrer information sent in requests
   res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
 
-  // Restrict download/execution of untrusted content
-  res.setHeader('X-Download-Options', 'noopen');
-
   next();
 };
 
