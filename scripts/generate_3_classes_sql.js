@@ -9,14 +9,14 @@ const classConfigs = [
   {
     gid: '70146045',
     classId: 1,
-    code: 'G1-NW-B',
-    name: 'G1 Networking & Security B (ជំនាញបណ្តាញកុំព្យូទ័រ និងប្រព័ន្ធសុវត្ថិភាព B)'
+    code: 'G1-NW-A',
+    name: 'G1 Networking & Security A (ជំនាញបណ្តាញកុំព្យូទ័រ និងប្រព័ន្ធសុវត្ថិភាព A)'
   },
   {
     gid: '124799847',
     classId: 2,
-    code: 'G1-NW-A',
-    name: 'G1 Networking & Security A (ជំនាញបណ្តាញកុំព្យូទ័រ និងប្រព័ន្ធសុវត្ថិភាព A)'
+    code: 'G1-NW-B',
+    name: 'G1 Networking & Security B (ជំនាញបណ្តាញកុំព្យូទ័រ និងប្រព័ន្ធសុវត្ថិភាព B)'
   },
   {
     gid: '1752201142',
@@ -28,11 +28,7 @@ const classConfigs = [
 
 const allStudents = [];
 const seenUsernames = new Set();
-const seenEmails = new Set();
-const seenStudentIds = new Set();
-
-// Add admin & teachers to reserved usernames
-['admin', 'vuthey', 'vavy', 'mesa', 'sambath'].forEach(u => seenUsernames.add(u));
+['admin', 'vuthey', 'vavy', 'mesa'].forEach(u => seenUsernames.add(u));
 
 for (const cfg of classConfigs) {
   const file = path.resolve(__dirname, `../database/sheet_${cfg.gid}.csv`);
@@ -50,11 +46,7 @@ for (const cfg of classConfigs) {
       const genderRaw = parts[5].trim();
       
       let telegram = '';
-      let dob = null;
-
-      // Handle GID 124799847 format which has DOB
       if (cfg.gid === '124799847') {
-        const rawDob = parts[6] ? parts[6].trim() : '';
         telegram = parts[7] ? parts[7].trim().replace(/'/g, "''") : '';
       } else {
         telegram = parts[6] ? parts[6].trim().replace(/'/g, "''") : '';
@@ -67,8 +59,13 @@ for (const cfg of classConfigs) {
         .join(' ')
         .replace(/'/g, "''");
 
-      let baseUsername = nameEnRaw.toLowerCase().replace(/[^a-z0-9]/g, '_').replace(/_+/g, '_').replace(/^_|_$/g, '');
-      if (!baseUsername) baseUsername = studentId.toLowerCase().replace(/-/g, '_');
+      let baseUsername = '';
+      if (studentId === 'DUC2024-0417') {
+        baseUsername = 'sambath';
+      } else {
+        baseUsername = nameEnRaw.toLowerCase().replace(/[^a-z0-9]/g, '_').replace(/_+/g, '_').replace(/^_|_$/g, '');
+        if (!baseUsername) baseUsername = studentId.toLowerCase().replace(/-/g, '_');
+      }
 
       let username = baseUsername;
       let counter = 1;
@@ -105,6 +102,7 @@ console.log(`Total students across all 3 classes: ${allStudents.length}`);
 // Generate SQL
 let sql = `-- =============================================================================
 -- ALL 3 CLASSES + STUDENTS IMPORT (${allStudents.length} Students)
+-- G1-NW-A: 61 students | G1-NW-B: 57 students | G1-SD-A: 42 students
 -- Digital University of Cambodia
 -- =============================================================================
 
@@ -127,8 +125,8 @@ SET FOREIGN_KEY_CHECKS = 1;
 
 -- 1. CLASSES (ទាំង ៣ ថ្នាក់)
 INSERT INTO classes (id, class_code, class_name, academic_year, description) VALUES
-(1, 'G1-NW-B', 'G1 Networking & Security B (ជំនាញបណ្តាញកុំព្យូទ័រ និងប្រព័ន្ធសុវត្ថិភាព B)', '2026-2027', 'ឆមាសទី១ ឆ្នាំទី៤ ជំនាន់ទី១ - Faculty of Digital Industry'),
-(2, 'G1-NW-A', 'G1 Networking & Security A (ជំនាញបណ្តាញកុំព្យូទ័រ និងប្រព័ន្ធសុវត្ថិភាព A)', '2026-2027', 'ឆមាសទី១ ឆ្នាំទី៤ ជំនាន់ទី១ - Faculty of Digital Industry'),
+(1, 'G1-NW-A', 'G1 Networking & Security A (ជំនាញបណ្តាញកុំព្យូទ័រ និងប្រព័ន្ធសុវត្ថិភាព A)', '2026-2027', 'ឆមាសទី១ ឆ្នាំទី៤ ជំនាន់ទី១ - Faculty of Digital Industry'),
+(2, 'G1-NW-B', 'G1 Networking & Security B (ជំនាញបណ្តាញកុំព្យូទ័រ និងប្រព័ន្ធសុវត្ថិភាព B)', '2026-2027', 'ឆមាសទី១ ឆ្នាំទី៤ ជំនាន់ទី១ - Faculty of Digital Industry'),
 (3, 'G1-SD-A', 'G1 Software Development A (ជំនាញអភិវឌ្ឍន៍កម្មវិធីសហ្វវែរ A)', '2026-2027', 'ឆមាសទី១ ឆ្នាំទី៤ ជំនាន់ទី១ - Faculty of Digital Industry');
 
 -- 2. SUBJECTS
@@ -138,17 +136,16 @@ INSERT INTO subjects (id, subject_code, subject_name, description, credits) VALU
 (3, 'CSC.V', 'Cisco V',                   'Cisco Networking V (CSC.V) — លោកគ្រូ សែម វ៉ាវី', 3),
 (4, 'CA',    'Cloud Architecture',        'Cloud Architecture & Infrastructure (CA) — លោកគ្រូ ភឿន មេសា', 3);
 
--- 3. USERS (Admin + Teachers + Sambath + ${allStudents.length} Students)
+-- 3. USERS (Admin + Teachers + Students)
 INSERT INTO users (id, username, email, password, role) VALUES
 (1, 'admin',   'admin@duc.edu.kh',   '${adminHash}',   'admin'),
 (2, 'vuthey',  'vuthey@duc.edu.kh',  '${teacherHash}', 'teacher'),
 (3, 'vavy',    'vavy@duc.edu.kh',    '${teacherHash}', 'teacher'),
 (4, 'mesa',    'mesa@duc.edu.kh',    '${teacherHash}', 'teacher'),
-(5, 'sambath', 'sambath@duc.edu.kh', '${studentHash}', 'student'),
 `;
 
 allStudents.forEach((s, idx) => {
-  const userId = 6 + idx;
+  const userId = 5 + idx;
   const comma = (idx === allStudents.length - 1) ? ';' : ',';
   sql += `(${userId}, '${s.username}', '${s.email}', '${studentHash}', 'student')${comma}\n`;
 });
@@ -158,27 +155,26 @@ sql += `(1, 2, 'TCH-001', 'Mr. Chheang Vuthey (ឈាង វុទ្ធី)', '
 sql += `(2, 3, 'TCH-002', 'Mr. Sem Vavy (សែម វ៉ាវី)',         'male', 'vavy@duc.edu.kh',   'Computer Network & Security'),\n`;
 sql += `(3, 4, 'TCH-003', 'Mr. Phoeun Mesa (ភឿន មេសា)',       'male', 'mesa@duc.edu.kh',   'Cloud & Infrastructure');\n\n`;
 
-sql += `-- 5. STUDENTS (${allStudents.length + 1} Total)\nINSERT INTO students (id, user_id, student_id, full_name, full_name_kh, gender, phone, email, class_id) VALUES\n`;
-sql += `(1, 5, 'DUC2024-0001', 'Mok Sambath', 'ម៉ុក សម្បត្តិ', 'male', 't.me/moksambath', 'sambath@duc.edu.kh', 1),\n`;
+sql += `-- 5. STUDENTS (${allStudents.length} Students Total)\nINSERT INTO students (id, user_id, student_id, full_name, full_name_kh, gender, phone, email, class_id) VALUES\n`;
 
 allStudents.forEach((s, idx) => {
-  const stuId = 2 + idx;
-  const userId = 6 + idx;
+  const stuId = 1 + idx;
+  const userId = 5 + idx;
   const comma = (idx === allStudents.length - 1) ? ';' : ',';
   sql += `(${stuId}, ${userId}, '${s.studentId}', '${s.nameEn}', '${s.nameKh}', '${s.gender}', '${s.telegram}', '${s.email}', ${s.classId})${comma}\n`;
 });
 
 sql += `\n-- 6. SCHEDULES (Class Timetables)\nINSERT INTO schedules (class_id, subject_id, teacher_id, day_of_week, start_time, end_time, room) VALUES\n`;
-// G1-NW-B
-sql += `(1, 1, 1, 'Friday',   '08:00:00', '11:00:00', 'DUC3'),\n`;
-sql += `(1, 2, 2, 'Friday',   '13:00:00', '15:00:00', 'DUC3'),\n`;
-sql += `(1, 3, 2, 'Friday',   '15:00:00', '16:30:00', 'DUC3'),\n`;
-sql += `(1, 4, 3, 'Saturday', '08:00:00', '11:00:00', 'DUC3'),\n`;
 // G1-NW-A
-sql += `(2, 1, 1, 'Monday',   '08:00:00', '11:00:00', 'DUC1'),\n`;
-sql += `(2, 2, 2, 'Monday',   '13:00:00', '15:00:00', 'DUC1'),\n`;
-sql += `(2, 3, 2, 'Tuesday',  '08:00:00', '11:00:00', 'DUC1'),\n`;
-sql += `(2, 4, 3, 'Wednesday','08:00:00', '11:00:00', 'DUC1'),\n`;
+sql += `(1, 1, 1, 'Monday',   '08:00:00', '11:00:00', 'DUC1'),\n`;
+sql += `(1, 2, 2, 'Monday',   '13:00:00', '15:00:00', 'DUC1'),\n`;
+sql += `(1, 3, 2, 'Tuesday',  '08:00:00', '11:00:00', 'DUC1'),\n`;
+sql += `(1, 4, 3, 'Wednesday','08:00:00', '11:00:00', 'DUC1'),\n`;
+// G1-NW-B
+sql += `(2, 1, 1, 'Friday',   '08:00:00', '11:00:00', 'DUC3'),\n`;
+sql += `(2, 2, 2, 'Friday',   '13:00:00', '15:00:00', 'DUC3'),\n`;
+sql += `(2, 3, 2, 'Friday',   '15:00:00', '16:30:00', 'DUC3'),\n`;
+sql += `(2, 4, 3, 'Saturday', '08:00:00', '11:00:00', 'DUC3'),\n`;
 // G1-SD-A
 sql += `(3, 1, 1, 'Thursday', '08:00:00', '11:00:00', 'DUC2'),\n`;
 sql += `(3, 2, 2, 'Thursday', '13:00:00', '15:00:00', 'DUC2'),\n`;
@@ -190,4 +186,4 @@ sql += `SELECT COUNT(*) AS total_users FROM users;\n`;
 
 fs.writeFileSync(path.resolve(__dirname, '../database/import_all_3_classes.sql'), sql, 'utf8');
 fs.writeFileSync(path.resolve(__dirname, '../database/seed.sql'), sql, 'utf8');
-console.log('SUCCESS! Generated database/import_all_3_classes.sql and updated seed.sql!');
+console.log('SUCCESS! G1-NW-A: 61, G1-NW-B: 57, G1-SD-A: 42. Generated database/import_all_3_classes.sql and seed.sql!');
