@@ -267,9 +267,11 @@ CREATE TABLE resources (
   teacher_id   INT          UNSIGNED NOT NULL,
   title        VARCHAR(200) NOT NULL,
   description  TEXT,
-  file_url     VARCHAR(500),                       -- URL or file path
-  resource_type ENUM('document','video','link','other') DEFAULT 'document',
-  created_at   TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  file_url      VARCHAR(500),                       -- URL or file path
+  file_name     VARCHAR(255) DEFAULT NULL,          -- original file name
+  file_size     INT          UNSIGNED DEFAULT NULL, -- file size in bytes
+  resource_type VARCHAR(50)  DEFAULT 'document',    -- pdf, ppt, document, video, link, other
+  created_at    TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at   TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 
   PRIMARY KEY (id),

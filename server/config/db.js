@@ -25,11 +25,29 @@ const pool = mysql.createPool({
   })
 });
 
-// ─── Test Connection ──────────────────────────────────────────────────────────
+// ─── Test Connection & Auto-Migrate ──────────────────────────────────────────
+async function autoMigrate(connection) {
+  const migrations = [
+    `ALTER TABLE resources ADD COLUMN IF NOT EXISTS file_name VARCHAR(255) NULL`,
+    `ALTER TABLE resources ADD COLUMN IF NOT EXISTS file_size INT UNSIGNED NULL`,
+    `ALTER TABLE resources MODIFY COLUMN resource_type VARCHAR(50) DEFAULT 'document'`,
+    `ALTER TABLE students MODIFY COLUMN phone VARCHAR(100)`,
+    `ALTER TABLE teachers MODIFY COLUMN phone VARCHAR(100)`
+  ];
+  for (const sql of migrations) {
+    try {
+      await connection.query(sql);
+    } catch (_) {
+      // Ignore if column already exists or table not initialized yet
+    }
+  }
+}
+
 async function testConnection() {
   try {
     const connection = await pool.getConnection();
     console.log('✅ Database connected successfully to:', process.env.DB_NAME || 'classroom_db');
+    await autoMigrate(connection);
     connection.release();
     return true;
   } catch (error) {

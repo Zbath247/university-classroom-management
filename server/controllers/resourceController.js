@@ -142,20 +142,42 @@ const createResource = async (req, res, next) => {
 
     const type = resource_type || 'document';
 
-    const result = await query(
-      `INSERT INTO resources (subject_id, teacher_id, title, description, file_url, file_name, file_size, resource_type)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
-      [
-        subject_id,
-        teacherId,
-        title.trim(),
-        description || null,
-        finalFileUrl,
-        fileName,
-        fileSize,
-        type
-      ]
-    );
+    let result;
+    try {
+      result = await query(
+        `INSERT INTO resources (subject_id, teacher_id, title, description, file_url, file_name, file_size, resource_type)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+        [
+          subject_id,
+          teacherId,
+          title.trim(),
+          description || null,
+          finalFileUrl,
+          fileName,
+          fileSize,
+          type
+        ]
+      );
+    } catch (insertErr) {
+      if (insertErr.message && (insertErr.message.includes('file_name') || insertErr.message.includes('file_size'))) {
+        try {
+          await query(`ALTER TABLE resources ADD COLUMN file_name VARCHAR(255) NULL, ADD COLUMN file_size INT UNSIGNED NULL`);
+          result = await query(
+            `INSERT INTO resources (subject_id, teacher_id, title, description, file_url, file_name, file_size, resource_type)
+             VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+            [subject_id, teacherId, title.trim(), description || null, finalFileUrl, fileName, fileSize, type]
+          );
+        } catch (_) {
+          result = await query(
+            `INSERT INTO resources (subject_id, teacher_id, title, description, file_url, resource_type)
+             VALUES (?, ?, ?, ?, ?, ?)`,
+            [subject_id, teacherId, title.trim(), description || null, finalFileUrl, type]
+          );
+        }
+      } else {
+        throw insertErr;
+      }
+    }
 
     const created = await query(
       `SELECT r.*, sub.subject_code, sub.subject_name
