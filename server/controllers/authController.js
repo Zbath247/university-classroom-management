@@ -44,8 +44,14 @@ const login = async (req, res, next) => {
 
     // 1. Direct user lookup or alias
     const aliasMap = {
-      'teacher': 'teacher1',
-      'student': 'student1'
+      'teacher': 'vuthey',
+      'teacher1': 'vuthey',
+      'teacher2': 'vavy',
+      'teacher3': 'mesa',
+      'student': 'sambath',
+      'student1': 'sambath',
+      'student2': 'kosal',
+      'student3': 'sreyla'
     };
     const lookupUsername = aliasMap[normalizedInput] || rawInput;
 
@@ -154,14 +160,17 @@ const login = async (req, res, next) => {
     // It returns true if they match, false if not.
     let passwordMatch = await bcrypt.compare(password, user.password);
 
-    // Also support flexible case demo credentials (admin@123 vs Admin@123)
+    // Also support flexible case demo credentials:
+    // admin: admin@123
+    // teacher: teacher@123
+    // student: student@123
     if (!passwordMatch && password) {
-      const lowerInput = password.toLowerCase();
-      if (lowerInput === 'admin@123' && user.role === 'admin') {
+      const lowerInput = password.toLowerCase().trim();
+      if (user.role === 'admin' && (lowerInput === 'admin@123' || password === 'admin@123')) {
         passwordMatch = true;
-      } else if ((lowerInput === 'teacher@123' || lowerInput === (user.username || '').toLowerCase()) && user.role === 'teacher') {
+      } else if (user.role === 'teacher' && (lowerInput === 'teacher@123' || password === 'teacher@123' || lowerInput === (user.username || '').toLowerCase())) {
         passwordMatch = true;
-      } else if ((lowerInput === 'student@123' || lowerInput === (user.username || '').toLowerCase()) && user.role === 'student') {
+      } else if (user.role === 'student' && (lowerInput === 'student@123' || password === 'student@123' || lowerInput === (user.username || '').toLowerCase())) {
         passwordMatch = true;
       }
     }

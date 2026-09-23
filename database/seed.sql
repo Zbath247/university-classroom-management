@@ -17,22 +17,26 @@
 USE classroom_db;
 
 -- ── 1. USERS ──────────────────────────────────────────────────────────────────
--- NOTE: Passwords are bcrypt hashes generated for the plaintext shown above.
+-- PASSWORDS (all bcrypt hashed):
+--   Admin:   admin    → admin@123
+--   Teacher: vuthey, vavy, mesa → teacher@123
+--   Student: sambath, kosal, sreyla, chanthy, rathana, pisey → student@123
 INSERT INTO users (id, username, email, password, role) VALUES
 -- Admin account
-(1, 'admin',    'admin@duc.edu.kh',     '$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'admin'),
+(1, 'admin',    'admin@duc.edu.kh',     '$2a$10$JQAyEPeBu8r1t/2T.9G3TOb7yPZs6a6d7L9FlnwgtvcJ6ccX4mxaO', 'admin'),
 
--- Teacher accounts
-(2, 'teacher1', 'sophea@duc.edu.kh',    '$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'teacher'),
-(3, 'teacher2', 'dara@duc.edu.kh',      '$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'teacher'),
+-- Teacher accounts (usernames: vuthey, vavy, mesa)
+(2, 'vuthey',   'vuthey@duc.edu.kh',    '$2a$10$dkVRl7NltjI5q.rLRndxi.GGW8wXcUhCdPVm6sfEa78ObbLW68mcO', 'teacher'),
+(3, 'vavy',     'vavy@duc.edu.kh',      '$2a$10$dkVRl7NltjI5q.rLRndxi.GGW8wXcUhCdPVm6sfEa78ObbLW68mcO', 'teacher'),
+(4, 'mesa',     'mesa@duc.edu.kh',      '$2a$10$dkVRl7NltjI5q.rLRndxi.GGW8wXcUhCdPVm6sfEa78ObbLW68mcO', 'teacher'),
 
--- Student accounts
-(4, 'student1', 'sambath@duc.edu.kh',   '$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'student'),
-(5, 'student2', 'kosal@duc.edu.kh',     '$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'student'),
-(6, 'student3', 'sreyla@duc.edu.kh',    '$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'student'),
-(7, 'student4', 'chanthy@duc.edu.kh',   '$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'student'),
-(8, 'student5', 'rathana@duc.edu.kh',   '$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'student'),
-(9, 'student6', 'pisey@duc.edu.kh',     '$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'student');
+-- Student accounts (usernames: sambath, kosal, sreyla, chanthy, rathana, pisey)
+(5, 'sambath',  'sambath@duc.edu.kh',   '$2a$10$q9qhvcwokO3.ZGQaIw9/xeR6zNWm9O867Kg0DGPTIm5Vs9m1Jviby', 'student'),
+(6, 'kosal',    'kosal@duc.edu.kh',     '$2a$10$q9qhvcwokO3.ZGQaIw9/xeR6zNWm9O867Kg0DGPTIm5Vs9m1Jviby', 'student'),
+(7, 'sreyla',   'sreyla@duc.edu.kh',    '$2a$10$q9qhvcwokO3.ZGQaIw9/xeR6zNWm9O867Kg0DGPTIm5Vs9m1Jviby', 'student'),
+(8, 'chanthy',  'chanthy@duc.edu.kh',   '$2a$10$q9qhvcwokO3.ZGQaIw9/xeR6zNWm9O867Kg0DGPTIm5Vs9m1Jviby', 'student'),
+(9, 'rathana',  'rathana@duc.edu.kh',   '$2a$10$q9qhvcwokO3.ZGQaIw9/xeR6zNWm9O867Kg0DGPTIm5Vs9m1Jviby', 'student'),
+(10, 'pisey',   'pisey@duc.edu.kh',    '$2a$10$q9qhvcwokO3.ZGQaIw9/xeR6zNWm9O867Kg0DGPTIm5Vs9m1Jviby', 'student');
 
 -- ── 2. CLASSES ────────────────────────────────────────────────────────────────
 INSERT INTO classes (id, class_code, class_name, academic_year, description) VALUES
@@ -52,16 +56,16 @@ INSERT INTO subjects (id, subject_code, subject_name, description, credits) VALU
 INSERT INTO teachers (id, user_id, teacher_id, full_name, gender, email, phone, department) VALUES
 (1, 2, 'TCH-001', 'Mr. Chheang Vuthey (ឈាង វុទ្ធី)', 'male', 'vuthey@duc.edu.kh', '012-345-678', 'Computer Network & Security'),
 (2, 3, 'TCH-002', 'Mr. Sem Vavy (សែម វ៉ាវី)',         'male', 'vavy@duc.edu.kh',   '012-987-654', 'Computer Network & Security'),
-(3, 1, 'TCH-003', 'Mr. Phoeun Mesa (ភឿន មេសា)',       'male', 'mesa@duc.edu.kh',   '012-111-222', 'Cloud & Infrastructure');
+(3, 4, 'TCH-003', 'Mr. Phoeun Mesa (ភឿន មេសា)',       'male', 'mesa@duc.edu.kh',   '012-111-222', 'Cloud & Infrastructure');
 
 -- ── 5. STUDENTS ───────────────────────────────────────────────────────────────
 INSERT INTO students (id, user_id, student_id, full_name, full_name_kh, gender, date_of_birth, phone, email, class_id) VALUES
-(1, 4, 'STU-2024-001', 'Mok Sambath',    'ម៉ុក សម្បត្តិ',   'male',   '2004-05-15', '087-111-001', 'sambath@duc.edu.kh',  1),
-(2, 5, 'STU-2024-002', 'Ly Kosal',       'លី គសាល',         'male',   '2004-08-22', '087-111-002', 'kosal@duc.edu.kh',    1),
-(3, 6, 'STU-2024-003', 'Noun Sreyla',    'នួន ស្រីឡា',      'female', '2004-03-10', '087-111-003', 'sreyla@duc.edu.kh',   1),
-(4, 7, 'STU-2024-004', 'Pov Chanthy',    'ផូ ចន្ទី',         'female', '2004-11-05', '087-111-004', 'chanthy@duc.edu.kh',  1),
-(5, 8, 'STU-2024-005', 'Sok Rathana',    'សុខ រ័ត្ន',        'male',   '2003-07-30', '087-111-005', 'rathana@duc.edu.kh',  1),
-(6, 9, 'STU-2024-006', 'Kim Pisey',      'គឹម ពិសី',        'female', '2004-09-18', '087-111-006', 'pisey@duc.edu.kh',    1);
+(1, 5, 'STU-2024-001', 'Mok Sambath',    'ម៉ុក សម្បត្តិ',   'male',   '2004-05-15', '087-111-001', 'sambath@duc.edu.kh',  1),
+(2, 6, 'STU-2024-002', 'Ly Kosal',       'លី គសាល',         'male',   '2004-08-22', '087-111-002', 'kosal@duc.edu.kh',    1),
+(3, 7, 'STU-2024-003', 'Noun Sreyla',    'នួន ស្រីឡា',      'female', '2004-03-10', '087-111-003', 'sreyla@duc.edu.kh',   1),
+(4, 8, 'STU-2024-004', 'Pov Chanthy',    'ផូ ចន្ទី',         'female', '2004-11-05', '087-111-004', 'chanthy@duc.edu.kh',  1),
+(5, 9, 'STU-2024-005', 'Sok Rathana',    'សុខ រ័ត្ន',        'male',   '2003-07-30', '087-111-005', 'rathana@duc.edu.kh',  1),
+(6, 10, 'STU-2024-006', 'Kim Pisey',      'គឹម ពិសី',        'female', '2004-09-18', '087-111-006', 'pisey@duc.edu.kh',    1);
 
 -- ── 6. SCHEDULES ──────────────────────────────────────────────────────────────
 -- Official Class G1-NW-B timetable (Room DUC3)
