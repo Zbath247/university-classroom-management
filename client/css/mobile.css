@@ -378,21 +378,21 @@ html, body {
   }
 }
 
-/* ─── 11. TOPBAR QUICK LANGUAGE & THEME CONTROLS (MOBILE ONLY, HIDDEN ON DESKTOP) ───────── */
+/* ─── 11. TOPBAR QUICK LANGUAGE & THEME CONTROLS (MOBILE ONLY, HIDDEN ON COMPUTER) ── */
 .topbar-controls-cluster {
-  display: none; /* Hidden on computer / desktop screens */
-  align-items: center;
-  gap: 6px;
-  background: rgba(0, 0, 0, 0.05);
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  padding: 3px 6px;
-  border-radius: 9999px;
-  margin-right: 4px;
+  display: none !important; /* Hidden on computer/desktop screen */
 }
 
 @media (max-width: 768px) {
   .topbar-controls-cluster {
-    display: inline-flex;
+    display: inline-flex !important;
+    align-items: center;
+    gap: 6px;
+    background: rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 3px 6px;
+    border-radius: 9999px;
+    margin-right: 4px;
   }
 }
 
