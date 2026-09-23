@@ -18,7 +18,11 @@ const pool = mysql.createPool({
   connectionLimit:    10,
   queueLimit:         0,
   // Return dates as strings (not JS Date objects) — easier to work with
-  dateStrings:        true
+  dateStrings:        true,
+  // SSL support for TiDB Cloud / production (set DB_SSL=true in .env)
+  ...(process.env.DB_SSL === 'true' && {
+    ssl: { minVersion: 'TLSv1.2', rejectUnauthorized: true }
+  })
 });
 
 // ─── Test Connection ──────────────────────────────────────────────────────────
