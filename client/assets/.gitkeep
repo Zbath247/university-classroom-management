@@ -1,0 +1,2 @@
+This folder is for static assets such as images, icons, and logos.
+Place files here and reference them in HTML as: /assets/filename.png

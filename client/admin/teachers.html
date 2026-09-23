@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#1e40af" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="DUC Classroom" />
+  <meta name="format-detection" content="telephone=no" />
+  <link rel="apple-touch-icon" href="/assets/duc-logo.png" />
+  <script>
+    (function(){try{var t=localStorage.getItem('duc_theme')||(window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',t);var l=localStorage.getItem('duc_lang')||'km';document.documentElement.lang=l;}catch(e){}})();
+  </script>
+  <title>Manage Teachers — DUC Classroom Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@300;400;500;600;700;800&family=Kantumruy+Pro:wght@400;500;600;700&family=Battambang:wght@400;700;900&family=Moul&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/style.css?v=2.3" />
+  <link rel="stylesheet" href="/css/dashboard.css?v=2.3" />
+  <script src="/js/icons.js"></script>
+  <script src="/js/i18n.js"></script>
+  <script src="/js/theme.js"></script>
+</head>
+<body>
+<div class="dashboard-layout">
+  <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+    <!-- ══ Sidebar ═══════════════════════════════════════════════════════════ -->
+  <aside class="sidebar role-admin" id="sidebar">
+    <div class="sidebar-brand">
+      <div class="sidebar-brand-icon"><img src="/assets/duc-logo.png" alt="DUC Logo"></div>
+      <div class="sidebar-brand-text">
+        <div class="sidebar-brand-name">DUC Classroom</div>
+        <div class="sidebar-brand-sub" data-i18n="admin.panel">ផ្ទាំងគ្រប់គ្រងទូទៅ</div>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <div class="sidebar-section-label" data-i18n="nav.main">ទំព័រចម្បង</div>
+      <ul>
+        <li class="nav-item">
+          <a href="/admin/dashboard.html" class="nav-link">
+            <span class="nav-icon"><svg class="app-svg-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg></span>
+            <span class="nav-label" data-i18n="nav.dashboard">ផ្ទាំងព័ត៌មាន</span>
+          </a>
+        </li>
+      </ul>
+      <div class="sidebar-section-label" data-i18n="nav.management">ការគ្រប់គ្រងទិន្នន័យ</div>
+      <ul>
+        <li class="nav-item">
+          <a href="/admin/students.html" class="nav-link">
+            <span class="nav-icon"><svg class="app-svg-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+            <span class="nav-label" data-i18n="nav.students">បញ្ជីនិស្សិត</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="/admin/teachers.html" class="nav-link active">
+            <span class="nav-icon"><svg class="app-svg-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><polyline points="16 11 18 13 22 9"/></svg></span>
+            <span class="nav-label" data-i18n="nav.teachers">បញ្ជីសាស្ត្រាចារ្យ</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="/admin/classes.html" class="nav-link">
+            <span class="nav-icon"><svg class="app-svg-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="m4 6 8-4 8 4"/><path d="m18 10 4 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-8l4-2"/><path d="M14 22v-4a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v4"/><path d="M18 5v17"/><path d="M6 5v17"/></svg></span>
+            <span class="nav-label" data-i18n="nav.classes">បន្ទប់ & ថ្នាក់រៀន</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="/admin/subjects.html" class="nav-link">
+            <span class="nav-icon"><svg class="app-svg-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></span>
+            <span class="nav-label" data-i18n="nav.subjects">មុខវិជ្ជាសិក្សា</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="/admin/schedules.html" class="nav-link">
+            <span class="nav-icon"><svg class="app-svg-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><circle cx="12" cy="15" r="2"/></svg></span>
+            <span class="nav-label" data-i18n="nav.schedules">កាលវិភាគសិក្សា</span>
+          </a>
+        </li>
+      </ul>
+      <div class="sidebar-section-label" data-i18n="nav.system">ប្រព័ន្ធ</div>
+      <ul>
+        <li class="nav-item">
+          <a href="/login.html" class="nav-link" onclick="logout(); return false;">
+            <span class="nav-icon"><svg class="app-svg-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></span>
+            <span class="nav-label" data-i18n="nav.signout">ចាកចេញពីប្រព័ន្ធ</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="sidebar-controls" id="sidebar-controls">
+      <div class="app-controls-cluster" id="app-controls-cluster">
+        <button type="button" class="btn-lang-toggle" id="app-lang-toggle" aria-label="Switch Language" title="Switch Language">
+          <span class="lang-toggle-flag">🇰🇭</span>
+          <span class="lang-toggle-label">ខ្មែរ</span>
+        </button>
+        <button type="button" class="btn-theme-toggle" id="app-theme-toggle" aria-label="Switch Theme" title="Switch Theme">
+          <span class="theme-toggle-icon">🌙</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="sidebar-footer">
+      <div class="sidebar-user">
+        <div class="sidebar-avatar" id="sidebar-avatar">A</div>
+        <div class="sidebar-user-info">
+          <div class="sidebar-user-name" id="sidebar-username">អ្នកគ្រប់គ្រង</div>
+          <div class="sidebar-user-role" data-i18n="role.admin">Admin</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ══ Main Content ═══════════════════════════════════════════════════════ -->
+  <div class="main-content" id="main-content">
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="sidebar-toggle" id="sidebar-toggle">☰</button>
+        <span class="topbar-title" data-i18n="page.teachers">Teacher Management</span>
+      </div>
+      <div class="topbar-right">
+        <div class="topbar-user">
+          <div class="topbar-avatar" id="topbar-avatar">A</div>
+          <div class="topbar-user-info hide-mobile">
+            <div class="topbar-user-name" id="topbar-username">Administrator</div>
+            <div class="topbar-user-role" data-i18n="role.admin">Admin</div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="page-content fade-in">
+      <div class="page-header" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; margin-bottom:1.5rem;">
+        <div>
+          <h1 class="page-title" style="font-size:1.75rem; font-weight:700;" data-i18n="page.teachers">Teachers & Instructors</h1>
+          <p class="page-subtitle" style="color:var(--text-muted); margin-top:0.25rem;" data-i18n="sub.teachers">
+            Manage university faculty members, departments, and credentials
+          </p>
+        </div>
+        <button class="btn btn-primary" onclick="openAddTeacherModal()" data-i18n="btn.add_new_teacher">
+          ➕ Add New Teacher
+        </button>
+      </div>
+
+      <!-- Filters & Search Toolbar -->
+      <div class="card" style="margin-bottom:1.5rem;">
+        <div class="card-body" style="padding:1rem;">
+          <div style="display:flex; gap:1rem; flex-wrap:wrap;">
+            <div style="flex:1; min-width:240px;">
+              <input type="text" id="search-input" class="form-control" placeholder="🔍 Search teachers by name, ID, department..." data-i18n-placeholder="placeholder.search_teachers" />
+            </div>
+            <button class="btn btn-secondary" onclick="loadTeachers()" data-i18n="action.search">Search</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Teachers Table -->
+      <div class="card">
+        <div class="card-body" style="padding:0;">
+          <div class="table-responsive">
+            <table class="table" style="margin:0;">
+              <thead>
+                <tr>
+                  <th data-i18n="table.teacher_id">Teacher ID</th>
+                  <th data-i18n="table.name">Full Name</th>
+                  <th data-i18n="table.gender">Gender</th>
+                  <th data-i18n="table.department">Department</th>
+                  <th data-i18n="table.phone">Phone</th>
+                  <th data-i18n="table.email">Email</th>
+                  <th style="text-align:right;" data-i18n="table.actions">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="teachers-tbody">
+                <tr><td colspan="7" class="text-center" style="padding:2rem;" data-i18n="msg.loading_teachers">Loading teachers...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- ══ Modal: Add / Edit Teacher ════════════════════════════════════════════ -->
+<div class="modal-backdrop" id="teacher-modal" data-default-title="Add New Teacher">
+  <div class="modal" style="max-width:600px;">
+    <div class="modal-header">
+      <h3 class="modal-title" id="teacher-modal-title" data-i18n="modal.add_teacher">Add New Teacher</h3>
+      <button class="modal-close" onclick="closeModal('teacher-modal')">×</button>
+    </div>
+    <form id="teacher-form" onsubmit="handleTeacherSubmit(event)">
+      <input type="hidden" id="teacher-id-field" />
+      <div class="modal-body" style="display:flex; flex-direction:column; gap:1rem;">
+
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+          <div class="form-group">
+            <label class="form-label" for="form-teacher-id" data-i18n="table.teacher_id">Teacher ID <span class="required">*</span></label>
+            <input type="text" id="form-teacher-id" class="form-control" placeholder="e.g. TCH-003" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="form-gender" data-i18n="table.gender">Gender</label>
+            <select id="form-gender" class="form-control">
+              <option value="male" data-i18n="table.gender_m">Male</option>
+              <option value="female" data-i18n="table.gender_f">Female</option>
+              <option value="other" data-i18n="table.gender_other">Other</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="form-full-name" data-i18n="table.name">Full Name <span class="required">*</span></label>
+          <input type="text" id="form-full-name" class="form-control" placeholder="e.g. Dr. Keo Vicheth" required />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="form-department" data-i18n="table.department">Department / Faculty</label>
+          <input type="text" id="form-department" class="form-control" placeholder="e.g. Information Technology" />
+        </div>
+
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+          <div class="form-group">
+            <label class="form-label" for="form-email" data-i18n="table.email">Email <span class="required">*</span></label>
+            <input type="email" id="form-email" class="form-control" placeholder="teacher@duc.edu.kh" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="form-phone" data-i18n="table.phone">Phone Number</label>
+            <input type="text" id="form-phone" class="form-control" placeholder="012 345 678" />
+          </div>
+        </div>
+
+        <div class="form-group" id="password-group">
+          <label class="form-label" for="form-password" data-i18n="table.password">Account Password</label>
+          <input type="password" id="form-password" class="form-control" placeholder="Default: Teacher@123 (Leave empty for default)" />
+          <small style="color:var(--text-muted);">Used for teacher to sign in to the portal.</small>
+        </div>
+
+      </div>
+      <div class="modal-footer" style="display:flex; justify-content:flex-end; gap:0.75rem;">
+        <button type="button" class="btn btn-secondary" onclick="closeModal('teacher-modal')" data-i18n="action.cancel">Cancel</button>
+        <button type="submit" class="btn btn-primary" id="btn-save-teacher" data-i18n="btn.save_teacher">Save Teacher</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div id="toast-container"></div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/dashboard.js"></script>
+  <script src="/js/admin.js"></script>
+  <script>
+    var allTeachers = [];
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      initDashboard('admin');
+      await loadTeachers();
+
+      document.getElementById('search-input').addEventListener('input', () => {
+        loadTeachers();
+      });
+    });
+
+    async function loadTeachers() {
+      const search = document.getElementById('search-input').value.trim();
+      const tbody = document.getElementById('teachers-tbody');
+
+      try {
+        let url = '/teachers?';
+        if (search) url += `search=${encodeURIComponent(search)}`;
+
+        const res = await api.get(url);
+        if (res.success) {
+          allTeachers = res.data;
+          renderTeachersTable(allTeachers);
+        }
+      } catch (err) {
+        console.error('Failed to load teachers:', err);
+        tbody.innerHTML = '<tr><td colspan="7" class="text-center" style="padding:2rem; color:var(--danger);">Error loading teachers.</td></tr>';
+      }
+    }
+
+    function renderTeachersTable(teachers) {
+      const tbody = document.getElementById('teachers-tbody');
+      if (teachers.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="7" class="text-center" style="padding:2rem;" data-i18n="msg.no_teachers">' + (window.I18n ? I18n.t('msg.no_teachers') : 'No teachers found.') + '</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = teachers.map(t => {
+        const genderKey = t.gender === 'female' ? 'table.gender_f' : 'table.gender_m';
+        const genderDisplay = window.I18n ? I18n.t(genderKey, t.gender === 'female' ? 'Female' : 'Male') : (t.gender === 'female' ? 'Female' : 'Male');
+        const editTxt = window.I18n ? I18n.t('action.edit') : 'Edit';
+
+        return `
+        <tr>
+          <td><strong style="color:var(--primary);">${t.teacher_id}</strong></td>
+          <td>${window.formatPersonName ? window.formatPersonName(t.full_name) : `<div style="font-weight:600;">${t.full_name}</div>`}</td>
+          <td><span class="badge ${t.gender === 'female' ? 'badge-purple' : 'badge-gray'}" data-i18n="${genderKey}">${genderDisplay}</span></td>
+          <td><span class="badge badge-info">${t.department || 'General'}</span></td>
+          <td>${t.phone || '—'}</td>
+          <td><small>${t.email}</small></td>
+          <td style="text-align:right;">
+            <div style="display:inline-flex; gap:0.25rem;">
+              <button class="btn btn-sm btn-secondary" onclick="openEditTeacherModal(${t.id})" data-i18n="action.edit">✏️ ${editTxt}</button>
+              <button class="btn btn-sm btn-danger" onclick="deleteTeacherAction(${t.id}, '${t.full_name}')">🗑️</button>
+            </div>
+          </td>
+        </tr>
+      `}).join('');
+
+      if (window.I18n) window.I18n.autoTranslate(tbody);
+    }
+
+    function openAddTeacherModal() {
+      document.getElementById('teacher-id-field').value = '';
+      const titleEl = document.getElementById('teacher-modal-title');
+      titleEl.textContent = window.I18n ? I18n.t('modal.add_teacher') : 'Add New Teacher';
+      titleEl.setAttribute('data-i18n', 'modal.add_teacher');
+      document.getElementById('teacher-form').reset();
+      openModal('teacher-modal');
+    }
+
+    function openEditTeacherModal(id) {
+      const t = allTeachers.find(item => item.id === id);
+      if (!t) return;
+
+      document.getElementById('teacher-id-field').value = t.id;
+      const titleEl = document.getElementById('teacher-modal-title');
+      titleEl.textContent = window.I18n ? I18n.t('modal.edit_teacher') : 'Edit Teacher';
+      titleEl.setAttribute('data-i18n', 'modal.edit_teacher');
+      document.getElementById('teacher-modal-title').textContent = `Edit Teacher: ${t.full_name}`;
+      document.getElementById('form-teacher-id').value = t.teacher_id;
+      document.getElementById('form-gender').value = t.gender || 'male';
+      document.getElementById('form-full-name').value = t.full_name;
+      document.getElementById('form-department').value = t.department || '';
+      document.getElementById('form-email').value = t.email;
+      document.getElementById('form-phone').value = t.phone || '';
+      document.getElementById('form-password').value = '';
+      openModal('teacher-modal');
+    }
+
+    async function handleTeacherSubmit(e) {
+      e.preventDefault();
+      const id = document.getElementById('teacher-id-field').value;
+      const btn = document.getElementById('btn-save-teacher');
+      btn.disabled = true;
+      btn.textContent = 'Saving...';
+
+      const payload = {
+        teacher_id: document.getElementById('form-teacher-id').value.trim(),
+        full_name:  document.getElementById('form-full-name').value.trim(),
+        gender:     document.getElementById('form-gender').value,
+        department: document.getElementById('form-department').value.trim(),
+        email:      document.getElementById('form-email').value.trim(),
+        phone:      document.getElementById('form-phone').value.trim()
+      };
+
+      const pass = document.getElementById('form-password').value;
+      if (pass) {
+        if (id) payload.new_password = pass;
+        else payload.password = pass;
+      }
+
+      try {
+        if (id) {
+          await api.put(`/teachers/${id}`, payload);
+          showToast('Teacher updated successfully!', 'success');
+        } else {
+          await api.post('/teachers', payload);
+          showToast('Teacher added successfully with login account!', 'success');
+        }
+        closeModal('teacher-modal');
+        await loadTeachers();
+      } catch (err) {
+        console.error(err);
+        showToast(err.message || 'Error saving teacher.', 'error');
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Save Teacher';
+      }
+    }
+
+    async function deleteTeacherAction(id, name) {
+      const ok = await showConfirmDialog({
+        title: 'Delete Teacher',
+        message: `Are you sure you want to delete teacher "${name}"? This will also remove their user account.`,
+        icon: '🗑️',
+        confirmText: 'Delete Teacher',
+        type: 'danger'
+      });
+      if (!ok) return;
+      try {
+        await api.delete(`/teachers/${id}`);
+        showToast(`Teacher "${name}" deleted.`, 'info');
+        await loadTeachers();
+      } catch (err) {
+        console.error(err);
+        showToast(err.message || 'Error deleting teacher.', 'error');
+      }
+    }
+  </script>
+</body>
+</html>

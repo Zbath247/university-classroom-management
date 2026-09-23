@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#1e40af" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="DUC Classroom" />
+  <meta name="format-detection" content="telephone=no" />
+  <link rel="apple-touch-icon" href="/assets/duc-logo.png" />
+  <script>
+    (function(){try{var t=localStorage.getItem('duc_theme')||(window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',t);var l=localStorage.getItem('duc_lang')||'km';document.documentElement.lang=l;}catch(e){}})();
+  </script>
+  <title>Admin Dashboard — University Classroom Management System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@300;400;500;600;700;800&family=Kantumruy+Pro:wght@400;500;600;700&family=Battambang:wght@400;700;900&family=Moul&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/style.css?v=2.3" />
+  <link rel="stylesheet" href="/css/dashboard.css?v=2.3" />
+  <script src="/js/icons.js"></script>
+  <script src="/js/i18n.js"></script>
+  <script src="/js/theme.js"></script>
+</head>
+<body>
+<div class="dashboard-layout">
+
+  <!-- ══ Sidebar Overlay (Mobile) ══════════════════════════════════════════ -->
+  <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+    <!-- ══ Sidebar ═══════════════════════════════════════════════════════════ -->
+  <aside class="sidebar role-admin" id="sidebar">
+    <div class="sidebar-brand">
+      <div class="sidebar-brand-icon"><img src="/assets/duc-logo.png" alt="DUC Logo"></div>
+      <div class="sidebar-brand-text">
+        <div class="sidebar-brand-name">DUC Classroom</div>
+        <div class="sidebar-brand-sub" data-i18n="admin.panel">ផ្ទាំងគ្រប់គ្រងទូទៅ</div>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <div class="sidebar-section-label" data-i18n="nav.main">ទំព័រចម្បង</div>
+      <ul>
+        <li class="nav-item">
+          <a href="/admin/dashboard.html" class="nav-link active">
+            <span class="nav-icon"><svg class="app-svg-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg></span>
+            <span class="nav-label" data-i18n="nav.dashboard">ផ្ទាំងព័ត៌មាន</span>
+          </a>
+        </li>
+      </ul>
+      <div class="sidebar-section-label" data-i18n="nav.management">ការគ្រប់គ្រងទិន្នន័យ</div>
+      <ul>
+        <li class="nav-item">
+          <a href="/admin/students.html" class="nav-link">
+            <span class="nav-icon"><svg class="app-svg-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+            <span class="nav-label" data-i18n="nav.students">បញ្ជីនិស្សិត</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="/admin/teachers.html" class="nav-link">
+            <span class="nav-icon"><svg class="app-svg-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><polyline points="16 11 18 13 22 9"/></svg></span>
+            <span class="nav-label" data-i18n="nav.teachers">បញ្ជីសាស្ត្រាចារ្យ</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="/admin/classes.html" class="nav-link">
+            <span class="nav-icon"><svg class="app-svg-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="m4 6 8-4 8 4"/><path d="m18 10 4 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-8l4-2"/><path d="M14 22v-4a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v4"/><path d="M18 5v17"/><path d="M6 5v17"/></svg></span>
+            <span class="nav-label" data-i18n="nav.classes">បន្ទប់ & ថ្នាក់រៀន</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="/admin/subjects.html" class="nav-link">
+            <span class="nav-icon"><svg class="app-svg-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></span>
+            <span class="nav-label" data-i18n="nav.subjects">មុខវិជ្ជាសិក្សា</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="/admin/schedules.html" class="nav-link">
+            <span class="nav-icon"><svg class="app-svg-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><circle cx="12" cy="15" r="2"/></svg></span>
+            <span class="nav-label" data-i18n="nav.schedules">កាលវិភាគសិក្សា</span>
+          </a>
+        </li>
+      </ul>
+      <div class="sidebar-section-label" data-i18n="nav.system">ប្រព័ន្ធ</div>
+      <ul>
+        <li class="nav-item">
+          <a href="/login.html" class="nav-link" onclick="logout(); return false;">
+            <span class="nav-icon"><svg class="app-svg-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></span>
+            <span class="nav-label" data-i18n="nav.signout">ចាកចេញពីប្រព័ន្ធ</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="sidebar-controls" id="sidebar-controls">
+      <div class="app-controls-cluster" id="app-controls-cluster">
+        <button type="button" class="btn-lang-toggle" id="app-lang-toggle" aria-label="Switch Language" title="Switch Language">
+          <span class="lang-toggle-flag">🇰🇭</span>
+          <span class="lang-toggle-label">ខ្មែរ</span>
+        </button>
+        <button type="button" class="btn-theme-toggle" id="app-theme-toggle" aria-label="Switch Theme" title="Switch Theme">
+          <span class="theme-toggle-icon">🌙</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="sidebar-footer">
+      <div class="sidebar-user">
+        <div class="sidebar-avatar" id="sidebar-avatar">A</div>
+        <div class="sidebar-user-info">
+          <div class="sidebar-user-name" id="sidebar-username">អ្នកគ្រប់គ្រង</div>
+          <div class="sidebar-user-role" data-i18n="role.admin">Admin</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ══ Main Content ═══════════════════════════════════════════════════════ -->
+  <div class="main-content" id="main-content">
+
+    <!-- Top Bar -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="sidebar-toggle" id="sidebar-toggle" aria-label="Toggle sidebar">☰</button>
+        <span class="topbar-title" id="page-title" data-i18n="nav.dashboard">Dashboard</span>
+      </div>
+      <div class="topbar-right">
+        <div class="topbar-user" id="topbar-user">
+          <div class="topbar-avatar" id="topbar-avatar">A</div>
+          <div class="topbar-user-info hide-mobile">
+            <div class="topbar-user-name" id="topbar-username">Administrator</div>
+            <div class="topbar-user-role" data-i18n="role.admin">Admin</div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Page Content -->
+    <main class="page-content fade-in">
+
+      <!-- Page Header -->
+      <div class="page-header" style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:1rem; margin-bottom:1.5rem;">
+        <div>
+          <h1 class="page-title" style="font-size:1.75rem; font-weight:700;" data-i18n="page.admin_dashboard">Admin Dashboard</h1>
+          <p class="page-subtitle" style="color:var(--text-muted); margin-top:0.25rem;" data-i18n="sub.admin_dashboard">
+            Digital University of Cambodia · Class G1-NW-B
+          </p>
+        </div>
+        <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
+          <a href="/admin/students.html" class="btn btn-primary btn-sm" data-i18n="btn.add_student">➕ Add Student</a>
+          <a href="/admin/classes.html" class="btn btn-secondary btn-sm" data-i18n="btn.add_class">➕ Add Class</a>
+          <a href="/admin/schedules.html" class="btn btn-secondary btn-sm" data-i18n="btn.timetable">📅 Timetable</a>
+        </div>
+      </div>
+
+      <!-- Stats Cards -->
+      <div class="stats-grid">
+        <div class="stat-card blue">
+          <div class="stat-info">
+            <div class="stat-value" id="stat-students">—</div>
+            <div class="stat-label" data-i18n="stat.total_students">Total Students</div>
+          </div>
+          <div class="stat-icon">🎓</div>
+        </div>
+        <div class="stat-card green">
+          <div class="stat-info">
+            <div class="stat-value" id="stat-teachers">—</div>
+            <div class="stat-label" data-i18n="stat.total_teachers">Total Teachers</div>
+          </div>
+          <div class="stat-icon">👨‍🏫</div>
+        </div>
+        <div class="stat-card purple">
+          <div class="stat-info">
+            <div class="stat-value" id="stat-classes">—</div>
+            <div class="stat-label" data-i18n="stat.total_classes">Total Classes</div>
+          </div>
+          <div class="stat-icon">🏫</div>
+        </div>
+        <div class="stat-card amber">
+          <div class="stat-info">
+            <div class="stat-value" id="stat-subjects">—</div>
+            <div class="stat-label" data-i18n="stat.total_subjects">Total Subjects</div>
+          </div>
+          <div class="stat-icon">📚</div>
+        </div>
+      </div>
+
+      <!-- Grid Layout for Widgets -->
+      <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 1.5rem; margin-top: 1.5rem;">
+
+        <!-- Recent Students Widget -->
+        <div class="card">
+          <div class="card-header" style="display:flex; justify-content:space-between; align-items:center;">
+            <h3 style="font-size:1.1rem; font-weight:600; margin:0;" data-i18n="widget.recent_students">🎓 Recent Students</h3>
+            <a href="/admin/students.html" class="btn btn-sm btn-secondary" data-i18n="action.view_all">View All</a>
+          </div>
+          <div class="card-body" style="padding:0;">
+            <div class="table-responsive">
+              <table class="table" style="margin:0;">
+                <thead>
+                  <tr>
+                    <th data-i18n="table.student_id">Student ID</th>
+                    <th data-i18n="table.name">Full Name</th>
+                    <th data-i18n="table.class">Class</th>
+                  </tr>
+                </thead>
+                <tbody id="recent-students-tbody">
+                  <tr><td colspan="3" class="text-center" style="padding:2rem;" data-i18n="msg.loading_students">Loading students...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Today's Schedule Widget -->
+        <div class="card">
+          <div class="card-header" style="display:flex; justify-content:space-between; align-items:center;">
+            <h3 style="font-size:1.1rem; font-weight:600; margin:0;">
+              <span data-i18n="widget.today_schedule">📅 Today's Schedule</span> (<span id="today-day-name">Today</span>)
+            </h3>
+            <a href="/admin/schedules.html" class="btn btn-sm btn-secondary" data-i18n="action.all_schedules">All Schedules</a>
+          </div>
+          <div class="card-body" style="padding:0;">
+            <div class="table-responsive">
+              <table class="table" style="margin:0;">
+                <thead>
+                  <tr>
+                    <th data-i18n="table.time">Time</th>
+                    <th data-i18n="table.subject">Subject</th>
+                    <th data-i18n="table.class_room">Class / Room</th>
+                    <th data-i18n="table.teacher">Teacher</th>
+                  </tr>
+                </thead>
+                <tbody id="today-schedules-tbody">
+                  <tr><td colspan="4" class="text-center" style="padding:2rem;" data-i18n="msg.loading_schedules">Loading schedules...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Classes Enrollment Overview -->
+      <div class="card" style="margin-top:1.5rem;">
+        <div class="card-header" style="display:flex; justify-content:space-between; align-items:center;">
+          <h3 style="font-size:1.1rem; font-weight:600; margin:0;" data-i18n="widget.classes_enrollment">🏫 Classes & Student Enrollment</h3>
+          <a href="/admin/classes.html" class="btn btn-sm btn-secondary" data-i18n="action.manage_classes">Manage Classes</a>
+        </div>
+        <div class="card-body">
+          <div id="classes-grid" style="display:grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1rem;">
+            <div class="text-center" style="padding:1rem;" data-i18n="msg.loading_classes">Loading classes...</div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<div id="toast-container"></div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/dashboard.js"></script>
+  <script src="/js/admin.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      initDashboard('admin');
+      await loadDashboardData();
+    });
+
+    async function loadDashboardData() {
+      try {
+        const res = await api.get('/admin/stats');
+        if (res.success && res.data) {
+          const { totals, recentStudents, classStats, todaySchedules, todayName } = res.data;
+
+          // Set counts
+          document.getElementById('stat-students').textContent = totals.students;
+          document.getElementById('stat-teachers').textContent = totals.teachers;
+          document.getElementById('stat-classes').textContent  = totals.classes;
+          document.getElementById('stat-subjects').textContent = totals.subjects;
+
+          // Today day
+          const dayKey = `day.${(todayName || '').toLowerCase()}`;
+          const dayDisplay = window.I18n ? I18n.t(dayKey, todayName) : todayName;
+          const todayEl = document.getElementById('today-day-name');
+          todayEl.textContent = dayDisplay;
+          todayEl.setAttribute('data-i18n', dayKey);
+
+          // Recent students table
+          const studentsTbody = document.getElementById('recent-students-tbody');
+          if (recentStudents && recentStudents.length > 0) {
+            studentsTbody.innerHTML = recentStudents.map(s => {
+              const classDisplay = s.class_code 
+                ? s.class_code 
+                : `<span data-i18n="status.unassigned">${window.I18n ? I18n.t('status.unassigned') : 'Unassigned'}</span>`;
+              return `
+              <tr>
+                <td><strong>${s.student_id}</strong></td>
+                <td>
+                  <div class="name-en">${s.full_name}</div>
+                  ${s.full_name_kh ? `<div class="name-khmer">${s.full_name_kh}</div>` : ''}
+                </td>
+                <td><span class="badge badge-primary">${classDisplay}</span></td>
+              </tr>
+            `}).join('');
+          } else {
+            studentsTbody.innerHTML = '<tr><td colspan="3" class="text-center" style="padding:2rem;" data-i18n="msg.no_students">' + (window.I18n ? I18n.t('msg.no_students') : 'No students found.') + '</td></tr>';
+          }
+
+          // Today schedule table
+          const schedTbody = document.getElementById('today-schedules-tbody');
+          if (todaySchedules && todaySchedules.length > 0) {
+            schedTbody.innerHTML = todaySchedules.map(sch => {
+              const roomDisplay = sch.room 
+                ? sch.room 
+                : `<span data-i18n="status.tbd">${window.I18n ? I18n.t('status.tbd') : 'TBD'}</span>`;
+              return `
+              <tr>
+                <td><span class="badge badge-info">${formatTime(sch.start_time)} - ${formatTime(sch.end_time)}</span></td>
+                <td><strong>${sch.subject_name}</strong></td>
+                <td>${sch.class_code} · <small style="color:var(--text-muted);">${roomDisplay}</small></td>
+                <td>${window.formatPersonName ? window.formatPersonName(sch.teacher_name) : sch.teacher_name}</td>
+              </tr>
+            `}).join('');
+          } else {
+            schedTbody.innerHTML = `<tr><td colspan="4" class="text-center" style="padding:2rem; color:var(--text-muted);" data-i18n="msg.no_schedules">${window.I18n ? I18n.t('msg.no_schedules') : 'No classes scheduled for today.'}</td></tr>`;
+          }
+
+          // Class enrollment cards
+          const classesGrid = document.getElementById('classes-grid');
+          if (classStats && classStats.length > 0) {
+            const studentsLabel = window.I18n ? I18n.t('table.students_count') : 'Students';
+            const yearLabel = window.I18n ? I18n.t('table.year_prefix') : 'Year';
+            classesGrid.innerHTML = classStats.map(c => `
+              <div style="border:1px solid var(--border-color); border-radius:var(--radius); padding:1rem; background:var(--bg-light);">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem;">
+                  <strong style="font-size:1.1rem; color:var(--primary);">${c.class_code}</strong>
+                  <span class="badge badge-success">${c.student_count} <span data-i18n="table.students_count">${studentsLabel}</span></span>
+                </div>
+                <div style="font-size:0.875rem; color:var(--text-dark);">${c.class_name}</div>
+                <div style="font-size:0.75rem; color:var(--text-muted); margin-top:0.25rem;"><span data-i18n="table.year_prefix">${yearLabel}</span>: ${c.academic_year}</div>
+              </div>
+            `).join('');
+          } else {
+            classesGrid.innerHTML = '<div class="text-center" style="padding:1rem;" data-i18n="msg.no_classes">' + (window.I18n ? I18n.t('msg.no_classes') : 'No classes found.') + '</div>';
+          }
+
+          if (window.I18n) {
+            window.I18n.autoTranslate(document.getElementById('main-content'));
+          }
+        }
+      } catch (err) {
+        console.error('Error loading dashboard stats:', err);
+        showToast('Failed to load dashboard statistics.', 'error');
+      }
+    }
+  </script>
+</body>
+</html>

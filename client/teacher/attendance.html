@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#1e40af" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="DUC Classroom" />
+  <meta name="format-detection" content="telephone=no" />
+  <link rel="apple-touch-icon" href="/assets/duc-logo.png" />
+  <script>
+    (function(){try{var t=localStorage.getItem('duc_theme')||(window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',t);var l=localStorage.getItem('duc_lang')||'km';document.documentElement.lang=l;}catch(e){}})();
+  </script>
+  <title>Take Attendance — DUC Teacher Portal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@300;400;500;600;700;800&family=Kantumruy+Pro:wght@400;500;600;700&family=Battambang:wght@400;700;900&family=Moul&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/style.css?v=2.3" />
+  <link rel="stylesheet" href="/css/dashboard.css?v=2.3" />
+  <script src="/js/icons.js"></script>
+  <script src="/js/i18n.js"></script>
+  <script src="/js/theme.js"></script>
+</head>
+<body>
+<div class="dashboard-layout">
+  <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+    <!-- ══ Sidebar ═══════════════════════════════════════════════════════════ -->
+  <aside class="sidebar role-teacher" id="sidebar">
+    <div class="sidebar-brand">
+      <div class="sidebar-brand-icon"><img src="/assets/duc-logo.png" alt="DUC Logo"></div>
+      <div class="sidebar-brand-text">
+        <div class="sidebar-brand-name">DUC Classroom</div>
+        <div class="sidebar-brand-sub" data-i18n="teacher.panel">ផ្ទាំងសាស្ត្រាចារ្យ</div>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <div class="sidebar-section-label" data-i18n="nav.main">ទំព័រចម្បង</div>
+      <ul>
+        <li class="nav-item">
+          <a href="/teacher/dashboard.html" class="nav-link">
+            <span class="nav-icon"><svg class="app-svg-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg></span>
+            <span class="nav-label" data-i18n="nav.dashboard">ផ្ទាំងព័ត៌មាន</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="/teacher/schedule.html" class="nav-link">
+            <span class="nav-icon"><svg class="app-svg-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><circle cx="12" cy="15" r="2"/></svg></span>
+            <span class="nav-label" data-i18n="nav.schedules">កាលវិភាគបង្រៀន</span>
+          </a>
+        </li>
+      </ul>
+      <div class="sidebar-section-label" data-i18n="nav.teaching">ការបង្រៀន</div>
+      <ul>
+        <li class="nav-item">
+          <a href="/teacher/attendance.html" class="nav-link active">
+            <span class="nav-icon"><svg class="app-svg-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><polyline points="9 14 11 16 15 11"/></svg></span>
+            <span class="nav-label" data-i18n="nav.attendance">កត់ត្រាវត្តមាន</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="/teacher/assignments.html" class="nav-link">
+            <span class="nav-icon"><svg class="app-svg-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg></span>
+            <span class="nav-label" data-i18n="nav.assignments">កិច្ចការ & លំហាត់</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="/teacher/resources.html" class="nav-link">
+            <span class="nav-icon"><svg class="app-svg-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/><line x1="12" y1="11" x2="12" y2="17"/><polyline points="9 14 12 17 15 14"/></svg></span>
+            <span class="nav-label" data-i18n="nav.resources">ឯកសារមេរៀន</span>
+          </a>
+        </li>
+      </ul>
+      <div class="sidebar-section-label" data-i18n="nav.system">ប្រព័ន្ធ</div>
+      <ul>
+        <li class="nav-item">
+          <a href="/login.html" class="nav-link" onclick="logout(); return false;">
+            <span class="nav-icon"><svg class="app-svg-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></span>
+            <span class="nav-label" data-i18n="nav.signout">ចាកចេញពីប្រព័ន្ធ</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="sidebar-controls" id="sidebar-controls">
+      <div class="app-controls-cluster" id="app-controls-cluster">
+        <button type="button" class="btn-lang-toggle" id="app-lang-toggle" aria-label="Switch Language" title="Switch Language">
+          <span class="lang-toggle-flag">🇰🇭</span>
+          <span class="lang-toggle-label">ខ្មែរ</span>
+        </button>
+        <button type="button" class="btn-theme-toggle" id="app-theme-toggle" aria-label="Switch Theme" title="Switch Theme">
+          <span class="theme-toggle-icon">🌙</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="sidebar-footer">
+      <div class="sidebar-user">
+        <div class="sidebar-avatar" id="sidebar-avatar" style="background:#047857;">T</div>
+        <div class="sidebar-user-info">
+          <div class="sidebar-user-name" id="sidebar-username">សាស្ត្រាចារ្យ</div>
+          <div class="sidebar-user-role" data-i18n="role.teacher">Teacher</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ══ Main Content ═══════════════════════════════════════════════════════ -->
+  <div class="main-content" id="main-content">
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="sidebar-toggle" id="sidebar-toggle">☰</button>
+        <span class="topbar-title" data-i18n="page.attendance_sheet">Student Attendance Sheet</span>
+      </div>
+      <div class="topbar-right">
+        <div class="topbar-user">
+          <div class="topbar-avatar" id="topbar-avatar" style="background: linear-gradient(135deg, #047857, #10b981);">T</div>
+          <div class="topbar-user-info hide-mobile">
+            <div class="topbar-user-name" id="topbar-username">Teacher</div>
+            <div class="topbar-user-role" data-i18n="role.teacher">Teacher</div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="page-content fade-in">
+      <div class="page-header" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; margin-bottom:1.5rem;">
+        <div>
+          <h1 class="page-title" style="font-size:1.75rem; font-weight:700;" data-i18n="page.record_attendance">Record Daily Attendance</h1>
+          <p class="page-subtitle" style="color:var(--text-muted); margin-top:0.25rem;" data-i18n="sub.attendance">
+            Select class and subject to load the roster, mark statuses, and save in one click
+          </p>
+        </div>
+        <div id="attendance-summary-badge" style="display:none;">
+          <span class="badge badge-success" id="rate-badge" style="font-size:0.95rem; padding:0.5rem 1rem;">100% Present</span>
+        </div>
+      </div>
+
+      <!-- Controls & Roster Selector -->
+      <div class="card" style="margin-bottom:1.5rem;">
+        <div class="card-body" style="padding:1.25rem;">
+          <form id="filter-form" onsubmit="loadAttendanceSheet(event)" style="display:flex; gap:1rem; flex-wrap:wrap; align-items:flex-end;">
+            <div style="flex:1; min-width:180px;">
+              <label class="form-label" for="select-class" data-i18n="table.class">Class <span class="required">*</span></label>
+              <select id="select-class" class="form-control" required>
+                <option value="" data-i18n="filter.select_class">-- Select Class --</option>
+              </select>
+            </div>
+            <div style="flex:1; min-width:200px;">
+              <label class="form-label" for="select-subject" data-i18n="table.subject">Subject <span class="required">*</span></label>
+              <select id="select-subject" class="form-control" required>
+                <option value="" data-i18n="filter.select_subject">-- Select Subject --</option>
+              </select>
+            </div>
+            <div style="flex:1; min-width:160px;">
+              <label class="form-label" for="select-date" data-i18n="table.date">Date <span class="required">*</span></label>
+              <input type="date" id="select-date" class="form-control" required />
+            </div>
+            <div>
+              <button type="submit" class="btn btn-primary" id="btn-load-sheet" data-i18n="action.load_roster">
+                📋 Load Roster
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Attendance Table & Sheet -->
+      <div class="card" id="sheet-card" style="display:none;">
+        <div class="card-header" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;">
+          <div>
+            <h3 style="font-size:1.1rem; font-weight:600; margin:0;" id="sheet-header-title" data-i18n="widget.class_roster">Class Roster</h3>
+            <small style="color:var(--text-muted);" id="sheet-header-subtitle"></small>
+          </div>
+          <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
+            <button type="button" class="btn btn-sm btn-secondary" onclick="markAll('present')" data-i18n="action.mark_all_present">✅ Mark All Present</button>
+            <button type="button" class="btn btn-sm btn-outline" onclick="markAll('absent')" data-i18n="action.mark_all_absent">❌ Mark All Absent</button>
+            <button type="button" class="btn btn-sm btn-primary" onclick="saveAttendanceBatch()" id="btn-save-batch" data-i18n="action.save_attendance">💾 Save Attendance</button>
+          </div>
+        </div>
+        <div class="card-body" style="padding:0;">
+          <div class="table-responsive">
+            <table class="table" style="margin:0;">
+              <thead>
+                <tr>
+                  <th style="width:140px;" data-i18n="table.student_id">Student ID</th>
+                  <th data-i18n="table.name">Full Name</th>
+                  <th style="width:340px;" data-i18n="table.status">Status</th>
+                  <th data-i18n="table.remark">Remark / Note</th>
+                </tr>
+              </thead>
+              <tbody id="attendance-tbody">
+                <tr><td colspan="4" class="text-center" style="padding:2rem;" data-i18n="msg.select_class_subject">Please select class and subject above.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="card-footer" style="display:flex; justify-content:flex-end; padding:1rem;">
+          <button type="button" class="btn btn-primary btn-lg" onclick="saveAttendanceBatch()" id="btn-save-batch-bottom" data-i18n="btn.save_attendance_records">
+            💾 Save Attendance Records
+          </button>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<div id="toast-container"></div>
+<script src="/js/api.js"></script>
+<script src="/js/auth.js"></script>
+<script src="/js/dashboard.js"></script>
+<script src="/js/admin.js"></script>
+<script>
+  var currentStudents = [];
+  var existingRecords = {};
+
+  document.addEventListener('DOMContentLoaded', async () => {
+    initDashboard('teacher');
+
+    // Default date to today
+    document.getElementById('select-date').value = new Date().toISOString().substring(0, 10);
+
+    // Load dropdown options
+    await Promise.all([
+      loadClassDropdowns(['select-class']),
+      loadSubjectDropdowns(['select-subject'])
+    ]);
+  });
+
+  async function loadAttendanceSheet(e) {
+    if (e) e.preventDefault();
+    const classId = document.getElementById('select-class').value;
+    const subjectId = document.getElementById('select-subject').value;
+    const date = document.getElementById('select-date').value;
+
+    if (!classId || !subjectId || !date) {
+      showToast('Please select class, subject, and date.', 'warning');
+      return;
+    }
+
+    const btn = document.getElementById('btn-load-sheet');
+    btn.disabled = true;
+    btn.textContent = window.I18n ? window.I18n.t('msg.loading') : 'Loading...';
+
+    try {
+      // 1. Get students enrolled in this class
+      const studentsRes = await api.get(`/students?class_id=${classId}`);
+      // 2. Get existing attendance for this class, subject, and date if any
+      const attendanceRes = await api.get(`/attendance?class_id=${classId}&subject_id=${subjectId}&attendance_date=${date}`);
+
+      currentStudents = studentsRes.data || [];
+      existingRecords = {};
+
+      if (attendanceRes.success && attendanceRes.data) {
+        attendanceRes.data.forEach(r => {
+          existingRecords[r.student_id] = r;
+        });
+      }
+
+      renderSheet(date);
+      document.getElementById('sheet-card').style.display = 'block';
+
+      // Update badge
+      updateSummaryBadge();
+
+    } catch (err) {
+      console.error(err);
+      showToast('Failed to load attendance sheet: ' + err.message, 'error');
+    } finally {
+      btn.disabled = false;
+      btn.textContent = window.I18n ? window.I18n.t('action.load_roster') : '📋 Load Roster';
+      btn.setAttribute('data-i18n', 'action.load_roster');
+    }
+  }
+
+  function renderSheet(date) {
+    const tbody = document.getElementById('attendance-tbody');
+    const classSelect = document.getElementById('select-class');
+    const className = classSelect.options[classSelect.selectedIndex].text;
+    const subjectSelect = document.getElementById('select-subject');
+    const subjectName = subjectSelect.options[subjectSelect.selectedIndex].text;
+
+    document.getElementById('sheet-header-title').textContent = `${className} — ${subjectName}`;
+    document.getElementById('sheet-header-title').removeAttribute('data-i18n');
+    document.getElementById('sheet-header-subtitle').textContent = `Attendance date: ${formatDate(date)} · Enrolled: ${currentStudents.length} students`;
+
+    if (currentStudents.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="4" class="text-center" style="padding:2rem;" data-i18n="msg.no_enrolled_students">No students enrolled in this class.</td></tr>';
+      if (window.I18n) window.I18n.autoTranslate(tbody);
+      return;
+    }
+
+    const remarkPlaceholder = window.I18n ? window.I18n.t('placeholder.remark') : 'Optional remark (e.g. sick note)';
+
+    tbody.innerHTML = currentStudents.map(s => {
+      const existing = existingRecords[s.id];
+      const status = existing ? existing.status : 'present';
+      const remark = existing && existing.remark ? existing.remark : '';
+
+      return `
+        <tr data-student-id="${s.id}">
+          <td><strong style="color:var(--primary);">${s.student_id}</strong></td>
+          <td>
+            <div style="font-weight:600;">${s.full_name}</div>
+            ${s.full_name_kh ? `<div style="font-family:var(--font-battambang); font-size:0.88rem; color:#1e40af; font-weight:700; margin-top:2px;">${s.full_name_kh}</div>` : ''}
+          </td>
+          <td>
+            <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
+              <label style="display:inline-flex; align-items:center; gap:0.25rem; cursor:pointer; font-size:0.875rem;">
+                <input type="radio" name="status_${s.id}" value="present" ${status === 'present' ? 'checked' : ''} onchange="updateSummaryBadge()" />
+                <span style="color:#059669; font-weight:600;" data-i18n="status.present">Present</span>
+              </label>
+              <label style="display:inline-flex; align-items:center; gap:0.25rem; cursor:pointer; font-size:0.875rem;">
+                <input type="radio" name="status_${s.id}" value="late" ${status === 'late' ? 'checked' : ''} onchange="updateSummaryBadge()" />
+                <span style="color:#d97706; font-weight:600;" data-i18n="status.late">Late</span>
+              </label>
+              <label style="display:inline-flex; align-items:center; gap:0.25rem; cursor:pointer; font-size:0.875rem;">
+                <input type="radio" name="status_${s.id}" value="absent" ${status === 'absent' ? 'checked' : ''} onchange="updateSummaryBadge()" />
+                <span style="color:#dc2626; font-weight:600;" data-i18n="status.absent">Absent</span>
+              </label>
+              <label style="display:inline-flex; align-items:center; gap:0.25rem; cursor:pointer; font-size:0.875rem;">
+                <input type="radio" name="status_${s.id}" value="permission" ${status === 'permission' ? 'checked' : ''} onchange="updateSummaryBadge()" />
+                <span style="color:#7c3aed; font-weight:600;" data-i18n="status.permission">Permission</span>
+              </label>
+            </div>
+          </td>
+          <td>
+            <input type="text" class="form-control form-control-sm" name="remark_${s.id}" value="${remark}" placeholder="${remarkPlaceholder}" data-i18n-placeholder="placeholder.remark" />
+          </td>
+        </tr>
+      `;
+    }).join('');
+
+    if (window.I18n) window.I18n.autoTranslate(tbody);
+  }
+
+  function markAll(status) {
+    currentStudents.forEach(s => {
+      const radio = document.querySelector(`input[name="status_${s.id}"][value="${status}"]`);
+      if (radio) radio.checked = true;
+    });
+    updateSummaryBadge();
+  }
+
+  function updateSummaryBadge() {
+    let presentCount = 0;
+    currentStudents.forEach(s => {
+      const radio = document.querySelector(`input[name="status_${s.id}"]:checked`);
+      if (radio && (radio.value === 'present' || radio.value === 'late')) {
+        presentCount++;
+      }
+    });
+
+    const total = currentStudents.length;
+    if (total > 0) {
+      const pct = Math.round((presentCount / total) * 100);
+      const badge = document.getElementById('rate-badge');
+      badge.textContent = `${pct}% Present (${presentCount}/${total})`;
+      badge.className = `badge ${pct >= 80 ? 'badge-success' : pct >= 60 ? 'badge-amber' : 'badge-danger'}`;
+      document.getElementById('attendance-summary-badge').style.display = 'block';
+    }
+  }
+
+  async function saveAttendanceBatch() {
+    const classId = document.getElementById('select-class').value;
+    const subjectId = document.getElementById('select-subject').value;
+    const date = document.getElementById('select-date').value;
+
+    if (!classId || !subjectId || !date || currentStudents.length === 0) {
+      showToast('No active attendance sheet to save.', 'warning');
+      return;
+    }
+
+    const records = [];
+    currentStudents.forEach(s => {
+      const radio = document.querySelector(`input[name="status_${s.id}"]:checked`);
+      const remarkInput = document.querySelector(`input[name="remark_${s.id}"]`);
+      records.push({
+        student_id: s.id,
+        status: radio ? radio.value : 'present',
+        remark: remarkInput ? remarkInput.value.trim() : null
+      });
+    });
+
+    const btn1 = document.getElementById('btn-save-batch');
+    const btn2 = document.getElementById('btn-save-batch-bottom');
+    [btn1, btn2].forEach(b => { if (b) { b.disabled = true; b.textContent = 'Saving...'; } });
+
+    try {
+      const res = await api.post('/attendance/batch', {
+        class_id: classId,
+        subject_id: subjectId,
+        attendance_date: date,
+        records
+      });
+
+      if (res.success) {
+        showToast(res.message || 'Attendance saved successfully!', 'success');
+      }
+    } catch (err) {
+      console.error(err);
+      showToast(err.message || 'Error saving attendance.', 'error');
+    } finally {
+      [btn1, btn2].forEach(b => {
+        if (b) {
+          b.disabled = false;
+          b.textContent = b.id === 'btn-save-batch' ? '💾 Save Attendance' : '💾 Save Attendance Records';
+        }
+      });
+    }
+  }
+</script>
+</body>
+</html>

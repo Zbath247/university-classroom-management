@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#1e40af" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="DUC Classroom" />
+  <meta name="format-detection" content="telephone=no" />
+  <link rel="apple-touch-icon" href="/assets/duc-logo.png" />
+  <title>User Login — University Classroom Management System | DUC</title>
+  <meta name="description" content="Official User Login for University Classroom Management System — Digital University of Cambodia, G1-NW-B" />
+  <link rel="icon" type="image/png" href="/assets/duc-logo.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@300;400;500;600;700;800&family=Moul&family=Noto+Serif+Khmer:wght@600;700;800;900&family=Battambang:wght@400;700;900&family=Kantumruy+Pro:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/style.css" />
+
+  <style>
+    /* ══════════════════════════════════════════════════════════════════════════
+       DARK GLASSMORPHIC LOGIN CANVAS (MIDNIGHT OBSIDIAN & TRANSLUCENT GLASS)
+       ══════════════════════════════════════════════════════════════════════════ */
+    :root, [data-theme="dark"], [data-theme="light"] {
+      --bg-midnight-1: #030712;
+      --bg-midnight-2: #091326;
+      --bg-midnight-3: #0f1f3d;
+      --accent-orange: #ff7a00;
+      --accent-orange-hover: #ea6b00;
+      --accent-orange-glow: rgba(255, 122, 0, 0.45);
+      --font-inter: 'Inter', system-ui, -apple-system, sans-serif;
+      --font-heading: 'Plus Jakarta Sans', 'Inter', system-ui, sans-serif;
+      --font-moul: 'Plus Jakarta Sans', 'Inter', 'Khmer OS Moul Light', 'Moul', 'Noto Serif Khmer', serif;
+      --font-khmer: 'Kantumruy Pro', 'Battambang', 'Inter', system-ui, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      background: radial-gradient(circle at 50% 15%, var(--bg-midnight-3) 0%, var(--bg-midnight-2) 50%, var(--bg-midnight-1) 100%);
+      font-family: var(--font-khmer);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1.25rem;
+      color: #f1f5f9;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Ambient Lighting / Glow Spheres */
+    body::before {
+      content: '';
+      position: fixed;
+      width: 650px;
+      height: 650px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 122, 0, 0.09) 0%, rgba(30, 58, 138, 0.12) 45%, transparent 75%);
+      top: -10%;
+      left: 50%;
+      transform: translateX(-50%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      width: 450px;
+      height: 450px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(59, 130, 246, 0.08) 0%, transparent 70%);
+      bottom: -10%;
+      right: 15%;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ─── University Header Top Banner ──────────────────────────────────────── */
+    .univ-top-banner {
+      position: relative;
+      z-index: 1;
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 2rem;
+      background: rgba(15, 27, 49, 0.7);
+      padding: 10px 24px 10px 18px;
+      border-radius: 50px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: 
+        0 14px 36px rgba(0, 0, 0, 0.45),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+      width: fit-content;
+      max-width: 92vw;
+      text-decoration: none;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      transition: transform 0.25s ease, border-color 0.25s ease;
+    }
+
+    .univ-top-banner:hover {
+      transform: translateY(-2px);
+      border-color: rgba(255, 255, 255, 0.25);
+    }
+
+    .univ-banner-logo {
+      width: 42px;
+      height: 42px;
+      object-fit: contain;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.5));
+      flex-shrink: 0;
+    }
+
+    .univ-banner-text {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .univ-banner-title {
+      font-family: var(--font-moul);
+      font-size: 1.05rem;
+      font-weight: normal;
+      color: #ffffff;
+      white-space: nowrap;
+      line-height: 1.45;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .univ-banner-sub {
+      font-family: var(--font-heading);
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #94a3b8;
+      letter-spacing: 0.5px;
+      white-space: nowrap;
+      margin-top: 1px;
+    }
+
+    /* ══════════════════════════════════════════════════════════════════════════
+       DARK GLASSMORPHIC LOGIN CARD
+       ══════════════════════════════════════════════════════════════════════════ */
+    .login-card {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 440px;
+      background: rgba(13, 23, 42, 0.72);
+      backdrop-filter: blur(28px) saturate(190%);
+      -webkit-backdrop-filter: blur(28px) saturate(190%);
+      border-radius: 32px;
+      padding: 3rem 2.5rem 2.75rem;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: 
+        0 30px 70px rgba(0, 0, 0, 0.65),
+        inset 0 1px 0 rgba(255, 255, 255, 0.18),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.4);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* Top Circular User Avatar */
+    .avatar-circle-wrap {
+      width: 96px;
+      height: 96px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      box-shadow: 
+        0 12px 28px rgba(0, 0, 0, 0.45),
+        inset 0 2px 4px rgba(255, 255, 255, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: -0.5rem;
+      margin-bottom: 1.35rem;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+    }
+
+    .avatar-circle-wrap:hover {
+      transform: translateY(-3px) scale(1.03);
+      border-color: rgba(255, 122, 0, 0.55);
+      box-shadow: 
+        0 16px 36px rgba(0, 0, 0, 0.55),
+        0 0 24px rgba(255, 122, 0, 0.35),
+        inset 0 2px 4px rgba(255, 255, 255, 0.3);
+    }
+
+    .avatar-icon-orange {
+      width: 48px;
+      height: 48px;
+      fill: var(--accent-orange);
+      filter: drop-shadow(0 0 12px rgba(255, 122, 0, 0.55));
+      transition: transform 0.2s ease;
+    }
+
+    .avatar-circle-wrap:hover .avatar-icon-orange {
+      transform: scale(1.05);
+    }
+
+    /* Headline & Subtitle */
+    .login-headline {
+      font-family: var(--font-heading);
+      font-size: 1.45rem;
+      font-weight: 800;
+      color: #ffffff;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      text-align: center;
+      margin-bottom: 0.35rem;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+    }
+
+    .login-subheadline {
+      font-size: 0.84rem;
+      color: #94a3b8;
+      text-align: center;
+      margin-bottom: 1.75rem;
+      font-weight: 400;
+      letter-spacing: 0.2px;
+    }
+
+    /* Alert / Error Display */
+    #login-error {
+      width: 100%;
+      padding: 11px 16px;
+      border-radius: 14px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: #fca5a5;
+      background: rgba(239, 68, 68, 0.16);
+      border: 1px solid rgba(239, 68, 68, 0.35);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+      margin-bottom: 1.25rem;
+      text-align: center;
+      display: none;
+    }
+
+    #login-error:not(.hidden) {
+      display: block;
+      animation: fadeIn 0.3s ease;
+    }
+
+    /* ══════════════════════════════════════════════════════════════════════════
+       FORM & SLEEK EMBEDDED INPUTS
+       ══════════════════════════════════════════════════════════════════════════ */
+    .login-form-body {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 1.15rem;
+    }
+
+    /* All-in-one Embedded Pill Input Field */
+    .input-pill-box {
+      width: 100%;
+      position: relative;
+      display: flex;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 16px;
+      padding: 2px 14px;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .input-pill-box:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.22);
+    }
+
+    .input-pill-box:focus-within {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: var(--accent-orange);
+      box-shadow: 
+        0 0 0 3px rgba(255, 122, 0, 0.22),
+        0 8px 24px rgba(0, 0, 0, 0.35);
+    }
+
+    /* Embedded Leading Icon */
+    .input-embedded-icon {
+      width: 22px;
+      height: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-right: 12px;
+      color: #94a3b8;
+      transition: all 0.2s ease;
+    }
+
+    .input-embedded-icon svg {
+      width: 20px;
+      height: 20px;
+      fill: currentColor;
+      transition: all 0.2s ease;
+    }
+
+    .input-pill-box:focus-within .input-embedded-icon {
+      color: var(--accent-orange);
+      filter: drop-shadow(0 0 8px rgba(255, 122, 0, 0.55));
+    }
+
+    .pill-input {
+      flex: 1;
+      height: 48px;
+      border: none;
+      outline: none;
+      background: transparent;
+      font-size: 0.95rem;
+      font-family: inherit;
+      color: #ffffff;
+      font-weight: 500;
+    }
+
+    .pill-input::placeholder {
+      color: #64748b;
+      font-weight: 400;
+    }
+
+    /* Password Toggle Button */
+    .pill-pwd-toggle {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: #94a3b8;
+      font-size: 1rem;
+      padding: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+      border-radius: 8px;
+    }
+
+    .pill-pwd-toggle:hover {
+      color: var(--accent-orange);
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    /* ══════════════════════════════════════════════════════════════════════════
+       OPTIONS: REMEMBER ME & FORGOT PASSWORD
+       ══════════════════════════════════════════════════════════════════════════ */
+    .options-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      padding: 0 4px;
+      margin-top: 0.25rem;
+      font-size: 0.85rem;
+    }
+
+    .remember-label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      color: #cbd5e1;
+      user-select: none;
+      font-weight: 500;
+    }
+
+    /* Custom Checkbox */
+    .remember-label input[type="checkbox"] {
+      appearance: none;
+      width: 18px;
+      height: 18px;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      transition: all 0.2s ease;
+    }
+
+    .remember-label input[type="checkbox"]:checked {
+      background: var(--accent-orange);
+      border-color: var(--accent-orange);
+      box-shadow: 0 0 10px rgba(255, 122, 0, 0.5);
+    }
+
+    .remember-label input[type="checkbox"]:checked::after {
+      content: '✓';
+      color: #ffffff;
+      font-size: 0.72rem;
+      font-weight: 800;
+      position: absolute;
+    }
+
+    .forgot-link {
+      color: #ff9d42;
+      text-decoration: none;
+      font-style: normal;
+      font-weight: 500;
+      transition: all 0.2s ease;
+    }
+
+    .forgot-link:hover {
+      color: #ffbe76;
+      text-decoration: underline;
+    }
+
+    /* ══════════════════════════════════════════════════════════════════════════
+       PRIMARY CTA LOGIN BUTTON
+       ══════════════════════════════════════════════════════════════════════════ */
+    .btn-submit-neu {
+      width: 100%;
+      height: 52px;
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      outline: none;
+      background: linear-gradient(135deg, #ff8c00 0%, #ff5500 100%);
+      color: #ffffff;
+      font-family: var(--font-heading);
+      font-size: 1.05rem;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      cursor: pointer;
+      box-shadow: 
+        0 6px 24px rgba(255, 102, 0, 0.45),
+        inset 0 1px 0 rgba(255, 255, 255, 0.35);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      margin-top: 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .btn-submit-neu:hover {
+      transform: translateY(-2px);
+      box-shadow: 
+        0 10px 32px rgba(255, 102, 0, 0.65),
+        inset 0 1px 0 rgba(255, 255, 255, 0.45);
+      filter: brightness(1.08);
+    }
+
+    .btn-submit-neu:active {
+      transform: translateY(1px);
+      box-shadow: 0 3px 12px rgba(255, 102, 0, 0.4);
+    }
+
+    .btn-submit-neu:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* Responsive */
+    @media (max-width: 480px) {
+      .univ-top-banner {
+        padding: 8px 16px 8px 12px;
+        gap: 10px;
+        margin-bottom: 1.5rem;
+      }
+
+      .univ-banner-logo {
+        width: 34px;
+        height: 34px;
+      }
+
+      .univ-banner-title {
+        font-size: 0.85rem;
+      }
+
+      .univ-banner-sub {
+        font-size: 0.7rem;
+      }
+
+      .login-card {
+        padding: 2.25rem 1.5rem 2rem;
+        border-radius: 28px;
+      }
+
+      .options-row {
+        font-size: 0.78rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ══════════════════════════════════════════════════════════════════════════
+       TOP UNIVERSITY BANNER
+       ══════════════════════════════════════════════════════════════════════════ -->
+  <div class="univ-top-banner">
+    <img src="/assets/duc-logo.png" alt="Digital University of Cambodia" class="univ-banner-logo" />
+    <div class="univ-banner-text" lang="km">
+      <div class="univ-banner-title">សាកលវិទ្យាល័យ ឌីជីថល កម្ពុជា</div>
+      <div class="univ-banner-sub">Digital University of Cambodia</div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════════════════════
+       DARK GLASSMORPHIC LOGIN CARD
+       ══════════════════════════════════════════════════════════════════════════ -->
+  <div class="login-card">
+
+    <!-- Top Circular Avatar (Orange User Silhouette / Logo) -->
+    <div class="avatar-circle-wrap" title="Digital University of Cambodia User Portal" onclick="toggleAvatarLogo()">
+      <svg class="avatar-icon-orange" id="avatar-svg" viewBox="0 0 24 24">
+        <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/>
+      </svg>
+      <!-- Optional DUC logo overlay switchable on click -->
+      <img src="/assets/duc-logo.png" alt="DUC Logo" id="avatar-logo-img" style="display:none; width:58px; height:58px; object-fit:contain;" />
+    </div>
+
+    <!-- Title & Subtitle -->
+    <h1 class="login-headline" id="login-title">USER LOGIN</h1>
+    <div class="login-subheadline" id="login-subtitle">Sign in to your university portal</div>
+
+    <!-- Error Alert Display -->
+    <div id="login-error" class="hidden"></div>
+
+    <!-- Login Form -->
+    <form id="login-form" class="login-form-body" novalidate>
+
+      <!-- Row 1: Username with Embedded Icon inside Pill -->
+      <div class="input-pill-box">
+        <div class="input-embedded-icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+          </svg>
+        </div>
+        <input
+          type="text"
+          id="username"
+          name="username"
+          class="pill-input"
+          placeholder="Username, ID, or Full Name"
+          autocomplete="username"
+          required
+        />
+      </div>
+
+      <!-- Row 2: Password with Embedded Lock Icon inside Pill -->
+      <div class="input-pill-box">
+        <div class="input-embedded-icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/>
+          </svg>
+        </div>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          class="pill-input"
+          placeholder="Password"
+          autocomplete="current-password"
+          required
+        />
+        <button type="button" class="pill-pwd-toggle" id="pwd-toggle" onclick="togglePassword()" title="Toggle password visibility">
+          <svg id="pwd-eye-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+        </button>
+      </div>
+
+      <!-- Row 3: Remember me & Forgot Password -->
+      <div class="options-row">
+        <label class="remember-label">
+          <input type="checkbox" id="remember-me" checked />
+          <span id="lbl-remember">Remember me</span>
+        </label>
+        <a href="javascript:void(0)" class="forgot-link" id="lnk-forgot" onclick="handleForgotPassword()">
+          Forgot Password?
+        </a>
+      </div>
+
+      <!-- Row 4: Submit Button -->
+      <button type="submit" id="btn-login" class="btn-submit-neu">
+        <span id="btn-login-text">LOGIN</span>
+      </button>
+
+    </form>
+
+  </div>
+
+  <!-- Toast Container -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- Dependencies -->
+  <script src="/js/api.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/icons.js"></script>
+
+  <script>
+    // Toggle Password Visibility
+    function togglePassword() {
+      const passInput = document.getElementById('password');
+      const toggleBtn = document.getElementById('pwd-toggle');
+      if (passInput.type === 'password') {
+        passInput.type = 'text';
+        toggleBtn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>';
+      } else {
+        passInput.type = 'password';
+        toggleBtn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>';
+      }
+    }
+
+    // Toggle Avatar between Orange Silhouette and DUC Logo
+    function toggleAvatarLogo() {
+      const svg = document.getElementById('avatar-svg');
+      const img = document.getElementById('avatar-logo-img');
+      if (svg.style.display !== 'none') {
+        svg.style.display = 'none';
+        img.style.display = 'block';
+      } else {
+        svg.style.display = 'block';
+        img.style.display = 'none';
+      }
+    }
+
+    // Forgot Password Alert
+    function handleForgotPassword() {
+      const isKm = (localStorage.getItem('duc_lang') || 'km') === 'km';
+      const msg = isKm
+        ? "ការស្នើសុំសង្គ្រោះពាក្យសម្ងាត់៖\nសូមទាក់ទងមកកាន់ការិយាល័យ IT សាកលវិទ្យាល័យ ឌីជីថល កម្ពុជា (បន្ទប់ ២០៤ ឬ អ៊ីមែល it-support@duc.edu.kh) ដោយភ្ជាប់មកជាមួយអត្តលេខនិស្សិត ឬ បុគ្គលិករបស់អ្នក។"
+        : "Institutional Password Recovery:\nPlease contact Digital University of Cambodia IT Administrator (Room 204 or email it-support@duc.edu.kh) with your student/staff ID.";
+      alert(msg);
+    }
+
+    // Initial load: focus username input
+    document.addEventListener('DOMContentLoaded', () => {
+      const userInput = document.getElementById('username');
+      if (userInput) userInput.focus();
+    });
+  </script>
+</body>
+</html>

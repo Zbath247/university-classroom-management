@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#1e40af" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="DUC Classroom" />
+  <meta name="format-detection" content="telephone=no" />
+  <link rel="apple-touch-icon" href="/assets/duc-logo.png" />
+  <script>
+    (function(){try{var t=localStorage.getItem('duc_theme')||(window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',t);var l=localStorage.getItem('duc_lang')||'km';document.documentElement.lang=l;}catch(e){}})();
+  </script>
+  <title>Study Materials & Resources — DUC Student Portal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@300;400;500;600;700;800&family=Kantumruy+Pro:wght@400;500;600;700&family=Battambang:wght@400;700;900&family=Moul&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/style.css?v=2.3" />
+  <link rel="stylesheet" href="/css/dashboard.css?v=2.3" />
+  <script src="/js/icons.js"></script>
+  <script src="/js/i18n.js"></script>
+  <script src="/js/theme.js"></script>
+</head>
+<body>
+<div class="dashboard-layout">
+  <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+    <!-- ══ Sidebar ═══════════════════════════════════════════════════════════ -->
+  <aside class="sidebar role-student" id="sidebar">
+    <div class="sidebar-brand">
+      <div class="sidebar-brand-icon"><img src="/assets/duc-logo.png" alt="DUC Logo"></div>
+      <div class="sidebar-brand-text">
+        <div class="sidebar-brand-name">DUC Classroom</div>
+        <div class="sidebar-brand-sub" data-i18n="student.portal">ផតថលនិស្សិត</div>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <div class="sidebar-section-label" data-i18n="nav.main">ទំព័រចម្បង</div>
+      <ul>
+        <li class="nav-item">
+          <a href="/student/dashboard.html" class="nav-link">
+            <span class="nav-icon"><svg class="app-svg-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg></span>
+            <span class="nav-label" data-i18n="nav.dashboard">ផ្ទាំងព័ត៌មាន</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="/student/profile.html" class="nav-link">
+            <span class="nav-icon"><svg class="app-svg-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>
+            <span class="nav-label" data-i18n="nav.profile">ព័ត៌មានផ្ទាល់ខ្លួន</span>
+          </a>
+        </li>
+      </ul>
+      <div class="sidebar-section-label" data-i18n="nav.academic">ការសិក្សា</div>
+      <ul>
+        <li class="nav-item">
+          <a href="/student/schedule.html" class="nav-link">
+            <span class="nav-icon"><svg class="app-svg-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><circle cx="12" cy="15" r="2"/></svg></span>
+            <span class="nav-label" data-i18n="nav.schedules">កាលវិភាគសិក្សា</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="/student/attendance.html" class="nav-link">
+            <span class="nav-icon"><svg class="app-svg-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><polyline points="9 14 11 16 15 11"/></svg></span>
+            <span class="nav-label" data-i18n="nav.attendance">វត្តមានរបស់ខ្ញុំ</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="/student/assignments.html" class="nav-link">
+            <span class="nav-icon"><svg class="app-svg-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg></span>
+            <span class="nav-label" data-i18n="nav.assignments">កិច្ចការ & លំហាត់</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="/student/resources.html" class="nav-link active">
+            <span class="nav-icon"><svg class="app-svg-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/><line x1="12" y1="11" x2="12" y2="17"/><polyline points="9 14 12 17 15 14"/></svg></span>
+            <span class="nav-label" data-i18n="nav.resources">ឯកសារមេរៀន</span>
+          </a>
+        </li>
+      </ul>
+      <div class="sidebar-section-label" data-i18n="nav.system">ប្រព័ន្ធ</div>
+      <ul>
+        <li class="nav-item">
+          <a href="/login.html" class="nav-link" onclick="logout(); return false;">
+            <span class="nav-icon"><svg class="app-svg-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></span>
+            <span class="nav-label" data-i18n="nav.signout">ចាកចេញពីប្រព័ន្ធ</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="sidebar-controls" id="sidebar-controls">
+      <div class="app-controls-cluster" id="app-controls-cluster">
+        <button type="button" class="btn-lang-toggle" id="app-lang-toggle" aria-label="Switch Language" title="Switch Language">
+          <span class="lang-toggle-flag">🇰🇭</span>
+          <span class="lang-toggle-label">ខ្មែរ</span>
+        </button>
+        <button type="button" class="btn-theme-toggle" id="app-theme-toggle" aria-label="Switch Theme" title="Switch Theme">
+          <span class="theme-toggle-icon">🌙</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="sidebar-footer">
+      <div class="sidebar-user">
+        <div class="sidebar-avatar" id="sidebar-avatar" style="background:#7f1d1d;">S</div>
+        <div class="sidebar-user-info">
+          <div class="sidebar-user-name" id="sidebar-username">និស្សិត</div>
+          <div class="sidebar-user-role" data-i18n="role.student">Student</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ══ Main Content ═══════════════════════════════════════════════════════ -->
+  <div class="main-content" id="main-content">
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="sidebar-toggle" id="sidebar-toggle">☰</button>
+        <span class="topbar-title" data-i18n="page.course_resources">Course Learning Resources</span>
+      </div>
+      <div class="topbar-right">
+        <div class="topbar-user">
+          <div class="topbar-avatar" id="topbar-avatar" style="background: linear-gradient(135deg, #991b1b, #ef4444);">S</div>
+          <div class="topbar-user-info hide-mobile">
+            <div class="topbar-user-name" id="topbar-username">Student</div>
+            <div class="topbar-user-role" data-i18n="role.student">Student</div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="page-content fade-in">
+      <div class="page-header" style="margin-bottom:1.5rem;">
+        <div>
+          <h1 class="page-title" style="font-size:1.75rem; font-weight:700;" data-i18n="page.learning_materials">Learning Materials & Resources</h1>
+          <p class="page-subtitle" style="color:var(--text-muted); margin-top:0.25rem;" data-i18n="sub.student_resources">
+            Access lecture slides, textbooks, code repositories, and references shared by your instructors
+          </p>
+        </div>
+      </div>
+
+      <!-- Filters & Search -->
+      <div class="card" style="margin-bottom:1.5rem;">
+        <div class="card-body" style="padding:1rem 1.25rem;">
+          <div style="display:flex; flex-wrap:wrap; gap:1rem; align-items:center;">
+            <div style="flex:1; min-width:240px;">
+              <input type="text" id="search-input" class="form-control" placeholder="🔍 Search materials by title or topic..." data-i18n="placeholder.search_resources" oninput="filterResources()" />
+            </div>
+            <div style="min-width:180px;">
+              <select id="type-filter" class="form-control" onchange="filterResources()">
+                <option value="" data-i18n="filter.all_resource_types">All Resource Types</option>
+                <option value="pdf" data-i18n="type.pdf">📕 PDF Documents</option>
+                <option value="ppt" data-i18n="type.ppt">📊 PowerPoint Slides</option>
+                <option value="document" data-i18n="type.documents">📄 Documents</option>
+                <option value="video" data-i18n="type.videos">🎥 Videos</option>
+                <option value="link" data-i18n="type.links">🔗 Web Links & Code</option>
+              </select>
+            </div>
+            <div style="min-width:180px;">
+              <select id="subject-filter" class="form-control" onchange="filterResources()">
+                <option value="" data-i18n="filter.all_subjects">All Subjects</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Resources Grid / List -->
+      <div id="resources-container">
+        <div class="card">
+          <div class="card-body text-center" style="padding:3rem;" data-i18n="msg.loading">
+            Loading learning resources...
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- ══ Modal: Document & Presentation Viewer ════════════════════════════════ -->
+<div class="modal-backdrop" id="doc-viewer-modal">
+  <div class="modal" style="width:92vw; max-width:1050px; height:88vh; display:flex; flex-direction:column; padding:0; overflow:hidden; border-radius:12px;">
+    <div class="modal-header" style="padding:1rem 1.25rem; border-bottom:1px solid var(--border-color); display:flex; justify-content:space-between; align-items:center; background:var(--bg-card);">
+      <div style="display:flex; align-items:center; gap:0.75rem; min-width:0;">
+        <span id="viewer-icon" style="font-size:1.6rem;">📄</span>
+        <div style="min-width:0;">
+          <h3 class="modal-title" id="viewer-title" style="font-size:1.15rem; margin:0; text-overflow:ellipsis; overflow:hidden; white-space:nowrap;">Document Viewer</h3>
+          <div id="viewer-subtitle" style="font-size:0.8rem; color:var(--text-muted); margin-top:2px;">—</div>
+        </div>
+      </div>
+      <div style="display:flex; align-items:center; gap:0.5rem;">
+        <a id="viewer-newtab-btn" href="#" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline" data-i18n="action.open_in_new_tab">↗ Open in New Tab</a>
+        <a id="viewer-download-btn" href="#" download class="btn btn-sm btn-primary" style="background:#7f1d1d; border-color:#7f1d1d;" data-i18n="action.download_file">📥 Download</a>
+        <button class="modal-close" onclick="closeModal('doc-viewer-modal')">×</button>
+      </div>
+    </div>
+
+    <!-- Viewer Body -->
+    <div id="viewer-body" style="flex:1; background:#0f172a; position:relative; overflow:auto; display:flex; align-items:center; justify-content:center;">
+      <!-- Dynamic viewer content loaded via JS -->
+    </div>
+  </div>
+</div>
+
+<!-- ══ Modal: Resource Details ═════════════════════════════════════════════ -->
+<div class="modal-backdrop" id="res-detail-modal">
+  <div class="modal" style="max-width:550px;">
+    <div class="modal-header">
+      <h3 class="modal-title" id="modal-res-title" data-i18n="modal.resource_details">Resource Details</h3>
+      <button class="modal-close" onclick="closeModal('res-detail-modal')">×</button>
+    </div>
+    <div class="modal-body" style="display:flex; flex-direction:column; gap:1rem;">
+      <div>
+        <small style="color:var(--text-muted); text-transform:uppercase; font-size:0.75rem;" data-i18n="table.subject">Subject</small>
+        <div style="font-weight:600;" id="modal-res-subject">—</div>
+      </div>
+      <div>
+        <small style="color:var(--text-muted); text-transform:uppercase; font-size:0.75rem;" data-i18n="table.instructor">Instructor</small>
+        <div style="font-weight:600;" id="modal-res-teacher">—</div>
+      </div>
+      <div>
+        <small style="color:var(--text-muted); text-transform:uppercase; font-size:0.75rem;" data-i18n="table.resource_type">Type</small>
+        <div id="modal-res-type">—</div>
+      </div>
+      <div>
+        <small style="color:var(--text-muted); text-transform:uppercase; font-size:0.75rem;" data-i18n="table.description_notes">Description</small>
+        <div style="background:var(--bg-light); border-radius:var(--radius); padding:1rem; margin-top:0.25rem; font-size:0.95rem; line-height:1.6;" id="modal-res-desc">
+          —
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer" style="display:flex; justify-content:space-between;">
+      <button type="button" class="btn btn-secondary" onclick="closeModal('res-detail-modal')" data-i18n="btn.close">Close</button>
+      <a id="modal-res-link" href="#" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="background:#7f1d1d; border-color:#7f1d1d;" data-i18n="action.open_resource">
+        Open Resource ↗
+      </a>
+    </div>
+  </div>
+</div>
+
+<div id="toast-container"></div>
+<script src="/js/api.js"></script>
+<script src="/js/auth.js"></script>
+<script src="/js/dashboard.js"></script>
+<script src="/js/admin.js"></script>
+<script>
+  var allResources = [];
+
+  document.addEventListener('DOMContentLoaded', async () => {
+    initDashboard('student');
+    await loadStudentResources();
+  });
+
+  async function loadStudentResources() {
+    const container = document.getElementById('resources-container');
+    try {
+      const res = await api.get('/student/resources');
+      if (res.success && res.data) {
+        allResources = res.data;
+        populateSubjectFilter(allResources);
+        renderResources(allResources);
+      }
+    } catch (err) {
+      console.error(err);
+      container.innerHTML = `
+        <div class="card">
+          <div class="card-body text-center" style="padding:2.5rem; color:var(--danger);" data-i18n="msg.error">
+            Failed to load resources. Please try again.
+          </div>
+        </div>
+      `;
+      if (window.I18n) window.I18n.autoTranslate(container);
+    }
+  }
+
+  function populateSubjectFilter(items) {
+    const filter = document.getElementById('subject-filter');
+    const subjects = {};
+    items.forEach(item => {
+      if (item.subject_id && item.subject_name) {
+        subjects[item.subject_id] = `${item.subject_code} - ${item.subject_name}`;
+      }
+    });
+    
+    let html = `<option value="" data-i18n="filter.all_subjects">${window.I18n ? window.I18n.t('filter.all_subjects') : 'All Subjects'}</option>`;
+    Object.keys(subjects).forEach(id => {
+      html += `<option value="${id}">${subjects[id]}</option>`;
+    });
+    filter.innerHTML = html;
+  }
+
+  function formatBytes(bytes) {
+    if (!bytes || bytes === 0) return '';
+    const k = 1024;
+    const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
+  }
+
+  function getTypeBadge(type) {
+    switch ((type || '').toLowerCase()) {
+      case 'pdf':
+        return '<span class="badge badge-danger" data-i18n="type.pdf">📕 PDF</span>';
+      case 'ppt':
+        return '<span class="badge badge-warning" data-i18n="type.ppt">📊 PPT</span>';
+      case 'document':
+        return '<span class="badge badge-primary" data-i18n="type.documents">📄 Document</span>';
+      case 'video':
+        return '<span class="badge badge-danger" data-i18n="type.videos">🎥 Video</span>';
+      case 'link':
+        return '<span class="badge badge-success" data-i18n="type.links">🔗 Link</span>';
+      default:
+        return `<span class="badge badge-secondary">${type || 'Resource'}</span>`;
+    }
+  }
+
+  function renderResources(items) {
+    const container = document.getElementById('resources-container');
+    if (!items || items.length === 0) {
+      container.innerHTML = `
+        <div class="card">
+          <div class="card-body text-center" style="padding:3rem; color:var(--text-muted);">
+            <div style="font-size:2.5rem; margin-bottom:0.75rem;">📂</div>
+            <h3 data-i18n="msg.no_resources">No learning resources found</h3>
+            <p style="margin-top:0.25rem;" data-i18n="msg.no_resources_sub">No materials have been shared matching your filter criteria.</p>
+          </div>
+        </div>
+      `;
+      if (window.I18n) window.I18n.autoTranslate(container);
+      return;
+    }
+
+    container.innerHTML = `
+      <div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap:1.25rem;">
+        ${items.map(r => {
+          const type = (r.resource_type || '').toLowerCase();
+          const ext = ((r.file_name || r.file_url || '').split('.').pop() || '').toLowerCase();
+          const isPdf = type === 'pdf' || ext === 'pdf';
+          const isPpt = type === 'ppt' || ext === 'ppt' || ext === 'pptx';
+          const isViewableDoc = isPdf || isPpt || (r.file_url && (r.file_url.startsWith('/uploads/') || ext === 'doc' || ext === 'docx'));
+
+          let actionBtnHtml = '';
+          if (isPdf) {
+            actionBtnHtml = `
+              <button class="btn btn-sm btn-primary" style="background:#dc2626; border-color:#dc2626;" onclick="openDocumentViewer(${r.id})">
+                📖 <span data-i18n="action.read_pdf">Read PDF</span>
+              </button>
+            `;
+          } else if (isPpt) {
+            actionBtnHtml = `
+              <button class="btn btn-sm btn-primary" style="background:#ea580c; border-color:#ea580c;" onclick="openDocumentViewer(${r.id})">
+                📊 <span data-i18n="action.view_ppt">View PPT</span>
+              </button>
+            `;
+          } else if (isViewableDoc) {
+            actionBtnHtml = `
+              <button class="btn btn-sm btn-primary" style="background:#7f1d1d; border-color:#7f1d1d;" onclick="openDocumentViewer(${r.id})">
+                👁️ <span data-i18n="action.preview">Preview</span>
+              </button>
+            `;
+          } else if (r.file_url) {
+            actionBtnHtml = `
+              <a href="${r.file_url}" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-primary" style="background:#7f1d1d; border-color:#7f1d1d;" data-i18n="action.open_resource">
+                Open Material ↗
+              </a>
+            `;
+          }
+
+          return `
+            <div class="card" style="display:flex; flex-direction:column; justify-content:space-between; height:100%; border-top: 3px solid ${isPdf ? '#dc2626' : (isPpt ? '#ea580c' : '#7f1d1d')};">
+              <div class="card-body" style="padding:1.25rem;">
+                <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:0.75rem;">
+                  ${getTypeBadge(r.resource_type)}
+                  <span style="font-size:0.75rem; color:var(--text-muted);">${r.created_at ? formatDate(r.created_at) : ''}</span>
+                </div>
+                
+                <h3 style="font-size:1.1rem; font-weight:700; margin-bottom:0.4rem; color:var(--text-dark); line-height:1.4;">
+                  ${r.title}
+                </h3>
+
+                ${r.file_name ? `
+                  <div style="font-size:0.78rem; color:var(--text-muted); margin-bottom:0.6rem; display:flex; align-items:center; gap:0.35rem;">
+                    <span>📎</span> <span style="font-weight:500;">${r.file_name}</span>
+                    ${r.file_size ? `<span>(${formatBytes(r.file_size)})</span>` : ''}
+                  </div>
+                ` : ''}
+
+                <div style="margin-bottom:0.75rem;">
+                  <span class="badge badge-primary" style="font-size:0.75rem;">${r.subject_code}</span>
+                  <span style="font-size:0.85rem; font-weight:500; color:var(--text-muted); margin-left:0.25rem;">${r.subject_name}</span>
+                </div>
+
+                <p style="font-size:0.875rem; color:var(--text-body); line-height:1.5; margin-bottom:1rem; display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden;">
+                  ${r.description || (window.I18n ? window.I18n.t('placeholder.optional') : 'No description provided.')}
+                </p>
+
+                <div style="font-size:0.8rem; color:var(--text-muted); display:flex; align-items:center; gap:0.4rem;">
+                  <span>👨‍🏫 <span data-i18n="table.instructor">By</span>:</span> <strong>${r.teacher_name}</strong>
+                </div>
+              </div>
+
+              <div class="card-footer" style="background:var(--bg-light); border-top:1px solid var(--border-color); padding:0.75rem 1.25rem; display:flex; justify-content:space-between; align-items:center;">
+                <button class="btn btn-sm btn-secondary" onclick="viewResourceDetail(${r.id})">
+                  ℹ️ <span data-i18n="action.view">Details</span>
+                </button>
+                <div style="display:flex; gap:0.4rem; align-items:center;">
+                  ${r.file_url ? `
+                    <a href="${r.file_url}" download="${r.file_name || r.title}" class="btn btn-sm btn-outline" title="Download File">
+                      📥
+                    </a>
+                  ` : ''}
+                  ${actionBtnHtml}
+                </div>
+              </div>
+            </div>
+          `;
+        }).join('')}
+      </div>
+    `;
+    if (window.I18n) window.I18n.autoTranslate(container);
+  }
+
+  function filterResources() {
+    const q = (document.getElementById('search-input').value || '').toLowerCase().trim();
+    const type = document.getElementById('type-filter').value;
+    const subId = document.getElementById('subject-filter').value;
+
+    const filtered = allResources.filter(r => {
+      const matchQ = !q || (r.title && r.title.toLowerCase().includes(q)) || (r.description && r.description.toLowerCase().includes(q));
+      const matchType = !type || (r.resource_type && r.resource_type.toLowerCase() === type.toLowerCase());
+      const matchSub = !subId || String(r.subject_id) === String(subId);
+      return matchQ && matchType && matchSub;
+    });
+
+    renderResources(filtered);
+  }
+
+  function openDocumentViewer(id) {
+    const r = allResources.find(item => item.id === id);
+    if (!r) return;
+
+    const modal = document.getElementById('doc-viewer-modal');
+    const titleEl = document.getElementById('viewer-title');
+    const subtitleEl = document.getElementById('viewer-subtitle');
+    const iconEl = document.getElementById('viewer-icon');
+    const bodyEl = document.getElementById('viewer-body');
+    const newTabBtn = document.getElementById('viewer-newtab-btn');
+    const downloadBtn = document.getElementById('viewer-download-btn');
+
+    titleEl.textContent = r.title;
+    subtitleEl.textContent = `${r.subject_code} - ${r.subject_name} · ${r.teacher_name}`;
+    newTabBtn.href = r.file_url;
+    downloadBtn.href = r.file_url;
+    downloadBtn.setAttribute('download', r.file_name || `${r.title}`);
+
+    const ext = ((r.file_name || r.file_url).split('.').pop() || '').toLowerCase();
+    const isPdf = ext === 'pdf' || r.resource_type === 'pdf';
+    const isPpt = ext === 'ppt' || ext === 'pptx' || r.resource_type === 'ppt';
+
+    if (isPdf) {
+      iconEl.textContent = '📕';
+      bodyEl.innerHTML = `
+        <iframe src="${r.file_url}#toolbar=1&navpanes=1" style="width:100%; height:100%; border:none;" title="${r.title}"></iframe>
+      `;
+    } else if (isPpt) {
+      iconEl.textContent = '📊';
+      const fullUrl = window.location.origin + (r.file_url.startsWith('/') ? r.file_url : '/' + r.file_url);
+      const officeViewerUrl = `https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(fullUrl)}`;
+
+      bodyEl.innerHTML = `
+        <div style="padding:2.5rem 1.5rem; max-width:650px; text-align:center; color:#f8fafc; background:rgba(30,41,59,0.85); border-radius:16px; border:1px solid rgba(255,255,255,0.1); margin:auto; box-shadow:0 20px 40px rgba(0,0,0,0.5);">
+          <div style="font-size:3.5rem; margin-bottom:1rem;">📊</div>
+          <h2 style="font-size:1.5rem; font-weight:700; margin-bottom:0.5rem; color:#ffffff;">${r.title}</h2>
+          <p style="color:#94a3b8; font-size:0.95rem; margin-bottom:1.5rem;">
+            ${r.subject_code} · ${r.subject_name} ${r.file_size ? `· ${formatBytes(r.file_size)}` : ''}
+          </p>
+
+          <p style="background:rgba(255,255,255,0.05); padding:1rem; border-radius:8px; font-size:0.875rem; color:#cbd5e1; line-height:1.6; margin-bottom:1.75rem;" data-i18n="modal.ppt_preview_note">
+            PowerPoint presentation slides can be opened directly on your device or via Office 365 viewer.
+          </p>
+
+          <div style="display:flex; justify-content:center; gap:1rem; flex-wrap:wrap;">
+            <a href="${r.file_url}" download class="btn btn-primary" style="background:#ea580c; border-color:#ea580c; font-size:1rem; padding:0.75rem 1.5rem;" data-i18n="action.download_file">
+              📥 Download PPT Slides
+            </a>
+            <a href="${officeViewerUrl}" target="_blank" rel="noopener noreferrer" class="btn btn-outline" style="color:#ffffff; border-color:rgba(255,255,255,0.3); font-size:1rem; padding:0.75rem 1.25rem;">
+              🖥️ Open in Office Online ↗
+            </a>
+          </div>
+        </div>
+      `;
+    } else {
+      iconEl.textContent = '📄';
+      bodyEl.innerHTML = `
+        <div style="padding:2rem; text-align:center; color:#f8fafc;">
+          <div style="font-size:3rem; margin-bottom:1rem;">📄</div>
+          <h3 style="font-size:1.25rem; font-weight:700; margin-bottom:0.5rem;">${r.title}</h3>
+          <p style="color:#94a3b8; margin-bottom:1.5rem;">${r.description || 'Study document'}</p>
+          <a href="${r.file_url}" download class="btn btn-primary" style="background:#7f1d1d; border-color:#7f1d1d;" data-i18n="action.download_file">📥 Download File</a>
+        </div>
+      `;
+    }
+
+    if (window.I18n) window.I18n.autoTranslate(modal);
+    openModal('doc-viewer-modal');
+  }
+
+  function viewResourceDetail(id) {
+    const r = allResources.find(item => item.id === id);
+    if (!r) return;
+
+    document.getElementById('modal-res-title').textContent = r.title;
+    document.getElementById('modal-res-subject').textContent = `${r.subject_code} — ${r.subject_name}`;
+    document.getElementById('modal-res-teacher').textContent = r.teacher_name;
+    document.getElementById('modal-res-type').innerHTML = getTypeBadge(r.resource_type);
+    document.getElementById('modal-res-desc').textContent = r.description || (window.I18n ? window.I18n.t('placeholder.optional') : 'No description provided.');
+    document.getElementById('modal-res-link').href = r.file_url;
+
+    const modal = document.getElementById('res-detail-modal');
+    if (window.I18n) window.I18n.autoTranslate(modal);
+    openModal('res-detail-modal');
+  }
+</script>
+</body>
+</html>
+

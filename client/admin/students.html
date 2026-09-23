@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#1e40af" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="DUC Classroom" />
+  <meta name="format-detection" content="telephone=no" />
+  <link rel="apple-touch-icon" href="/assets/duc-logo.png" />
+  <script>
+    (function(){try{var t=localStorage.getItem('duc_theme')||(window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',t);var l=localStorage.getItem('duc_lang')||'km';document.documentElement.lang=l;}catch(e){}})();
+  </script>
+  <title>Manage Students — DUC Classroom Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@300;400;500;600;700;800&family=Kantumruy+Pro:wght@400;500;600;700&family=Battambang:wght@400;700;900&family=Moul&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/style.css?v=2.3" />
+  <link rel="stylesheet" href="/css/dashboard.css?v=2.3" />
+  <script src="/js/icons.js"></script>
+  <script src="/js/i18n.js"></script>
+  <script src="/js/theme.js"></script>
+</head>
+<body>
+<div class="dashboard-layout">
+
+  <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+    <!-- ══ Sidebar ═══════════════════════════════════════════════════════════ -->
+  <aside class="sidebar role-admin" id="sidebar">
+    <div class="sidebar-brand">
+      <div class="sidebar-brand-icon"><img src="/assets/duc-logo.png" alt="DUC Logo"></div>
+      <div class="sidebar-brand-text">
+        <div class="sidebar-brand-name">DUC Classroom</div>
+        <div class="sidebar-brand-sub" data-i18n="admin.panel">ផ្ទាំងគ្រប់គ្រងទូទៅ</div>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <div class="sidebar-section-label" data-i18n="nav.main">ទំព័រចម្បង</div>
+      <ul>
+        <li class="nav-item">
+          <a href="/admin/dashboard.html" class="nav-link">
+            <span class="nav-icon"><svg class="app-svg-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg></span>
+            <span class="nav-label" data-i18n="nav.dashboard">ផ្ទាំងព័ត៌មាន</span>
+          </a>
+        </li>
+      </ul>
+      <div class="sidebar-section-label" data-i18n="nav.management">ការគ្រប់គ្រងទិន្នន័យ</div>
+      <ul>
+        <li class="nav-item">
+          <a href="/admin/students.html" class="nav-link active">
+            <span class="nav-icon"><svg class="app-svg-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+            <span class="nav-label" data-i18n="nav.students">បញ្ជីនិស្សិត</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="/admin/teachers.html" class="nav-link">
+            <span class="nav-icon"><svg class="app-svg-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><polyline points="16 11 18 13 22 9"/></svg></span>
+            <span class="nav-label" data-i18n="nav.teachers">បញ្ជីសាស្ត្រាចារ្យ</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="/admin/classes.html" class="nav-link">
+            <span class="nav-icon"><svg class="app-svg-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="m4 6 8-4 8 4"/><path d="m18 10 4 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-8l4-2"/><path d="M14 22v-4a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v4"/><path d="M18 5v17"/><path d="M6 5v17"/></svg></span>
+            <span class="nav-label" data-i18n="nav.classes">បន្ទប់ & ថ្នាក់រៀន</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="/admin/subjects.html" class="nav-link">
+            <span class="nav-icon"><svg class="app-svg-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></span>
+            <span class="nav-label" data-i18n="nav.subjects">មុខវិជ្ជាសិក្សា</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="/admin/schedules.html" class="nav-link">
+            <span class="nav-icon"><svg class="app-svg-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><circle cx="12" cy="15" r="2"/></svg></span>
+            <span class="nav-label" data-i18n="nav.schedules">កាលវិភាគសិក្សា</span>
+          </a>
+        </li>
+      </ul>
+      <div class="sidebar-section-label" data-i18n="nav.system">ប្រព័ន្ធ</div>
+      <ul>
+        <li class="nav-item">
+          <a href="/login.html" class="nav-link" onclick="logout(); return false;">
+            <span class="nav-icon"><svg class="app-svg-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></span>
+            <span class="nav-label" data-i18n="nav.signout">ចាកចេញពីប្រព័ន្ធ</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="sidebar-controls" id="sidebar-controls">
+      <div class="app-controls-cluster" id="app-controls-cluster">
+        <button type="button" class="btn-lang-toggle" id="app-lang-toggle" aria-label="Switch Language" title="Switch Language">
+          <span class="lang-toggle-flag">🇰🇭</span>
+          <span class="lang-toggle-label">ខ្មែរ</span>
+        </button>
+        <button type="button" class="btn-theme-toggle" id="app-theme-toggle" aria-label="Switch Theme" title="Switch Theme">
+          <span class="theme-toggle-icon">🌙</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="sidebar-footer">
+      <div class="sidebar-user">
+        <div class="sidebar-avatar" id="sidebar-avatar">A</div>
+        <div class="sidebar-user-info">
+          <div class="sidebar-user-name" id="sidebar-username">អ្នកគ្រប់គ្រង</div>
+          <div class="sidebar-user-role" data-i18n="role.admin">Admin</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ══ Main Content ═══════════════════════════════════════════════════════ -->
+  <div class="main-content" id="main-content">
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="sidebar-toggle" id="sidebar-toggle">☰</button>
+        <span class="topbar-title" data-i18n="page.students">Student Management</span>
+      </div>
+      <div class="topbar-right">
+        <div class="topbar-user">
+          <div class="topbar-avatar" id="topbar-avatar">A</div>
+          <div class="topbar-user-info hide-mobile">
+            <div class="topbar-user-name" id="topbar-username">Administrator</div>
+            <div class="topbar-user-role" data-i18n="role.admin">Admin</div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="page-content fade-in">
+      <div class="page-header" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; margin-bottom:1.5rem;">
+        <div>
+          <h1 class="page-title" style="font-size:1.75rem; font-weight:700;" data-i18n="page.students">Students</h1>
+          <p class="page-subtitle" style="color:var(--text-muted); margin-top:0.25rem;" data-i18n="sub.students">
+            Add, update, or remove student accounts and enrollment
+          </p>
+        </div>
+        <button class="btn btn-primary" onclick="openAddStudentModal()" data-i18n="btn.add_new_student">
+          ➕ Add New Student
+        </button>
+      </div>
+
+      <!-- Filters & Search Toolbar -->
+      <div class="card" style="margin-bottom:1.5rem;">
+        <div class="card-body" style="padding:1rem;">
+          <div style="display:flex; gap:1rem; flex-wrap:wrap;">
+            <div style="flex:1; min-width:240px;">
+              <input type="text" id="search-input" class="form-control" placeholder="🔍 Search by name, student ID, email..." data-i18n-placeholder="placeholder.search_students" />
+            </div>
+            <div style="width:200px;">
+              <select id="filter-class" class="form-control">
+                <option value="" data-i18n="filter.all_classes">All Classes</option>
+              </select>
+            </div>
+            <button class="btn btn-secondary" onclick="loadStudents()" data-i18n="action.filter">Filter</button>
+            <button class="btn btn-outline" onclick="resetFilters()" data-i18n="action.reset">Reset</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Students Table -->
+      <div class="card">
+        <div class="card-body" style="padding:0;">
+          <div class="table-responsive">
+            <table class="table" style="margin:0;">
+              <thead>
+                <tr>
+                  <th data-i18n="table.student_id">Student ID</th>
+                  <th data-i18n="table.name">Full Name</th>
+                  <th data-i18n="table.gender">Gender</th>
+                  <th data-i18n="table.class">Class</th>
+                  <th data-i18n="table.phone">Phone</th>
+                  <th data-i18n="table.email">Email</th>
+                  <th style="text-align:right;" data-i18n="table.actions">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="students-tbody">
+                <tr><td colspan="7" class="text-center" style="padding:2rem;" data-i18n="msg.loading_students">Loading students...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- ══ Modal: Add / Edit Student ════════════════════════════════════════════ -->
+<div class="modal-backdrop" id="student-modal" data-default-title="Add New Student">
+  <div class="modal" style="max-width:650px;">
+    <div class="modal-header">
+      <h3 class="modal-title" id="student-modal-title" data-i18n="modal.add_student">Add New Student</h3>
+      <button class="modal-close" onclick="closeModal('student-modal')">×</button>
+    </div>
+    <form id="student-form" onsubmit="handleStudentSubmit(event)">
+      <input type="hidden" id="student-id-field" />
+      <div class="modal-body" style="display:flex; flex-direction:column; gap:1rem;">
+
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+          <div class="form-group">
+            <label class="form-label" for="form-student-code" data-i18n="table.student_id">Student ID <span class="required">*</span></label>
+            <input type="text" id="form-student-code" class="form-control" placeholder="e.g. STU-2024-007" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="form-class" data-i18n="table.class">Class</label>
+            <select id="form-class" class="form-control">
+              <option value="" data-i18n="filter.select_class">-- Select Class --</option>
+            </select>
+          </div>
+        </div>
+
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+          <div class="form-group">
+            <label class="form-label" for="form-full-name" data-i18n="table.name_en">Full Name (English) <span class="required">*</span></label>
+            <input type="text" id="form-full-name" class="form-control" placeholder="e.g. Sok Dara" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="form-full-name-kh" data-i18n="table.name_kh">Full Name (Khmer)</label>
+            <input type="text" id="form-full-name-kh" class="form-control" placeholder="e.g. សុខ តារា" />
+          </div>
+        </div>
+
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+          <div class="form-group">
+            <label class="form-label" for="form-gender" data-i18n="table.gender">Gender</label>
+            <select id="form-gender" class="form-control">
+              <option value="male" data-i18n="table.gender_m">Male</option>
+              <option value="female" data-i18n="table.gender_f">Female</option>
+              <option value="other" data-i18n="table.gender_other">Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="form-dob" data-i18n="table.dob">Date of Birth</label>
+            <input type="date" id="form-dob" class="form-control" />
+          </div>
+        </div>
+
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+          <div class="form-group">
+            <label class="form-label" for="form-email" data-i18n="table.email">Email <span class="required">*</span></label>
+            <input type="email" id="form-email" class="form-control" placeholder="student@duc.edu.kh" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="form-phone" data-i18n="table.phone">Phone Number</label>
+            <input type="text" id="form-phone" class="form-control" placeholder="012 345 678" />
+          </div>
+        </div>
+
+        <div class="form-group" id="password-group">
+          <label class="form-label" for="form-password" data-i18n="table.password">Account Password</label>
+          <input type="password" id="form-password" class="form-control" placeholder="Default: Student@123 (Leave empty for default)" />
+          <small style="color:var(--text-muted);">Used for student to sign in to the portal.</small>
+        </div>
+
+      </div>
+      <div class="modal-footer" style="display:flex; justify-content:flex-end; gap:0.75rem;">
+        <button type="button" class="btn btn-secondary" onclick="closeModal('student-modal')" data-i18n="action.cancel">Cancel</button>
+        <button type="submit" class="btn btn-primary" id="btn-save-student" data-i18n="btn.save_student">Save Student</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div id="toast-container"></div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/dashboard.js"></script>
+  <script src="/js/admin.js"></script>
+  <script>
+    var allStudents = [];
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      initDashboard('admin');
+      await loadClassDropdowns(['filter-class', 'form-class']);
+      await loadStudents();
+
+      // Search debounce
+      document.getElementById('search-input').addEventListener('input', () => {
+        loadStudents();
+      });
+      document.getElementById('filter-class').addEventListener('change', () => {
+        loadStudents();
+      });
+    });
+
+    async function loadStudents() {
+      const search = document.getElementById('search-input').value.trim();
+      const classId = document.getElementById('filter-class').value;
+      const tbody = document.getElementById('students-tbody');
+
+      try {
+        let url = '/students?';
+        if (search) url += `search=${encodeURIComponent(search)}&`;
+        if (classId) url += `class_id=${encodeURIComponent(classId)}&`;
+
+        const res = await api.get(url);
+        if (res.success) {
+          allStudents = res.data;
+          renderStudentsTable(allStudents);
+        }
+      } catch (err) {
+        console.error('Failed to load students:', err);
+        tbody.innerHTML = '<tr><td colspan="7" class="text-center" style="padding:2rem; color:var(--danger);">Error loading students.</td></tr>';
+      }
+    }
+
+    function renderStudentsTable(students) {
+      const tbody = document.getElementById('students-tbody');
+      if (students.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="7" class="text-center" style="padding:2rem;" data-i18n="msg.no_students">' + (window.I18n ? I18n.t('msg.no_students') : 'No students found matching your criteria.') + '</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = students.map(s => {
+        const phoneDisplay = s.phone && s.phone.includes('t.me') 
+          ? `<a href="https://${s.phone.replace(/^https?:\/\//, '')}" target="_blank" rel="noopener noreferrer" style="color:#0284c7; text-decoration:none; font-weight:500; display:inline-flex; align-items:center; gap:4px;">
+               <span style="font-size:0.85rem;">✈️</span> ${s.phone.replace('t.me/', '@')}
+             </a>`
+          : (s.phone || '—');
+
+        const genderKey = s.gender === 'female' ? 'table.gender_f' : 'table.gender_m';
+        const genderDisplay = window.I18n ? I18n.t(genderKey, s.gender === 'female' ? 'Female' : 'Male') : (s.gender === 'female' ? 'Female' : 'Male');
+        const editTxt = window.I18n ? I18n.t('action.edit') : 'Edit';
+
+        return `
+        <tr>
+          <td><strong style="color:var(--primary);">${s.student_id}</strong></td>
+          <td>
+            <div class="name-en">${s.full_name}</div>
+            ${s.full_name_kh ? `<div class="name-khmer">${s.full_name_kh}</div>` : ''}
+          </td>
+          <td><span class="badge ${s.gender === 'female' ? 'badge-purple' : 'badge-gray'}" data-i18n="${genderKey}">${genderDisplay}</span></td>
+          <td><span class="badge badge-primary">${s.class_code || 'G1-NW-B'}</span></td>
+          <td>${phoneDisplay}</td>
+          <td><small style="color:var(--text-muted);">${s.email}</small></td>
+          <td style="text-align:right;">
+            <div style="display:inline-flex; gap:0.25rem;">
+              <button class="btn btn-sm btn-secondary" onclick="openEditStudentModal(${s.id})" data-i18n="action.edit">✏️ ${editTxt}</button>
+              <button class="btn btn-sm btn-danger" onclick="deleteStudentAction(${s.id}, '${s.full_name}')">🗑️</button>
+            </div>
+          </td>
+        </tr>
+      `}).join('');
+
+      if (window.I18n) window.I18n.autoTranslate(tbody);
+    }
+
+    function resetFilters() {
+      document.getElementById('search-input').value = '';
+      document.getElementById('filter-class').value = '';
+      loadStudents();
+    }
+
+    function openAddStudentModal() {
+      document.getElementById('student-id-field').value = '';
+      const titleEl = document.getElementById('student-modal-title');
+      titleEl.textContent = window.I18n ? I18n.t('modal.add_student') : 'Add New Student';
+      titleEl.setAttribute('data-i18n', 'modal.add_student');
+      document.getElementById('student-form').reset();
+      document.getElementById('password-group').style.display = 'block';
+      openModal('student-modal');
+    }
+
+    function openEditStudentModal(id) {
+      const s = allStudents.find(item => item.id === id);
+      if (!s) return;
+
+      document.getElementById('student-id-field').value = s.id;
+      const titleEl = document.getElementById('student-modal-title');
+      titleEl.textContent = window.I18n ? I18n.t('modal.edit_student') : 'Edit Student';
+      titleEl.setAttribute('data-i18n', 'modal.edit_student');
+      document.getElementById('form-student-code').value = s.student_id;
+      document.getElementById('form-class').value = s.class_id || '';
+      document.getElementById('form-full-name').value = s.full_name;
+      document.getElementById('form-full-name-kh').value = s.full_name_kh || '';
+      document.getElementById('form-gender').value = s.gender || 'male';
+      document.getElementById('form-dob').value = s.date_of_birth ? s.date_of_birth.substring(0, 10) : '';
+      document.getElementById('form-email').value = s.email;
+      document.getElementById('form-phone').value = s.phone || '';
+      document.getElementById('form-password').value = '';
+      document.getElementById('password-group').style.display = 'block';
+      openModal('student-modal');
+    }
+
+    async function handleStudentSubmit(e) {
+      e.preventDefault();
+      const id = document.getElementById('student-id-field').value;
+      const btn = document.getElementById('btn-save-student');
+      btn.disabled = true;
+      btn.textContent = 'Saving...';
+
+      const payload = {
+        student_id:   document.getElementById('form-student-code').value.trim(),
+        class_id:     document.getElementById('form-class').value || null,
+        full_name:    document.getElementById('form-full-name').value.trim(),
+        full_name_kh: document.getElementById('form-full-name-kh').value.trim(),
+        gender:       document.getElementById('form-gender').value,
+        date_of_birth:document.getElementById('form-dob').value || null,
+        email:        document.getElementById('form-email').value.trim(),
+        phone:        document.getElementById('form-phone').value.trim()
+      };
+
+      const pass = document.getElementById('form-password').value;
+      if (pass) {
+        if (id) payload.new_password = pass;
+        else payload.password = pass;
+      }
+
+      try {
+        if (id) {
+          // Update
+          await api.put(`/students/${id}`, payload);
+          showToast('Student updated successfully!', 'success');
+        } else {
+          // Create
+          await api.post('/students', payload);
+          showToast('Student added successfully with login account!', 'success');
+        }
+        closeModal('student-modal');
+        await loadStudents();
+      } catch (err) {
+        console.error(err);
+        showToast(err.message || 'Error saving student.', 'error');
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Save Student';
+      }
+    }
+
+    async function deleteStudentAction(id, name) {
+      const ok = await showConfirmDialog({
+        title: 'Delete Student',
+        message: `Are you sure you want to delete student "${name}"? This will also remove their user login account.`,
+        icon: '🗑️',
+        confirmText: 'Delete Student',
+        type: 'danger'
+      });
+      if (!ok) return;
+      try {
+        await api.delete(`/students/${id}`);
+        showToast(`Student "${name}" deleted.`, 'info');
+        await loadStudents();
+      } catch (err) {
+        console.error(err);
+        showToast(err.message || 'Error deleting student.', 'error');
+      }
+    }
+  </script>
+</body>
+</html>
