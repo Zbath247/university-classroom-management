@@ -22,6 +22,68 @@
   <script src="/js/icons.js?v=2.6"></script>
   <script src="/js/i18n.js?v=2.6"></script>
   <script src="/js/theme.js?v=2.8"></script>
+  <style>
+    /* ─── Mobile Schedule Document Optimizations ─── */
+    @media (max-width: 640px) {
+      .official-schedule-card .card-body {
+        padding: 1.1rem 0.85rem !important;
+      }
+      
+      .doc-header-wrap {
+        flex-direction: column !important;
+        align-items: center !important;
+        text-align: center !important;
+        gap: 0.75rem !important;
+        padding-bottom: 0.85rem !important;
+      }
+      
+      .doc-header-left,
+      .doc-header-right {
+        text-align: center !important;
+        width: 100% !important;
+      }
+      
+      .doc-header-right {
+        padding-top: 0.5rem;
+        border-top: 1px dashed var(--border-color, #e2e8f0);
+      }
+      
+      .doc-title-wrap {
+        margin: 1rem 0 0.85rem !important;
+      }
+      
+      .doc-main-title {
+        font-size: 1.05rem !important;
+        line-height: 1.5 !important;
+      }
+      
+      .mobile-schedule-cards {
+        display: flex !important;
+      }
+      
+      .desktop-matrix-table {
+        display: none;
+      }
+      
+      .desktop-matrix-table.is-expanded {
+        display: block !important;
+      }
+
+      .doc-subjects-grid {
+        grid-template-columns: 1fr !important;
+        gap: 8px !important;
+      }
+    }
+
+    [data-theme="dark"] .mobile-day-body {
+      background: rgba(15, 23, 42, 0.6) !important;
+    }
+    
+    [data-theme="dark"] .mobile-class-item {
+      background: rgba(30, 41, 59, 0.85) !important;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+    }
+  </style>
 </head>
 <body>
 <div class="dashboard-layout">
@@ -134,25 +196,25 @@
 
     <main class="page-content fade-in">
       <!-- ══ Official DUC Timetable Document Card ════════════════════════════ -->
-      <div class="card" style="margin-bottom:2rem; border-top: 4px solid var(--primary); box-shadow:0 8px 24px rgba(0,0,0,0.06);">
-        <div class="card-body" style="padding:1.75rem 2rem;">
+      <div class="card official-schedule-card" style="margin-bottom:2rem; border-top: 4px solid var(--primary); box-shadow:0 8px 24px rgba(0,0,0,0.06);">
+        <div class="card-body official-card-body" style="padding:1.75rem 2rem;">
           
           <!-- Document Header -->
-          <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:1rem; border-bottom:1px solid var(--border); padding-bottom:1.25rem;">
-            <div>
+          <div class="doc-header-wrap" style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:1rem; border-bottom:1px solid var(--border); padding-bottom:1.25rem;">
+            <div class="doc-header-left">
               <div style="font-family:var(--font-moul); color:#10254a; font-size:1.05rem; letter-spacing:normal;" data-i18n="univ.name">សាកលវិទ្យាល័យឌីជីថលកម្ពុជា</div>
               <div style="font-weight:700; color:#1e40af; font-size:0.85rem; letter-spacing:0.5px;" data-i18n="univ.sub">Digital University of Cambodia</div>
               <div style="font-family:var(--font-battambang); color:#475569; font-size:0.92rem; font-weight:700; margin-top:2px;" data-i18n="univ.academic_office">ការិយាល័យសិក្សា</div>
             </div>
-            <div style="text-align:right;">
+            <div class="doc-header-right" style="text-align:right;">
               <div style="font-family:var(--font-moul); color:#10254a; font-size:1.05rem; letter-spacing:normal;" data-i18n="gov.cambodia">ព្រះរាជាណាចក្រកម្ពុជា</div>
               <div style="font-family:var(--font-moul); color:#d97706; font-size:0.95rem; margin-top:2px;" data-i18n="gov.motto">ជាតិ សាសនា ព្រះមហាក្សត្រ</div>
             </div>
           </div>
 
           <!-- Document Title & Cohort -->
-          <div style="text-align:center; margin:1.5rem 0 1.25rem;">
-            <h2 style="font-family:var(--font-moul); color:#10254a; font-size:1.18rem; font-weight:normal; margin-bottom:6px; letter-spacing:normal;" data-i18n="timetable.doc_title">កាលវិភាគសិក្សា ឆ្នាំទី៤ ឆមាសទី១ ជំនាន់ទី១</h2>
+          <div class="doc-title-wrap" style="text-align:center; margin:1.5rem 0 1.25rem;">
+            <h2 class="doc-main-title" style="font-family:var(--font-moul); color:#10254a; font-size:1.18rem; font-weight:normal; margin-bottom:6px; letter-spacing:normal;" data-i18n="timetable.doc_title">កាលវិភាគសិក្សា ឆ្នាំទី៤ ឆមាសទី១ ជំនាន់ទី១</h2>
             <div style="font-family:var(--font-battambang); font-weight:700; color:#1e293b; font-size:0.98rem; margin-bottom:4px;" data-i18n="timetable.major">
               កម្រិតបរិញ្ញាបត្រ ជំនាញ បណ្តាញកុំព្យូទ័រ និងប្រព័ន្ធសុវត្ថិភាព
             </div>
@@ -164,12 +226,96 @@
             </div>
           </div>
 
-          <!-- Official Weekly Matrix Grid Table -->
-          <div class="table-responsive" style="margin-top:1rem; border:1px solid #cbd5e1; border-radius:8px; overflow:hidden;">
-            <table class="table" style="margin:0; text-align:center; border-collapse:collapse; width:100%;">
+          <!-- ══ MOBILE ONLY: Clean Responsive Class Schedule Cards ══════════ -->
+          <div class="mobile-schedule-cards" style="display:none;">
+            <!-- Day: Friday -->
+            <div class="mobile-day-block">
+              <div class="mobile-day-header" style="background:#1e40af; color:#ffd166; padding:0.6rem 0.85rem; border-radius:10px 10px 0 0; font-weight:700; font-size:0.95rem; display:flex; justify-content:space-between; align-items:center;">
+                <span data-i18n="day.friday">ថ្ងៃសុក្រ (Friday)</span>
+                <span class="badge" style="background:rgba(255,255,255,0.2); color:#ffffff; font-size:0.75rem;">3 មុខវិជ្ជា</span>
+              </div>
+              <div class="mobile-day-body" style="background:var(--bg-light); border:1px solid var(--border-color); border-top:none; border-radius:0 0 10px 10px; padding:0.75rem; display:flex; flex-direction:column; gap:0.6rem;">
+                
+                <!-- Friday Slot 1 -->
+                <div class="mobile-class-item" style="background:var(--bg-card); border-left:4px solid #2563eb; border-radius:8px; padding:0.75rem; box-shadow:0 2px 6px rgba(0,0,0,0.04);">
+                  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+                    <span style="font-weight:800; color:#1e40af; font-size:1.05rem;">SAD</span>
+                    <span class="badge badge-primary" style="font-size:0.75rem;">08:00 - 11:00</span>
+                  </div>
+                  <div style="font-size:0.88rem; font-weight:600; color:var(--text-dark); margin-bottom:4px;">System Analyze and Design</div>
+                  <div style="display:flex; justify-content:space-between; font-size:0.8rem; color:var(--text-muted);">
+                    <span>📍 បន្ទប់: <strong>DUC3</strong></span>
+                    <span>👨‍🏫 <strong>លោកគ្រូ ឈាង វុទ្ធី</strong></span>
+                  </div>
+                </div>
+
+                <!-- Friday Slot 2 -->
+                <div class="mobile-class-item" style="background:var(--bg-card); border-left:4px solid #16a34a; border-radius:8px; padding:0.75rem; box-shadow:0 2px 6px rgba(0,0,0,0.04);">
+                  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+                    <span style="font-weight:800; color:#15803d; font-size:1.05rem;">ITPM</span>
+                    <span class="badge badge-success" style="font-size:0.75rem;">13:00 - 15:00</span>
+                  </div>
+                  <div style="font-size:0.88rem; font-weight:600; color:var(--text-dark); margin-bottom:4px;">IT Project Management</div>
+                  <div style="display:flex; justify-content:space-between; font-size:0.8rem; color:var(--text-muted);">
+                    <span>📍 បន្ទប់: <strong>DUC3</strong></span>
+                    <span>👨‍🏫 <strong>លោកគ្រូ សែម វ៉ាវី</strong></span>
+                  </div>
+                </div>
+
+                <!-- Friday Slot 3 -->
+                <div class="mobile-class-item" style="background:var(--bg-card); border-left:4px solid #9333ea; border-radius:8px; padding:0.75rem; box-shadow:0 2px 6px rgba(0,0,0,0.04);">
+                  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+                    <span style="font-weight:800; color:#7e22ce; font-size:1.05rem;">CSC.V</span>
+                    <span class="badge badge-purple" style="font-size:0.75rem; background:#9333ea; color:#fff;">15:00 - 16:30</span>
+                  </div>
+                  <div style="font-size:0.88rem; font-weight:600; color:var(--text-dark); margin-bottom:4px;">Cisco V (Computer Networks)</div>
+                  <div style="display:flex; justify-content:space-between; font-size:0.8rem; color:var(--text-muted);">
+                    <span>📍 បន្ទប់: <strong>DUC3</strong></span>
+                    <span>👨‍🏫 <strong>លោកគ្រូ សែម វ៉ាវី</strong></span>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- Day: Saturday -->
+            <div class="mobile-day-block" style="margin-top:0.75rem;">
+              <div class="mobile-day-header" style="background:#1e40af; color:#ffd166; padding:0.6rem 0.85rem; border-radius:10px 10px 0 0; font-weight:700; font-size:0.95rem; display:flex; justify-content:space-between; align-items:center;">
+                <span data-i18n="day.saturday">ថ្ងៃសៅរ៍ (Saturday)</span>
+                <span class="badge" style="background:rgba(255,255,255,0.2); color:#ffffff; font-size:0.75rem;">1 មុខវិជ្ជា</span>
+              </div>
+              <div class="mobile-day-body" style="background:var(--bg-light); border:1px solid var(--border-color); border-top:none; border-radius:0 0 10px 10px; padding:0.75rem;">
+                
+                <!-- Saturday Slot 1 -->
+                <div class="mobile-class-item" style="background:var(--bg-card); border-left:4px solid #ea580c; border-radius:8px; padding:0.75rem; box-shadow:0 2px 6px rgba(0,0,0,0.04);">
+                  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+                    <span style="font-weight:800; color:#c2410c; font-size:1.05rem;">CA</span>
+                    <span class="badge badge-warning" style="font-size:0.75rem;">08:00 - 11:00</span>
+                  </div>
+                  <div style="font-size:0.88rem; font-weight:600; color:var(--text-dark); margin-bottom:4px;">Cloud Architecture</div>
+                  <div style="display:flex; justify-content:space-between; font-size:0.8rem; color:var(--text-muted);">
+                    <span>📍 បន្ទប់: <strong>DUC3</strong></span>
+                    <span>👨‍🏫 <strong>លោកគ្រូ ភឿន មេសា</strong></span>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- Toggle Matrix Table on Mobile -->
+            <div style="text-align:center; margin-top:1rem;">
+              <button type="button" class="btn btn-sm btn-outline" style="border-radius:8px; font-size:0.82rem;" onclick="toggleMobileMatrixTable()">
+                <span id="matrix-toggle-text">📊 មើលតារាងម៉ាទ្រីសពេញលេញ (Full Matrix Table)</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Official Weekly Matrix Grid Table (Default on Desktop, Toggle on Mobile) -->
+          <div class="desktop-matrix-table table-responsive" id="official-matrix-table" style="margin-top:1rem; border:1px solid #cbd5e1; border-radius:8px; overflow-x:auto;">
+            <table class="table" style="margin:0; text-align:center; border-collapse:collapse; width:100%; min-width:620px;">
               <thead>
                 <tr style="background:#10254a; color:#ffffff;">
-                  <th style="padding:12px; border:1px solid #1e3a8a; width:140px;" data-i18n="table.time_day">Time \ Day</th>
+                  <th style="padding:12px; border:1px solid #1e3a8a; width:130px;" data-i18n="table.time_day">Time \ Day</th>
                   <th style="padding:12px; border:1px solid #1e3a8a;" data-i18n="day.monday">Monday</th>
                   <th style="padding:12px; border:1px solid #1e3a8a;" data-i18n="day.tuesday">Tuesday</th>
                   <th style="padding:12px; border:1px solid #1e3a8a;" data-i18n="day.wednesday">Wednesday</th>
@@ -230,18 +376,18 @@
           </div>
 
           <!-- Document Footer / Subject & Exam Notes -->
-          <div style="margin-top:1.5rem; padding:1.25rem; background:#f8fafc; border-radius:8px; border-left:4px solid #f59e0b;">
-            <div style="font-family:var(--font-battambang); font-weight:700; color:#b45309; font-size:0.92rem; margin-bottom:8px;" data-i18n="timetable.exam_notice">
+          <div class="doc-footer-notes" style="margin-top:1.5rem; padding:1.25rem; background:var(--bg-light); border-radius:10px; border-left:4px solid #f59e0b;">
+            <div style="font-family:var(--font-battambang); font-weight:700; color:#b45309; font-size:0.92rem; margin-bottom:8px; line-height:1.5;" data-i18n="timetable.exam_notice">
               ⚠️ បញ្ជាក់៖ ការប្រឡងពាក់កណ្ដាលឆមាសចាប់ផ្ដើមពីថ្ងៃទី២៦ ខែតុលា ឆ្នាំ២០២៦ ដល់ថ្ងៃទី១ ខែវិច្ឆិកា ឆ្នាំ២០២៦
             </div>
-            <div style="font-family:var(--font-battambang); font-weight:700; color:#334155; font-size:0.9rem; margin-bottom:8px;" data-i18n="timetable.subjects_included">
+            <div style="font-family:var(--font-battambang); font-weight:700; color:var(--text-dark); font-size:0.9rem; margin-bottom:8px;" data-i18n="timetable.subjects_included">
               មុខវិជ្ជាដែលត្រូវសិក្សារួមមាន៖
             </div>
-            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:10px; font-family:var(--font-battambang); font-size:0.88rem; color:#475569;">
-              <div><strong>[SAD]</strong> = System Analyze and Design · <span style="color:#1e40af; font-weight:600;" data-i18n="lecturer.chheang_vuthea">លោកគ្រូ ឈាង វុទ្ធី</span></div>
-              <div><strong>[ITPM]</strong> = IT Project Management · <span style="color:#1e40af; font-weight:600;" data-i18n="lecturer.sem_vavy">លោកគ្រូ សែម វ៉ាវី</span></div>
-              <div><strong>[CSC.V]</strong> = Cisco V · <span style="color:#1e40af; font-weight:600;" data-i18n="lecturer.sem_vavy">លោកគ្រូ សែម វ៉ាវី</span></div>
-              <div><strong>[CA]</strong> = Cloud Architecture · <span style="color:#1e40af; font-weight:600;" data-i18n="lecturer.phoeun_mesa">លោកគ្រូ ភឿន មេសា</span></div>
+            <div class="doc-subjects-grid" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:10px; font-family:var(--font-battambang); font-size:0.88rem; color:var(--text-body);">
+              <div style="background:var(--bg-card); padding:8px 12px; border-radius:6px; border:1px solid var(--border-color);"><strong style="color:#1e40af;">[SAD]</strong> = System Analyze and Design · <span style="color:#1e40af; font-weight:600;" data-i18n="lecturer.chheang_vuthea">លោកគ្រូ ឈាង វុទ្ធី</span></div>
+              <div style="background:var(--bg-card); padding:8px 12px; border-radius:6px; border:1px solid var(--border-color);"><strong style="color:#15803d;">[ITPM]</strong> = IT Project Management · <span style="color:#1e40af; font-weight:600;" data-i18n="lecturer.sem_vavy">លោកគ្រូ សែម វ៉ាវី</span></div>
+              <div style="background:var(--bg-card); padding:8px 12px; border-radius:6px; border:1px solid var(--border-color);"><strong style="color:#7e22ce;">[CSC.V]</strong> = Cisco V · <span style="color:#1e40af; font-weight:600;" data-i18n="lecturer.sem_vavy">លោកគ្រូ សែម វ៉ាវី</span></div>
+              <div style="background:var(--bg-card); padding:8px 12px; border-radius:6px; border:1px solid var(--border-color);"><strong style="color:#c2410c;">[CA]</strong> = Cloud Architecture · <span style="color:#1e40af; font-weight:600;" data-i18n="lecturer.phoeun_mesa">លោកគ្រូ ភឿន មេសា</span></div>
             </div>
           </div>
 
@@ -261,6 +407,20 @@
   document.addEventListener('DOMContentLoaded', async () => {
     initDashboard('student');
   });
+
+  function toggleMobileMatrixTable() {
+    const table = document.getElementById('official-matrix-table');
+    const text = document.getElementById('matrix-toggle-text');
+    if (!table) return;
+    const isExpanded = table.classList.contains('is-expanded');
+    if (!isExpanded) {
+      table.classList.add('is-expanded');
+      if (text) text.textContent = '❌ លាក់តារាងម៉ាទ្រីស (Hide Matrix Table)';
+    } else {
+      table.classList.remove('is-expanded');
+      if (text) text.textContent = '📊 មើលតារាងម៉ាទ្រីសពេញលេញ (Full Matrix Table)';
+    }
+  }
 </script>
 </body>
 </html>
