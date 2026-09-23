@@ -203,7 +203,21 @@
       ];
     }
 
-    const currentLang = localStorage.getItem('duc_lang') || localStorage.getItem('duc_language') || 'km';
+    function updateDockLabels() {
+      const activeLang = window.I18n ? window.I18n.getCurrentLang() : (localStorage.getItem('duc_lang') || 'km');
+      dock.querySelectorAll('.dock-tab').forEach(el => {
+        const tabId = el.getAttribute('data-tab-id');
+        const tabObj = tabs.find(t => t.id === tabId);
+        if (tabObj) {
+          const lbl = el.querySelector('.dock-label');
+          if (lbl) {
+            lbl.textContent = (activeLang === 'en' && tabObj.labelEn) ? tabObj.labelEn : tabObj.label;
+          }
+        }
+      });
+    }
+
+    const currentLang = window.I18n ? window.I18n.getCurrentLang() : (localStorage.getItem('duc_lang') || 'km');
 
     tabs.forEach(tab => {
       const isActive = tab.href && path.endsWith(tab.href);
@@ -213,6 +227,7 @@
         const btn = document.createElement('button');
         btn.type = 'button';
         btn.className = 'dock-tab';
+        btn.setAttribute('data-tab-id', tab.id);
         btn.innerHTML = `
           <span class="dock-icon">${tab.icon}</span>
           <span class="dock-label">${text}</span>
@@ -235,6 +250,7 @@
         const a = document.createElement('a');
         a.href = tab.href;
         a.className = `dock-tab ${isActive ? 'active' : ''}`;
+        a.setAttribute('data-tab-id', tab.id);
         a.innerHTML = `
           <span class="dock-icon">${tab.icon}</span>
           <span class="dock-label">${text}</span>
@@ -244,5 +260,9 @@
     });
 
     document.body.appendChild(dock);
+
+    window.addEventListener('duc:langchange', () => {
+      updateDockLabels();
+    });
   }
 })();

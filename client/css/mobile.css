@@ -377,3 +377,91 @@ html, body {
     padding: 1rem !important;
   }
 }
+
+/* ─── 11. TOPBAR QUICK LANGUAGE & THEME CONTROLS (MOBILE & DESKTOP) ───────── */
+.topbar-controls-cluster {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 3px 6px;
+  border-radius: 9999px;
+  margin-right: 4px;
+}
+
+[data-theme="dark"] .topbar-controls-cluster {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.topbar-controls-cluster .btn-lang-toggle {
+  height: 30px;
+  padding: 0 10px;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  color: #0f172a;
+  border-radius: 9999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+[data-theme="dark"] .topbar-controls-cluster .btn-lang-toggle {
+  background: rgba(255, 255, 255, 0.16);
+  border-color: rgba(255, 255, 255, 0.28);
+  color: #ffffff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.topbar-controls-cluster .btn-lang-toggle:active {
+  transform: scale(0.93);
+}
+
+.topbar-controls-cluster .btn-theme-toggle {
+  width: 30px;
+  height: 30px;
+  flex-shrink: 0;
+  background: transparent;
+  border: none;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #1e293b;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+[data-theme="dark"] .topbar-controls-cluster .btn-theme-toggle {
+  color: #ffffff;
+}
+
+.topbar-controls-cluster .btn-theme-toggle:active {
+  transform: scale(0.9);
+}
+
+@media (max-width: 480px) {
+  .topbar-controls-cluster {
+    gap: 4px;
+    padding: 2px 4px;
+  }
+  .topbar-controls-cluster .btn-lang-toggle {
+    height: 28px;
+    padding: 0 8px;
+    font-size: 0.75rem;
+  }
+  .topbar-controls-cluster .btn-theme-toggle {
+    width: 28px;
+    height: 28px;
+  }
+}

@@ -146,28 +146,32 @@
    * Bind event listeners for injected controls
    */
   function bindControlsEvents(container) {
-    // Theme toggle
-    const themeBtn = container.querySelector('#app-theme-toggle');
-    if (themeBtn && !themeBtn.dataset.bound) {
-      themeBtn.dataset.bound = 'true';
-      themeBtn.addEventListener('click', () => {
-        toggleTheme();
-      });
-    }
+    // Theme toggles
+    const themeBtns = container.querySelectorAll('.btn-theme-toggle');
+    themeBtns.forEach(themeBtn => {
+      if (!themeBtn.dataset.bound) {
+        themeBtn.dataset.bound = 'true';
+        themeBtn.addEventListener('click', () => {
+          toggleTheme();
+        });
+      }
+    });
 
-    // Single language toggle
-    const langBtn = container.querySelector('#app-lang-toggle');
-    if (langBtn && !langBtn.dataset.bound) {
-      langBtn.dataset.bound = 'true';
-      langBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        toggleLanguage();
-      });
-    }
+    // Language toggles
+    const langBtns = container.querySelectorAll('.btn-lang-toggle');
+    langBtns.forEach(langBtn => {
+      if (!langBtn.dataset.bound) {
+        langBtn.dataset.bound = 'true';
+        langBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          toggleLanguage();
+        });
+      }
+    });
   }
 
   /**
-   * Auto-inject controls cluster into sidebar (above sidebar-footer) or dedicated slot
+   * Auto-inject controls cluster into sidebar and topbar for full mobile + desktop access
    */
   function injectControls(targetContainer) {
     let container = targetContainer;
@@ -176,10 +180,6 @@
       // 1. If page has a sidebar (Dashboard pages)
       const sidebar = document.querySelector('.sidebar');
       if (sidebar) {
-        // Remove legacy controls from topbar-right if still present
-        const oldInTopbar = document.querySelector('.topbar-right #app-controls-cluster');
-        if (oldInTopbar) oldInTopbar.remove();
-
         let wrapper = sidebar.querySelector('#sidebar-controls');
         if (!wrapper) {
           wrapper = document.createElement('div');
@@ -200,6 +200,20 @@
           }
         }
         bindControlsEvents(wrapper);
+
+        // Also inject topbar quick language/theme switcher (crucial for mobile phones!)
+        const topbarRight = document.querySelector('.topbar-right');
+        if (topbarRight && !topbarRight.querySelector('.topbar-controls-cluster')) {
+          const topbarCluster = document.createElement('div');
+          topbarCluster.className = 'topbar-controls-cluster';
+          topbarCluster.innerHTML = `
+            ${createLanguageToggleHTML()}
+            ${createThemeToggleHTML()}
+          `;
+          topbarRight.insertBefore(topbarCluster, topbarRight.firstChild);
+          bindControlsEvents(topbarCluster);
+        }
+
         updateLanguageToggleUI(window.I18n ? window.I18n.getCurrentLang() : (localStorage.getItem('duc_lang') || 'km'));
         updateThemeToggleUI(document.documentElement.getAttribute('data-theme') || 'light');
         return;
