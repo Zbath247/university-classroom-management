@@ -198,10 +198,20 @@ function populateUserUI(user) {
   if (topbarUsername) topbarUsername.textContent = name;
   if (topbarRole)     topbarRole.textContent     = role;
 
-  // Page Welcome Names (if present on dashboards)
+  // Page Welcome Names & Class Labels (Instant zero-flicker pre-fill)
   const studentDisplay = document.getElementById('student-display-name');
   if (studentDisplay) {
     studentDisplay.textContent = name;
+  }
+  const studentClass = document.getElementById('student-class-label');
+  if (studentClass && (studentClass.textContent === 'Loading class...' || !studentClass.textContent)) {
+    const code = user.profile?.class_code || 'G1-NW-B';
+    const cName = user.profile?.class_name || 'Networking & Security B';
+    studentClass.textContent = `${code} · ${cName}`;
+  }
+  const statClass = document.getElementById('stat-class');
+  if (statClass && statClass.textContent === '—') {
+    statClass.textContent = user.profile?.class_code || 'G1-NW-B';
   }
   const teacherDisplay = document.getElementById('teacher-display-name');
   if (teacherDisplay) {
@@ -915,6 +925,74 @@ async function navigateToPage(url, pushState = true) {
   }
 }
 
+// ─── Instant Visual Feedback & Predictive Prefetch ───────────────────────────
+function setupInstantFeedbackAndPrefetch() {
+  // 1. Create or get top progress bar
+  let bar = document.getElementById('global-top-progress');
+  if (!bar) {
+    bar = document.createElement('div');
+    bar.id = 'global-top-progress';
+    document.body.appendChild(bar);
+  }
+
+  // Dismiss loading bar on current page load
+  bar.classList.remove('active');
+  bar.classList.add('done');
+  setTimeout(() => {
+    bar.classList.remove('done');
+    bar.style.width = '0%';
+  }, 400);
+
+  // 2. Instant 0ms visual feedback when clicking links
+  document.addEventListener('click', (e) => {
+    const link = e.target.closest('a[href]');
+    if (!link) return;
+
+    const href = link.getAttribute('href');
+    if (!href || href.startsWith('#') || href.startsWith('javascript:') || link.target === '_blank') return;
+    if (link.getAttribute('onclick') && link.getAttribute('onclick').includes('logout')) return;
+
+    try {
+      const url = new URL(link.href, window.location.origin);
+      if (url.origin === window.location.origin && url.pathname !== window.location.pathname) {
+        // Highlight clicked navigation link immediately
+        document.querySelectorAll('.sidebar-nav .nav-link, .dock-tab').forEach(l => l.classList.remove('active'));
+        link.classList.add('active');
+
+        // Start top progress bar instantly
+        bar.classList.remove('done');
+        bar.classList.add('active');
+      }
+    } catch (_) {}
+  });
+
+  // 3. Smart Predictive Prefetch on hover/touch
+  const prefetched = new Set();
+  function prefetch(url) {
+    if (!url || prefetched.has(url) || url.startsWith('#') || url.startsWith('javascript:')) return;
+    try {
+      const parsed = new URL(url, window.location.origin);
+      if (parsed.origin !== window.location.origin || parsed.pathname === window.location.pathname) return;
+      prefetched.add(url);
+
+      const linkEl = document.createElement('link');
+      linkEl.rel = 'prefetch';
+      linkEl.href = parsed.href;
+      document.head.appendChild(linkEl);
+    } catch (_) {}
+  }
+
+  document.addEventListener('mouseover', (e) => {
+    const a = e.target.closest('a[href]');
+    if (a && a.href) prefetch(a.href);
+  }, { passive: true });
+
+  document.addEventListener('touchstart', (e) => {
+    const a = e.target.closest('a[href]');
+    if (a && a.href) prefetch(a.href);
+  }, { passive: true });
+}
+
 // ─── Initialize Mobile Enhancements ───────────────────────────────────────────
 function initMobileEnhancements() {
   if (document.getElementById('mobile-enhancements-script')) return;
@@ -929,6 +1007,7 @@ document.addEventListener('DOMContentLoaded', () => {
   setActiveNavLink();
   setupSeamlessNavigation();
   initMobileEnhancements();
+  setupInstantFeedbackAndPrefetch();
 });
 
 
