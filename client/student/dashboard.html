@@ -133,12 +133,17 @@
     </header>
 
     <main class="page-content fade-in">
-      <div class="page-header" style="display:flex; justify-content:flex-end; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:1.5rem;">
-        <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
-          <a href="/student/schedule.html" class="btn btn-primary btn-sm" data-i18n="btn.timetable">📅 Timetable</a>
-          <a href="/student/attendance.html" class="btn btn-secondary btn-sm" data-i18n="action.my_attendance">✅ My Attendance</a>
-          <a href="/student/resources.html" class="btn btn-secondary btn-sm" data-i18n="action.study_files">📁 Study Files</a>
-        </div>
+      <!-- Quick Navigation Action Buttons (Equal 3-column Grid) -->
+      <div class="student-quick-nav-grid">
+        <a href="/student/schedule.html" class="quick-nav-btn quick-nav-primary">
+          <span data-i18n="btn.timetable">កាលវិភាគ</span>
+        </a>
+        <a href="/student/attendance.html" class="quick-nav-btn quick-nav-secondary">
+          <span data-i18n="action.my_attendance">វត្តមានរបស់ខ្ញុំ</span>
+        </a>
+        <a href="/student/resources.html" class="quick-nav-btn quick-nav-secondary">
+          <span data-i18n="action.study_files">ឯកសារមេរៀន</span>
+        </a>
       </div>
 
       <!-- Stats Cards -->

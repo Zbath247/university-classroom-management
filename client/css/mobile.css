@@ -329,28 +329,55 @@ html, body {
 /* ─── 9. RESPONSIVE TOPBAR HEADER ─────────────────────────────────────────── */
 @media (max-width: 768px) {
   .topbar {
-    height: 60px !important;
-    padding: 0 1rem !important;
+    height: 56px !important;
+    padding: 0 0.75rem !important;
     padding-top: var(--safe-area-top) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 0.4rem !important;
   }
 
   .topbar-left {
-    gap: 0.5rem !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.45rem !important;
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+    overflow: hidden !important;
   }
 
   .sidebar-toggle {
-    width: 38px !important;
-    height: 38px !important;
-    border-radius: 10px !important;
-    font-size: 1.15rem !important;
+    width: 36px !important;
+    height: 36px !important;
+    flex-shrink: 0 !important;
+    border-radius: 9px !important;
+    font-size: 1.1rem !important;
   }
 
   .topbar-title {
     font-size: 0.95rem !important;
-    max-width: 160px !important;
+    font-weight: 700 !important;
     white-space: nowrap !important;
     overflow: hidden !important;
     text-overflow: ellipsis !important;
+    max-width: none !important;
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+  }
+
+  .topbar-right {
+    flex: 0 0 auto !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.35rem !important;
+  }
+
+  .topbar-avatar {
+    width: 32px !important;
+    height: 32px !important;
+    font-size: 0.85rem !important;
+    flex-shrink: 0 !important;
   }
 }
 
@@ -359,7 +386,7 @@ html, body {
   .btn,
   button,
   .nav-link {
-    min-height: 42px;
+    min-height: 40px;
     touch-action: manipulation;
   }
 
@@ -387,12 +414,13 @@ html, body {
   .topbar-controls-cluster {
     display: inline-flex !important;
     align-items: center;
-    gap: 6px;
+    gap: 4px;
     background: rgba(0, 0, 0, 0.05);
     border: 1px solid rgba(0, 0, 0, 0.1);
-    padding: 3px 6px;
+    padding: 2px 5px;
     border-radius: 9999px;
-    margin-right: 4px;
+    margin-right: 2px;
+    flex-shrink: 0;
   }
 }
 
@@ -402,8 +430,8 @@ html, body {
 }
 
 .topbar-controls-cluster .btn-lang-toggle {
-  height: 30px;
-  padding: 0 10px;
+  height: 28px;
+  padding: 0 8px;
   background: #ffffff;
   border: 1px solid #cbd5e1;
   color: #0f172a;
@@ -411,8 +439,8 @@ html, body {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 5px;
-  font-size: 0.78rem;
+  gap: 4px;
+  font-size: 0.75rem;
   font-weight: 700;
   cursor: pointer;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
@@ -432,8 +460,8 @@ html, body {
 }
 
 .topbar-controls-cluster .btn-theme-toggle {
-  width: 30px;
-  height: 30px;
+  width: 28px;
+  height: 28px;
   flex-shrink: 0;
   background: transparent;
   border: none;
@@ -443,7 +471,7 @@ html, body {
   justify-content: center;
   cursor: pointer;
   color: #1e293b;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   transition: all 0.2s ease;
   user-select: none;
 }
@@ -458,16 +486,95 @@ html, body {
 
 @media (max-width: 480px) {
   .topbar-controls-cluster {
-    gap: 4px;
+    gap: 3px;
     padding: 2px 4px;
   }
   .topbar-controls-cluster .btn-lang-toggle {
-    height: 28px;
-    padding: 0 8px;
-    font-size: 0.75rem;
+    height: 26px;
+    padding: 0 6px;
+    font-size: 0.72rem;
   }
   .topbar-controls-cluster .btn-theme-toggle {
-    width: 28px;
-    height: 28px;
+    width: 26px;
+    height: 26px;
+    font-size: 0.85rem;
+  }
+}
+
+/* ─── 12. STUDENT QUICK ACTIONS NAVIGATION GRID (BALANCED 3 COLUMNS) ──────── */
+.student-quick-nav-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.6rem;
+  width: 100%;
+  margin-bottom: 1.25rem;
+}
+
+.quick-nav-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  padding: 0.65rem 0.4rem;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none;
+  text-align: center;
+  white-space: nowrap;
+  min-height: 40px;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.quick-nav-btn:active {
+  transform: scale(0.96);
+}
+
+.quick-nav-btn.quick-nav-primary {
+  background: linear-gradient(135deg, #1d4ed8, #2563eb);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+}
+
+.quick-nav-btn.quick-nav-primary:hover {
+  background: linear-gradient(135deg, #1e40af, #1d4ed8);
+  color: #ffffff;
+  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.35);
+}
+
+.quick-nav-btn.quick-nav-secondary {
+  background: var(--bg-card, #ffffff);
+  color: var(--text-dark, #0f172a);
+  border: 1px solid var(--border-color, #e2e8f0);
+}
+
+[data-theme="dark"] .quick-nav-btn.quick-nav-secondary {
+  background: rgba(30, 41, 59, 0.7);
+  color: #f8fafc;
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+.quick-nav-btn.quick-nav-secondary:hover {
+  background: var(--bg-light, #f8fafc);
+  border-color: #cbd5e1;
+}
+
+[data-theme="dark"] .quick-nav-btn.quick-nav-secondary:hover {
+  background: rgba(51, 65, 85, 0.8);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+@media (max-width: 480px) {
+  .student-quick-nav-grid {
+    gap: 0.4rem;
+  }
+  .quick-nav-btn {
+    padding: 0.55rem 0.2rem;
+    font-size: 0.74rem;
+    border-radius: 10px;
+    gap: 0.2rem;
+    min-height: 38px;
   }
 }
