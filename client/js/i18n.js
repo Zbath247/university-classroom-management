@@ -395,7 +395,7 @@
       'sub.student_assignments': 'ពិនិត្យមើលកិច្ចការដែលបានចាត់តាំង លំហាត់អនុវត្ត និងកាលបរិច្ឆេទផុតកំណត់',
       'status.past_due': 'ហួសកាលកំណត់',
       'modal.assignment_details': 'ព័ត៌មានលម្អិតអំពីកិច្ចការ',
-      'page.course_resources': 'ឯកសារ និងសម្ភារសិក្សាមុខវិជ្ជា',
+      'page.course_resources': 'ឯកសារមេរៀន',
       'page.learning_materials': 'ឯកសារមេរៀន & សម្ភារសិក្សា',
       'sub.student_resources': 'ចូលអានស្លាយមេរៀន សៀវភៅសិក្សា កូដ និងឯកសារយោងដែលចែករំលែកដោយសាស្ត្រាចារ្យ',
       'placeholder.search_resources': '🔍 ស្វែងរកឯកសារតាមចំណងជើង ឬប្រធានបទ...',
