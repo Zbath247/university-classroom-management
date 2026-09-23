@@ -793,10 +793,45 @@ function renderEmptyState(container, {
   `;
 }
 
-// ─── Native Rock-Solid Navigation ───────────────────────────────────────────
+// ─── Seamless In-Page Swap (Ultra-Smooth SPA/PJAX) ──────────────────────────
 function setupSeamlessNavigation() {
-  // Let standard browser navigation handle page transitions natively, flawlessly, and without click interception
-  return;
+  if (window._seamlessNavInitialized) return;
+  window._seamlessNavInitialized = true;
+
+  document.addEventListener('click', (e) => {
+    // Only handle primary left click without modifier keys (ctrl, shift, meta)
+    if (e.button !== 0 || e.ctrlKey || e.metaKey || e.shiftKey || e.altKey) return;
+
+    const link = e.target.closest('a[href]');
+    if (!link) return;
+
+    const href = link.getAttribute('href');
+    if (!href || href.startsWith('#') || href.startsWith('javascript:') || link.target === '_blank') return;
+    if (link.getAttribute('onclick') && link.getAttribute('onclick').includes('logout')) return;
+    if (link.hasAttribute('download')) return;
+
+    try {
+      const targetUrl = new URL(link.href, window.location.origin);
+      if (targetUrl.origin === window.location.origin && targetUrl.pathname !== window.location.pathname) {
+        const curPath = window.location.pathname;
+        const tgtPath = targetUrl.pathname;
+        const isSameRealm =
+          (curPath.startsWith('/admin/') && tgtPath.startsWith('/admin/')) ||
+          (curPath.startsWith('/teacher/') && tgtPath.startsWith('/teacher/')) ||
+          (curPath.startsWith('/student/') && tgtPath.startsWith('/student/'));
+
+        if (isSameRealm) {
+          e.preventDefault();
+          navigateToPage(targetUrl.href, true);
+        }
+      }
+    } catch (_) {}
+  });
+
+  // Handle browser Back / Forward buttons seamlessly
+  window.addEventListener('popstate', () => {
+    navigateToPage(window.location.href, false);
+  });
 }
 
 async function navigateToPage(url, pushState = true) {
@@ -806,19 +841,37 @@ async function navigateToPage(url, pushState = true) {
     return;
   }
 
-  // Update active navigation state immediately on sidebar
+  // Update navigation items active state immediately
   const targetPath = new URL(url, window.location.origin).pathname;
-  document.querySelectorAll('.sidebar-nav .nav-link').forEach(l => {
+  document.querySelectorAll('.sidebar-nav .nav-link, .dock-tab').forEach(l => {
     l.classList.remove('active');
-    if (l.getAttribute('href') === targetPath) {
+    const h = l.getAttribute('href');
+    if (h && (h === targetPath || targetPath.endsWith(h))) {
       l.classList.add('active');
     }
   });
 
+  // Close mobile sidebar if open
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('sidebar-overlay');
+  if (sidebar && sidebar.classList.contains('mobile-open')) {
+    sidebar.classList.remove('mobile-open');
+    if (overlay) overlay.classList.remove('active');
+    document.body.classList.remove('sidebar-locked');
+  }
+
+  // Start progress indicator
+  const bar = document.getElementById('global-top-progress');
+  if (bar) {
+    bar.classList.remove('done');
+    bar.classList.add('active');
+  }
+
   try {
-    // Subtle fast transition: gentle fade
-    currentMain.style.transition = 'opacity 0.08s ease-out';
-    currentMain.style.opacity = '0.5';
+    // Gentle fast transition: subtle fade
+    currentMain.style.transition = 'opacity 0.1s ease-out, transform 0.1s ease-out';
+    currentMain.style.opacity = '0.35';
+    currentMain.style.transform = 'translateY(2px)';
 
     const response = await fetch(url);
     if (!response.ok) throw new Error('Page load failed');
@@ -842,12 +895,14 @@ async function navigateToPage(url, pushState = true) {
 
     // Swap main content seamlessly
     currentMain.innerHTML = newMain.innerHTML;
-    currentMain.style.opacity = '1';
 
     // Swap modal backdrops cleanly
     document.querySelectorAll('.modal-backdrop:not(#global-confirm-modal)').forEach(m => m.remove());
     newDoc.querySelectorAll('.modal-backdrop:not(#global-confirm-modal)').forEach(m => {
       document.body.appendChild(document.importNode(m, true));
+    });
+    document.querySelectorAll('.modal').forEach(box => {
+      box.addEventListener('click', (e) => e.stopPropagation());
     });
 
     // Re-bind topbar & branding
@@ -868,7 +923,6 @@ async function navigateToPage(url, pushState = true) {
     const deferredCallbacks = [];
     const originalAddEventListener = document.addEventListener;
 
-    // Temporarily intercept 'DOMContentLoaded' so the script's ready handler is captured
     document.addEventListener = function(event, callback, options) {
       if (event === 'DOMContentLoaded') {
         deferredCallbacks.push(callback);
@@ -878,16 +932,11 @@ async function navigateToPage(url, pushState = true) {
     };
 
     inlineScripts.forEach(s => {
+      if (s.src) return; // skip external scripts
       const code = s.textContent;
-      if (code && !code.includes('duc_theme') && !code.includes('anti-fouc') && 
-          (code.includes('load') || code.includes('init') || code.includes('DOMContentLoaded') || code.includes('Table') || 
-           code.includes('allStudents') || code.includes('allTeachers') || code.includes('allClasses') || 
-           code.includes('allSubjects') || code.includes('allSchedules') || code.includes('allAssignments') || 
-           code.includes('allResources') || code.includes('currentStudents') || code.includes('Profile') || code.includes('profile'))) {
+      if (code && !code.includes('duc_theme') && !code.includes('anti-fouc')) {
         try {
-          // Convert top-level let and const declarations to var so re-evaluating on SPA navigation does not throw SyntaxError
           const safeCode = code.replace(/(^|\n)\s*(let|const)\s+([a-zA-Z0-9_$]+)\s*=/g, '$1var $3 =');
-          // Execute in real global window scope via DOM script element
           const scriptEl = document.createElement('script');
           scriptEl.textContent = safeCode;
           document.body.appendChild(scriptEl);
@@ -898,10 +947,8 @@ async function navigateToPage(url, pushState = true) {
       }
     });
 
-    // Restore original addEventListener
     document.addEventListener = originalAddEventListener;
 
-    // Execute captured DOMContentLoaded callbacks sequentially
     for (const cb of deferredCallbacks) {
       try {
         const res = cb();
@@ -913,12 +960,27 @@ async function navigateToPage(url, pushState = true) {
       }
     }
 
-    // Auto-translate newly rendered content
     if (window.I18n) {
       window.I18n.autoTranslate(currentMain);
     }
 
-    window.scrollTo(0, 0);
+    // Finish progress bar
+    if (bar) {
+      bar.classList.remove('active');
+      bar.classList.add('done');
+      setTimeout(() => {
+        bar.classList.remove('done');
+        bar.style.width = '0%';
+      }, 250);
+    }
+
+    // Smooth reveal of new content
+    requestAnimationFrame(() => {
+      currentMain.style.opacity = '1';
+      currentMain.style.transform = 'translateY(0)';
+    });
+
+    window.scrollTo({ top: 0, behavior: 'instant' });
   } catch (err) {
     console.error('Seamless transition failed, falling back to full navigation:', err);
     window.location.href = url;
