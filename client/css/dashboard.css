@@ -1496,3 +1496,66 @@ html, body {
   }
 }
 
+/* ─── 11. TOPBAR QUICK LANGUAGE & THEME CONTROLS (MOBILE ONLY, HIDDEN ON COMPUTER) ── */
+.topbar-controls-cluster {
+  display: none !important; /* Always hidden on Computer / Desktop */
+}
+
+@media (max-width: 768px) {
+  .topbar-controls-cluster {
+    display: inline-flex !important;
+    align-items: center;
+    gap: 6px;
+    background: rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 3px 6px;
+    border-radius: 9999px;
+    margin-right: 4px;
+  }
+
+  [data-theme="dark"] .topbar-controls-cluster {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.15);
+  }
+
+  .topbar-controls-cluster .btn-lang-toggle {
+    height: 30px;
+    padding: 0 10px;
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    color: #0f172a;
+    border-radius: 9999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    cursor: pointer;
+  }
+
+  [data-theme="dark"] .topbar-controls-cluster .btn-lang-toggle {
+    background: rgba(255, 255, 255, 0.16);
+    border-color: rgba(255, 255, 255, 0.28);
+    color: #ffffff;
+  }
+
+  .topbar-controls-cluster .btn-theme-toggle {
+    width: 30px;
+    height: 30px;
+    background: transparent;
+    border: none;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: #1e293b;
+    font-size: 0.95rem;
+  }
+
+  [data-theme="dark"] .topbar-controls-cluster .btn-theme-toggle {
+    color: #ffffff;
+  }
+}
+

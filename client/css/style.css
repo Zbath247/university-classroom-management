@@ -1729,3 +1729,15 @@ body.lang-en .topbar-user-role {
   letter-spacing: -0.01em;
 }
 
+/* Hide topbar quick language & theme toggle cluster on desktop/computer */
+.topbar-controls-cluster {
+  display: none !important;
+}
+
+@media (max-width: 768px) {
+  .topbar-controls-cluster {
+    display: inline-flex !important;
+  }
+}
+
+
