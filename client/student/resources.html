@@ -334,30 +334,26 @@
           const isViewableDoc = isPdf || isPpt || (r.file_url && (r.file_url.startsWith('/uploads/') || ext === 'doc' || ext === 'docx'));
 
           let actionBtnHtml = '';
-          if (isPdf) {
-            actionBtnHtml = `
-              <button class="btn btn-sm btn-primary" style="background:#dc2626; border-color:#dc2626;" onclick="openDocumentViewer(${r.id})">
-                📖 <span data-i18n="action.read_pdf">Read PDF</span>
-              </button>
-            `;
-          } else if (isPpt) {
-            actionBtnHtml = `
-              <button class="btn btn-sm btn-primary" style="background:#ea580c; border-color:#ea580c;" onclick="openDocumentViewer(${r.id})">
-                📊 <span data-i18n="action.view_ppt">View PPT</span>
-              </button>
-            `;
-          } else if (isViewableDoc) {
-            actionBtnHtml = `
-              <button class="btn btn-sm btn-primary" style="background:#7f1d1d; border-color:#7f1d1d;" onclick="openDocumentViewer(${r.id})">
-                👁️ <span data-i18n="action.preview">Preview</span>
-              </button>
-            `;
-          } else if (r.file_url) {
-            actionBtnHtml = `
-              <a href="${r.file_url}" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-primary" style="background:#7f1d1d; border-color:#7f1d1d;" data-i18n="action.open_resource">
-                Open Material ↗
-              </a>
-            `;
+          if (r.file_url) {
+            if (isPdf) {
+              actionBtnHtml = `
+                <a href="${r.file_url}" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-primary" style="background:#dc2626; border-color:#dc2626; text-decoration:none; display:inline-flex; align-items:center; gap:4px;">
+                  📖 <span data-i18n="action.read_pdf">Read PDF</span>
+                </a>
+              `;
+            } else if (isPpt) {
+              actionBtnHtml = `
+                <button class="btn btn-sm btn-primary" style="background:#ea580c; border-color:#ea580c;" onclick="openDocumentViewer(${r.id})">
+                  📊 <span data-i18n="action.view_ppt">View PPT</span>
+                </button>
+              `;
+            } else {
+              actionBtnHtml = `
+                <a href="${r.file_url}" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-primary" style="background:#7f1d1d; border-color:#7f1d1d; text-decoration:none; display:inline-flex; align-items:center; gap:4px;">
+                  👁️ <span data-i18n="action.preview">Preview</span>
+                </a>
+              `;
+            }
           }
 
           return `
@@ -493,7 +489,7 @@
   }
 
   function viewResourceDetail(id) {
-    const r = allResources.find(item => item.id === id);
+    const r = allResources.find(item => item.id == id);
     if (!r) return;
 
     document.getElementById('modal-res-title').textContent = r.title;
@@ -501,7 +497,13 @@
     document.getElementById('modal-res-teacher').textContent = r.teacher_name;
     document.getElementById('modal-res-type').innerHTML = getTypeBadge(r.resource_type);
     document.getElementById('modal-res-desc').textContent = r.description || (window.I18n ? window.I18n.t('placeholder.optional') : 'No description provided.');
-    document.getElementById('modal-res-link').href = r.file_url;
+    
+    const linkBtn = document.getElementById('modal-res-link');
+    if (linkBtn) {
+      linkBtn.href = r.file_url || '#';
+      linkBtn.target = '_blank';
+      linkBtn.style.display = r.file_url ? 'inline-flex' : 'none';
+    }
 
     const modal = document.getElementById('res-detail-modal');
     if (window.I18n) window.I18n.autoTranslate(modal);
