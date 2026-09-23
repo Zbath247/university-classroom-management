@@ -378,9 +378,9 @@ html, body {
   }
 }
 
-/* ─── 11. TOPBAR QUICK LANGUAGE & THEME CONTROLS (MOBILE & DESKTOP) ───────── */
+/* ─── 11. TOPBAR QUICK LANGUAGE & THEME CONTROLS (MOBILE ONLY, HIDDEN ON DESKTOP) ───────── */
 .topbar-controls-cluster {
-  display: inline-flex;
+  display: none; /* Hidden on computer / desktop screens */
   align-items: center;
   gap: 6px;
   background: rgba(0, 0, 0, 0.05);
@@ -388,6 +388,12 @@ html, body {
   padding: 3px 6px;
   border-radius: 9999px;
   margin-right: 4px;
+}
+
+@media (max-width: 768px) {
+  .topbar-controls-cluster {
+    display: inline-flex;
+  }
 }
 
 [data-theme="dark"] .topbar-controls-cluster {
