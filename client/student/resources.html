@@ -382,18 +382,13 @@
                 </div>
               </div>
 
-              <div class="card-footer" style="background:var(--bg-light); border-top:1px solid var(--border-color); padding:0.75rem 1.25rem; display:flex; justify-content:space-between; align-items:center;">
-                <button class="btn btn-sm btn-secondary" onclick="viewResourceDetail(${r.id})">
-                  ℹ️ <span data-i18n="action.view">Details</span>
-                </button>
-                <div style="display:flex; gap:0.4rem; align-items:center;">
-                  ${r.file_url ? `
-                    <a href="${r.file_url}" download="${r.file_name || r.title}" class="btn btn-sm btn-outline" title="Download File">
-                      📥
-                    </a>
-                  ` : ''}
-                  ${actionBtnHtml}
-                </div>
+              <div class="card-footer" style="background:var(--bg-light); border-top:1px solid var(--border-color); padding:0.75rem 1.25rem; display:flex; justify-content:flex-end; align-items:center; gap:0.5rem;">
+                ${r.file_url ? `
+                  <a href="${r.file_url}" download="${r.file_name || r.title}" class="btn btn-sm btn-outline" title="Download File">
+                    📥
+                  </a>
+                ` : ''}
+                ${actionBtnHtml}
               </div>
             </div>
           `;
