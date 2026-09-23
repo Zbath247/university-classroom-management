@@ -807,16 +807,18 @@ html[data-theme="light"] body {
 
 /* ─── Mobile Overlay ─────────────────────────────────────────────────────── */
 .sidebar-overlay {
-  display: none;
+  display: none !important;
   position: fixed;
   inset: 0;
   background: rgba(0,0,0,0.5);
   z-index: 99;
+  pointer-events: none !important;
 }
 
 @media (max-width: 768px) {
   .sidebar-overlay.active {
-    display: block;
+    display: block !important;
+    pointer-events: auto !important;
   }
 }
 

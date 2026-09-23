@@ -783,36 +783,10 @@ function renderEmptyState(container, {
   `;
 }
 
-// ─── Rock-Solid Zero-Flicker SPA Client Router ──────────────────────────────
+// ─── Native Rock-Solid Navigation ───────────────────────────────────────────
 function setupSeamlessNavigation() {
-  if (window.__seamlessNavBound) return;
-  window.__seamlessNavBound = true;
-
-  document.addEventListener('click', (e) => {
-    const link = e.target.closest('.sidebar-nav a.nav-link, a[data-spa], .card-header a.btn');
-    if (!link) return;
-
-    const href = link.getAttribute('href');
-    if (!href || href.startsWith('#') || href.startsWith('javascript:') || link.target === '_blank') return;
-    if (href.includes('login.html') || (link.getAttribute('onclick') && link.getAttribute('onclick').includes('logout'))) return;
-
-    const targetUrl = new URL(href, window.location.origin);
-    // Don't re-navigate if clicking the active page
-    if (targetUrl.pathname === window.location.pathname) {
-      e.preventDefault();
-      return;
-    }
-
-    // Only route same-origin role dashboard pages
-    if (targetUrl.origin !== window.location.origin) return;
-
-    e.preventDefault();
-    navigateToPage(targetUrl.pathname + targetUrl.search, true);
-  });
-
-  window.addEventListener('popstate', () => {
-    navigateToPage(window.location.pathname + window.location.search, false);
-  });
+  // Let standard browser navigation handle page transitions natively, flawlessly, and without click interception
+  return;
 }
 
 async function navigateToPage(url, pushState = true) {

@@ -21,38 +21,17 @@
     setupSidebarOverlaySafety();
     setupTouchGestures();
     setupMobileBottomDock();
-    setupBodyScrollLocking();
   }
 
-  // ─── 1. Ensure Sidebar Overlay Exists on Every Page ───────────────────────────
+  // ─── 1. Ensure Sidebar Overlay Safety ─────────────────────────────────────────
   function setupSidebarOverlaySafety() {
-    let overlay = document.getElementById('sidebar-overlay');
-    if (!overlay) {
-      overlay = document.createElement('div');
-      overlay.id = 'sidebar-overlay';
-      overlay.className = 'sidebar-overlay';
-      document.body.appendChild(overlay);
-    }
-
+    const overlay = document.getElementById('sidebar-overlay');
     const sidebar = document.getElementById('sidebar');
     if (sidebar && overlay) {
       overlay.addEventListener('click', () => {
         sidebar.classList.remove('mobile-open');
         overlay.classList.remove('active');
         document.body.classList.remove('sidebar-locked');
-      });
-    }
-
-    // Toggle button enhancement
-    const toggleBtn = document.getElementById('sidebar-toggle');
-    if (toggleBtn && sidebar) {
-      toggleBtn.addEventListener('click', () => {
-        const isOpen = sidebar.classList.contains('mobile-open');
-        if (isOpen) {
-          document.body.classList.add('sidebar-locked');
-        } else {
-          document.body.classList.remove('sidebar-locked');
-        }
       });
     }
   }
@@ -67,40 +46,26 @@
     let currentX = 0;
 
     sidebar.addEventListener('touchstart', (e) => {
-      startX = e.touches[0].clientX;
-      currentX = startX;
+      if (e.touches && e.touches[0]) {
+        startX = e.touches[0].clientX;
+        currentX = startX;
+      }
     }, { passive: true });
 
     sidebar.addEventListener('touchmove', (e) => {
-      currentX = e.touches[0].clientX;
+      if (e.touches && e.touches[0]) {
+        currentX = e.touches[0].clientX;
+      }
     }, { passive: true });
 
     sidebar.addEventListener('touchend', () => {
       const diffX = startX - currentX;
-      // If swiped left by more than 50px, close sidebar
       if (diffX > 50 && sidebar.classList.contains('mobile-open')) {
         sidebar.classList.remove('mobile-open');
         if (overlay) overlay.classList.remove('active');
         document.body.classList.remove('sidebar-locked');
       }
     }, { passive: true });
-  }
-
-  // ─── 3. Body Scroll-Locking Safeguard ──────────────────────────────────────────
-  function setupBodyScrollLocking() {
-    const observer = new MutationObserver(() => {
-      const sidebar = document.getElementById('sidebar');
-      const openModal = document.querySelector('.modal.active, .modal.show, [id$="-modal"].active');
-      const isSidebarOpen = sidebar && sidebar.classList.contains('mobile-open');
-      
-      if (isSidebarOpen || openModal) {
-        document.body.classList.add('sidebar-locked');
-      } else {
-        document.body.classList.remove('sidebar-locked');
-      }
-    });
-
-    observer.observe(document.body, { attributes: true, subtree: true, attributeFilter: ['class'] });
   }
 
   // ─── 4. Render App-Like Mobile Bottom Navigation Dock ────────────────────────

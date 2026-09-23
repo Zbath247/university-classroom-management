@@ -276,19 +276,20 @@ html, body {
     -webkit-backdrop-filter: blur(4px);
     z-index: 999;
     opacity: 0;
-    pointer-events: none;
+    display: none;
+    pointer-events: none !important;
     transition: opacity 0.25s ease;
   }
 
   .sidebar-overlay.active {
     opacity: 1;
-    pointer-events: auto;
+    display: block !important;
+    pointer-events: auto !important;
   }
 
-  /* Freeze body scroll when drawer is open */
+  /* Freeze body scroll only when drawer is explicitly open */
   body.sidebar-locked {
     overflow: hidden !important;
-    touch-action: none !important;
   }
 }
 
