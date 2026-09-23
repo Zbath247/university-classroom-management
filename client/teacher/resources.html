@@ -203,26 +203,26 @@
       <div class="modal-body" style="display:flex; flex-direction:column; gap:0.75rem; padding:1.25rem;">
 
         <div class="form-group" style="margin-bottom:0;">
-          <label class="form-label" for="form-title" style="margin-bottom:0.35rem;" data-i18n="table.resource_title">Resource Title <span class="required">*</span></label>
-          <input type="text" id="form-title" class="form-control" placeholder="e.g. Chapter 3: ER Diagrams Lecture Slides" required />
+          <label class="form-label" for="form-title" style="margin-bottom:0.35rem;" data-i18n="table.resource_title">Title <span class="required">*</span></label>
+          <input type="text" id="form-title" class="form-control" placeholder="បញ្ចូលចំណងជើងមេរៀន ឬឯកសារ..." required />
         </div>
 
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.75rem;">
           <div class="form-group" style="margin-bottom:0;">
             <label class="form-label" for="form-subject" style="margin-bottom:0.35rem;" data-i18n="table.subject">Subject <span class="required">*</span></label>
             <select id="form-subject" class="form-control" required>
-              <option value="" data-i18n="filter.select_subject">-- Select Subject --</option>
+              <option value="" data-i18n="filter.select_subject">-- ជ្រើសរើសមុខវិជ្ជា --</option>
             </select>
           </div>
           <div class="form-group" style="margin-bottom:0;">
-            <label class="form-label" for="form-type" style="margin-bottom:0.35rem;" data-i18n="table.resource_type">Resource Type</label>
+            <label class="form-label" for="form-type" style="margin-bottom:0.35rem;" data-i18n="table.resource_type">Type</label>
             <select id="form-type" class="form-control">
-              <option value="pdf" data-i18n="type.pdf">📕 PDF Document</option>
-              <option value="ppt" data-i18n="type.ppt">📊 PowerPoint Slides</option>
-              <option value="document" data-i18n="type.document_pdf">📄 Word / Other Document</option>
-              <option value="video" data-i18n="type.video_recording">🎥 Video / Lecture Recording</option>
-              <option value="link" data-i18n="type.url_drive">🔗 Web URL / Drive Link</option>
-              <option value="other" data-i18n="type.other">📁 Other File</option>
+              <option value="pdf" data-i18n="type.pdf">📕 ឯកសារ PDF</option>
+              <option value="ppt" data-i18n="type.ppt">📊 ស្លាយ PPT</option>
+              <option value="document" data-i18n="type.document_pdf">📄 ឯកសារ Word/Doc</option>
+              <option value="video" data-i18n="type.video_recording">🎥 វីដេអូមេរៀន</option>
+              <option value="link" data-i18n="type.url_drive">🔗 តំណភ្ជាប់ Web/Drive</option>
+              <option value="other" data-i18n="type.other">📁 ផ្សេងៗ</option>
             </select>
           </div>
         </div>
@@ -230,8 +230,8 @@
         <!-- Sleek & Compact File Upload Row -->
         <div class="form-group" style="margin-bottom:0;">
           <label class="form-label" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.35rem;">
-            <span data-i18n="upload.choose_file">ជ្រើសរើសឯកសារ (PDF, PPT, PPTX)</span>
-            <small style="color:var(--text-muted); font-size:0.75rem;" data-i18n="upload.file_size_max">ទំហំអតិបរមា: 50MB</small>
+            <span data-i18n="upload.choose_file">ឯកសារភ្ជាប់ (File)</span>
+            <small style="color:var(--text-muted); font-size:0.75rem;" data-i18n="upload.file_size_max">អតិបរមា 50MB</small>
           </label>
 
           <input type="file" id="form-file" accept=".pdf,.ppt,.pptx,.doc,.docx" style="display:none;" onchange="handleFileSelected(this)" />
@@ -242,20 +242,20 @@
               <span data-i18n="action.browse_file">ជ្រើសរើស File</span>
             </button>
             <div id="file-display-text" style="flex:1; font-size:0.85rem; color:var(--text-muted); text-overflow:ellipsis; overflow:hidden; white-space:nowrap; padding:0 0.5rem;" data-i18n="upload.drag_drop_short">
-              ឬទម្លាក់ File មកទីនេះ (.pdf, .ppt, .pptx)
+              ឬទម្លាក់ File មកទីនេះ
             </div>
             <button type="button" id="btn-clear-file" class="btn btn-sm btn-outline" style="display:none; padding:0.25rem 0.5rem; color:var(--danger); border-color:rgba(239,68,68,0.3); font-size:0.8rem;" onclick="event.stopPropagation(); clearSelectedFile();" title="Remove">✕</button>
           </div>
         </div>
 
         <div class="form-group" style="margin-bottom:0;">
-          <label class="form-label" for="form-url" style="margin-bottom:0.35rem;" data-i18n="upload.or_enter_url">Or enter Web Link / Drive URL</label>
-          <input type="url" id="form-url" class="form-control" placeholder="https://drive.google.com/... or https://youtube.com/..." />
+          <label class="form-label" for="form-url" style="margin-bottom:0.35rem;" data-i18n="upload.or_enter_url">ឬតំណភ្ជាប់ (URL / Link):</label>
+          <input type="url" id="form-url" class="form-control" placeholder="https://drive.google.com/... ឬ https://youtube.com/..." />
         </div>
 
         <div class="form-group" style="margin-bottom:0;">
-          <label class="form-label" for="form-desc" style="margin-bottom:0.35rem;" data-i18n="table.description_notes">Description / Notes</label>
-          <textarea id="form-desc" class="form-control" rows="2" placeholder="Additional study guidance, instructions for students..."></textarea>
+          <label class="form-label" for="form-desc" style="margin-bottom:0.35rem;" data-i18n="table.description_notes">ការពិពណ៌នា</label>
+          <textarea id="form-desc" class="form-control" rows="2" placeholder="សេចក្តីណែនាំបន្ថែម (មិនបង្ខំ)..."></textarea>
         </div>
 
       </div>
