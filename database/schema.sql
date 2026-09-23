@@ -101,7 +101,7 @@ CREATE TABLE teachers (
   full_name   VARCHAR(100) NOT NULL,
   gender      ENUM('male','female','other') DEFAULT 'male',
   email       VARCHAR(100) NOT NULL,
-  phone       VARCHAR(20),
+  phone       VARCHAR(100),
   department  VARCHAR(100),
   avatar      VARCHAR(255) DEFAULT NULL,
   created_at  TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -131,7 +131,7 @@ CREATE TABLE students (
   full_name_kh  VARCHAR(100),                      -- Khmer name
   gender        ENUM('male','female','other') DEFAULT 'male',
   date_of_birth DATE,
-  phone         VARCHAR(20),
+  phone         VARCHAR(100),
   email         VARCHAR(100),
   avatar        VARCHAR(255) DEFAULT NULL,
   class_id      INT          UNSIGNED,             -- which class they belong to

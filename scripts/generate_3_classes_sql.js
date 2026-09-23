@@ -111,6 +111,9 @@ let sql = `-- ==================================================================
 USE classroom_db;
 
 SET FOREIGN_KEY_CHECKS = 0;
+ALTER TABLE students MODIFY COLUMN phone VARCHAR(100);
+ALTER TABLE teachers MODIFY COLUMN phone VARCHAR(100);
+
 TRUNCATE TABLE resources; 
 TRUNCATE TABLE assignments;
 TRUNCATE TABLE attendance; 
