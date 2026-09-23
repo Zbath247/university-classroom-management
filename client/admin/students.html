@@ -271,7 +271,7 @@
 
   <script src="/js/api.js?v=2.6"></script>
   <script src="/js/auth.js?v=2.6"></script>
-  <script src="/js/dashboard.js?v=2.7"></script>
+  <script src="/js/dashboard.js?v=2.8"></script>
   <script src="/js/admin.js?v=2.6"></script>
   <script>
     var allStudents = [];
@@ -318,6 +318,7 @@
         return;
       }
 
+      const lang = window.I18n ? window.I18n.getCurrentLang() : (localStorage.getItem('duc_lang') || 'km');
       tbody.innerHTML = students.map(s => {
         const phoneDisplay = s.phone && s.phone.includes('t.me') 
           ? `<a href="https://${s.phone.replace(/^https?:\/\//, '')}" target="_blank" rel="noopener noreferrer" style="color:#0284c7; text-decoration:none; font-weight:500; display:inline-flex; align-items:center; gap:4px;">
@@ -328,14 +329,12 @@
         const genderKey = s.gender === 'female' ? 'table.gender_f' : 'table.gender_m';
         const genderDisplay = window.I18n ? I18n.t(genderKey, s.gender === 'female' ? 'Female' : 'Male') : (s.gender === 'female' ? 'Female' : 'Male');
         const editTxt = window.I18n ? I18n.t('action.edit') : 'Edit';
+        const nameHtml = window.formatPersonName ? window.formatPersonName(s.full_name, s.full_name_kh, lang) : `<div class="name-en">${s.full_name}</div>`;
 
         return `
         <tr>
           <td><strong style="color:var(--primary);">${s.student_id}</strong></td>
-          <td>
-            <div class="name-en">${s.full_name}</div>
-            ${s.full_name_kh ? `<div class="name-khmer">${s.full_name_kh}</div>` : ''}
-          </td>
+          <td>${nameHtml}</td>
           <td><span class="badge ${s.gender === 'female' ? 'badge-purple' : 'badge-gray'}" data-i18n="${genderKey}">${genderDisplay}</span></td>
           <td><span class="badge badge-primary">${s.class_code || 'G1-NW-B'}</span></td>
           <td>${phoneDisplay}</td>

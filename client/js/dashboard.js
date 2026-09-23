@@ -97,13 +97,19 @@ function getUserDisplayName(user, lang) {
 }
 
 // ─── Format Bilingual Person Name for Tables ─────────────────────────────────
-function formatPersonName(fullName, khmerName = null) {
+// ─── Format Bilingual Person Name for Tables ─────────────────────────────────
+function formatPersonName(fullName, khmerName = null, targetLang = null) {
   if (!fullName) return '—';
+  const lang = targetLang || (window.I18n ? window.I18n.getCurrentLang() : (localStorage.getItem('duc_lang') || 'km'));
+  const isKhmer = lang === 'km';
 
   if (khmerName) {
+    if (!isKhmer) {
+      return `<div class="name-en">${fullName}</div>`;
+    }
     return `
-      <div class="name-en">${fullName}</div>
-      <div class="name-khmer">${khmerName}</div>
+      <div class="name-khmer" style="font-weight:600; font-size:0.95rem;">${khmerName}</div>
+      <div class="name-en" style="font-size:0.8rem; color:var(--text-muted);">${fullName}</div>
     `;
   }
 
@@ -111,9 +117,13 @@ function formatPersonName(fullName, khmerName = null) {
   if (match) {
     const enName = match[1].trim();
     const khName = match[2].trim();
+    if (!isKhmer) {
+      return `<div class="name-en">${enName}</div>`;
+    }
+    const khPrefix = enName.includes('Mr.') ? 'លោកគ្រូ ' : '';
     return `
-      <div class="name-en">${enName}</div>
-      <div class="name-khmer">${khName}</div>
+      <div class="name-khmer" style="font-size:0.95rem; font-weight:700;">${khPrefix}${khName}</div>
+      <div class="name-en" style="font-size:0.8rem; color:var(--text-muted);">${enName}</div>
     `;
   }
 
@@ -124,6 +134,81 @@ function formatPersonName(fullName, khmerName = null) {
   return `<div class="name-en">${fullName}</div>`;
 }
 window.formatPersonName = formatPersonName;
+
+// ─── Format Bilingual Text Utility (Switches based on current language) ────
+function formatBilingualText(text, targetLang) {
+  if (!text) return '';
+  const lang = targetLang || (window.I18n ? window.I18n.getCurrentLang() : (localStorage.getItem('duc_lang') || 'km'));
+  const isKhmer = lang === 'km';
+
+  // 1. Parenthesized format: "English Name (ឈ្មោះខ្មែរ)"
+  const parenMatch = text.match(/^(.*?)\s*[\(\[]\s*([\u1780-\u17FF\s0-9A-Za-z]+)\s*[\)\]]$/);
+  if (parenMatch) {
+    const enPart = parenMatch[1].trim();
+    const khPart = parenMatch[2].trim();
+    if (!isKhmer) {
+      return enPart;
+    }
+    const gMatch = enPart.match(/^(G\d+)/i);
+    if (gMatch && !khPart.startsWith(gMatch[1])) {
+      return `${gMatch[1]} ${khPart}`;
+    }
+    return khPart;
+  }
+
+  // 2. Academic descriptions with semester / year
+  if (text.includes('ឆមាស') || text.includes('ជំនាន់') || text.includes('ឆ្នាំ') || text.includes('Faculty of Digital Industry') || text.includes('Semester')) {
+    if (!isKhmer) {
+      let en = text
+        .replace(/ឆមាសទី\s*([១-៩\d]+)/g, (m, p1) => {
+          const num = { '១':'1', '២':'2', '៣':'3', '៤':'4' }[p1] || p1;
+          return `Semester ${num}`;
+        })
+        .replace(/ឆ្នាំទី\s*([១-៩\d]+)/g, (m, p1) => {
+          const num = { '១':'1', '២':'2', '៣':'3', '៤':'4' }[p1] || p1;
+          return `Year ${num}`;
+        })
+        .replace(/ជំនាន់ទី\s*([១-៩\d]+)/g, (m, p1) => {
+          const num = { '១':'1', '២':'2', '៣':'3', '៤':'4' }[p1] || p1;
+          return `Gen ${num}`;
+        })
+        .replace(/មហាវិទ្យាល័យឧស្សាហកម្មឌីជីថល/g, 'Faculty of Digital Industry');
+      en = en.replace(/(Semester \d+)\s+(Year \d+)\s+(Gen \d+)/, '$1, $2, $3');
+      return en;
+    } else {
+      return text
+        .replace(/Faculty of Digital Industry/g, 'មហាវិទ្យាល័យឧស្សាហកម្មឌីជីថល')
+        .replace(/Semester\s*1/gi, 'ឆមាសទី១')
+        .replace(/Semester\s*2/gi, 'ឆមាសទី២')
+        .replace(/Year\s*1/gi, 'ឆ្នាំទី១')
+        .replace(/Year\s*2/gi, 'ឆ្នាំទី២')
+        .replace(/Year\s*3/gi, 'ឆ្នាំទី៣')
+        .replace(/Year\s*4/gi, 'ឆ្នាំទី៤')
+        .replace(/Gen\s*1/gi, 'ជំនាន់ទី១')
+        .replace(/Gen\s*2/gi, 'ជំនាន់ទី២');
+    }
+  }
+
+  // 3. Subject descriptions with instructor: "System Analysis & Design (SAD) — លោកគ្រូ ឈាង វុទ្ធី"
+  if (text.includes('— លោកគ្រូ') || text.includes('— Instructor') || text.includes('— Mr.')) {
+    if (!isKhmer) {
+      return text
+        .replace(/លោកគ្រូ\s*ឈាង\s*វុទ្ធី/g, 'Instructor Chheang Vuthey')
+        .replace(/លោកគ្រូ\s*សែម\s*វ៉ាវី/g, 'Instructor Sem Vavy')
+        .replace(/លោកគ្រូ\s*ភឿន\s*មេសា/g, 'Instructor Phoeun Mesa')
+        .replace(/លោកគ្រូ/g, 'Instructor');
+    } else {
+      return text
+        .replace(/Instructor Chheang Vuthey|Mr\. Chheang Vuthey/g, 'លោកគ្រូ ឈាង វុទ្ធី')
+        .replace(/Instructor Sem Vavy|Mr\. Sem Vavy/g, 'លោកគ្រូ សែម វ៉ាវី')
+        .replace(/Instructor Phoeun Mesa|Mr\. Phoeun Mesa/g, 'លោកគ្រូ ភឿន មេសា')
+        .replace(/Instructor\s+/g, 'លោកគ្រូ ');
+    }
+  }
+
+  return text;
+}
+window.formatBilingualText = formatBilingualText;
 
 // ─── Format Date Utility (Shared across all portals) ──────────────────────────
 function formatDate(dateStr) {
@@ -706,6 +791,23 @@ function initThemeAndBilingualEngine() {
       window.I18n.autoTranslate(document);
     }
     populateUserUI();
+
+    // Re-render active table data with current language
+    if (typeof renderClassesTable === 'function' && typeof allClasses !== 'undefined' && allClasses.length) {
+      renderClassesTable(allClasses);
+    }
+    if (typeof renderSubjectsTable === 'function' && typeof allSubjects !== 'undefined' && allSubjects.length) {
+      renderSubjectsTable(allSubjects);
+    }
+    if (typeof renderTeachersTable === 'function' && typeof allTeachers !== 'undefined' && allTeachers.length) {
+      renderTeachersTable(allTeachers);
+    }
+    if (typeof renderStudentsTable === 'function' && typeof allStudents !== 'undefined' && allStudents.length) {
+      renderStudentsTable(allStudents);
+    }
+    if (typeof renderSchedulesTable === 'function' && typeof allSchedules !== 'undefined' && allSchedules.length) {
+      renderSchedulesTable(allSchedules);
+    }
   });
 }
 

@@ -250,7 +250,7 @@
 
   <script src="/js/api.js?v=2.6"></script>
   <script src="/js/auth.js?v=2.6"></script>
-  <script src="/js/dashboard.js?v=2.7"></script>
+  <script src="/js/dashboard.js?v=2.8"></script>
   <script src="/js/admin.js?v=2.6"></script>
   <script>
     var allTeachers = [];
@@ -290,17 +290,20 @@
         return;
       }
 
+      const lang = window.I18n ? window.I18n.getCurrentLang() : (localStorage.getItem('duc_lang') || 'km');
       tbody.innerHTML = teachers.map(t => {
         const genderKey = t.gender === 'female' ? 'table.gender_f' : 'table.gender_m';
         const genderDisplay = window.I18n ? I18n.t(genderKey, t.gender === 'female' ? 'Female' : 'Male') : (t.gender === 'female' ? 'Female' : 'Male');
         const editTxt = window.I18n ? I18n.t('action.edit') : 'Edit';
+        const nameHtml = window.formatPersonName ? window.formatPersonName(t.full_name, null, lang) : `<div style="font-weight:600;">${t.full_name}</div>`;
+        const deptDisplay = window.formatBilingualText ? window.formatBilingualText(t.department, lang) : (t.department || 'General');
 
         return `
         <tr>
           <td><strong style="color:var(--primary);">${t.teacher_id}</strong></td>
-          <td>${window.formatPersonName ? window.formatPersonName(t.full_name) : `<div style="font-weight:600;">${t.full_name}</div>`}</td>
+          <td>${nameHtml}</td>
           <td><span class="badge ${t.gender === 'female' ? 'badge-purple' : 'badge-gray'}" data-i18n="${genderKey}">${genderDisplay}</span></td>
-          <td><span class="badge badge-info">${t.department || 'General'}</span></td>
+          <td><span class="badge badge-info">${deptDisplay}</span></td>
           <td>${t.phone || '—'}</td>
           <td><small>${t.email}</small></td>
           <td style="text-align:right;">

@@ -263,99 +263,117 @@
 
   <script src="/js/api.js?v=2.6"></script>
   <script src="/js/auth.js?v=2.6"></script>
-  <script src="/js/dashboard.js?v=2.7"></script>
+  <script src="/js/dashboard.js?v=2.8"></script>
   <script src="/js/admin.js?v=2.6"></script>
   <script>
+    var dashboardStatsData = null;
+
     document.addEventListener('DOMContentLoaded', async () => {
       initDashboard('admin');
       await loadDashboardData();
+    });
+
+    window.addEventListener('duc:langchange', () => {
+      if (dashboardStatsData) {
+        renderDashboardStats(dashboardStatsData);
+      }
     });
 
     async function loadDashboardData() {
       try {
         const res = await api.get('/admin/stats');
         if (res.success && res.data) {
-          const { totals, recentStudents, classStats, todaySchedules, todayName } = res.data;
-
-          // Set counts
-          document.getElementById('stat-students').textContent = totals.students;
-          document.getElementById('stat-teachers').textContent = totals.teachers;
-          document.getElementById('stat-classes').textContent  = totals.classes;
-          document.getElementById('stat-subjects').textContent = totals.subjects;
-
-          // Today day
-          const dayKey = `day.${(todayName || '').toLowerCase()}`;
-          const dayDisplay = window.I18n ? I18n.t(dayKey, todayName) : todayName;
-          const todayEl = document.getElementById('today-day-name');
-          todayEl.textContent = dayDisplay;
-          todayEl.setAttribute('data-i18n', dayKey);
-
-          // Recent students table
-          const studentsTbody = document.getElementById('recent-students-tbody');
-          if (recentStudents && recentStudents.length > 0) {
-            studentsTbody.innerHTML = recentStudents.map(s => {
-              const classDisplay = s.class_code 
-                ? s.class_code 
-                : `<span data-i18n="status.unassigned">${window.I18n ? I18n.t('status.unassigned') : 'Unassigned'}</span>`;
-              return `
-              <tr>
-                <td><strong>${s.student_id}</strong></td>
-                <td>
-                  <div class="name-en">${s.full_name}</div>
-                  ${s.full_name_kh ? `<div class="name-khmer">${s.full_name_kh}</div>` : ''}
-                </td>
-                <td><span class="badge badge-primary">${classDisplay}</span></td>
-              </tr>
-            `}).join('');
-          } else {
-            studentsTbody.innerHTML = '<tr><td colspan="3" class="text-center" style="padding:2rem;" data-i18n="msg.no_students">' + (window.I18n ? I18n.t('msg.no_students') : 'No students found.') + '</td></tr>';
-          }
-
-          // Today schedule table
-          const schedTbody = document.getElementById('today-schedules-tbody');
-          if (todaySchedules && todaySchedules.length > 0) {
-            schedTbody.innerHTML = todaySchedules.map(sch => {
-              const roomDisplay = sch.room 
-                ? sch.room 
-                : `<span data-i18n="status.tbd">${window.I18n ? I18n.t('status.tbd') : 'TBD'}</span>`;
-              return `
-              <tr>
-                <td><span class="badge badge-info">${formatTime(sch.start_time)} - ${formatTime(sch.end_time)}</span></td>
-                <td><strong>${sch.subject_name}</strong></td>
-                <td>${sch.class_code} · <small style="color:var(--text-muted);">${roomDisplay}</small></td>
-                <td>${window.formatPersonName ? window.formatPersonName(sch.teacher_name) : sch.teacher_name}</td>
-              </tr>
-            `}).join('');
-          } else {
-            schedTbody.innerHTML = `<tr><td colspan="4" class="text-center" style="padding:2rem; color:var(--text-muted);" data-i18n="msg.no_schedules">${window.I18n ? I18n.t('msg.no_schedules') : 'No classes scheduled for today.'}</td></tr>`;
-          }
-
-          // Class enrollment cards
-          const classesGrid = document.getElementById('classes-grid');
-          if (classStats && classStats.length > 0) {
-            const studentsLabel = window.I18n ? I18n.t('table.students_count') : 'Students';
-            const yearLabel = window.I18n ? I18n.t('table.year_prefix') : 'Year';
-            classesGrid.innerHTML = classStats.map(c => `
-              <div style="border:1px solid var(--border-color); border-radius:var(--radius); padding:1rem; background:var(--bg-light);">
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem;">
-                  <strong style="font-size:1.1rem; color:var(--primary);">${c.class_code}</strong>
-                  <span class="badge badge-success">${c.student_count} <span data-i18n="table.students_count">${studentsLabel}</span></span>
-                </div>
-                <div style="font-size:0.875rem; color:var(--text-dark);">${c.class_name}</div>
-                <div style="font-size:0.75rem; color:var(--text-muted); margin-top:0.25rem;"><span data-i18n="table.year_prefix">${yearLabel}</span>: ${c.academic_year}</div>
-              </div>
-            `).join('');
-          } else {
-            classesGrid.innerHTML = '<div class="text-center" style="padding:1rem;" data-i18n="msg.no_classes">' + (window.I18n ? I18n.t('msg.no_classes') : 'No classes found.') + '</div>';
-          }
-
-          if (window.I18n) {
-            window.I18n.autoTranslate(document.getElementById('main-content'));
-          }
+          dashboardStatsData = res.data;
+          renderDashboardStats(dashboardStatsData);
         }
       } catch (err) {
         console.error('Error loading dashboard stats:', err);
         showToast('Failed to load dashboard statistics.', 'error');
+      }
+    }
+
+    function renderDashboardStats(data) {
+      const lang = window.I18n ? window.I18n.getCurrentLang() : (localStorage.getItem('duc_lang') || 'km');
+      const { totals, recentStudents, classStats, todaySchedules, todayName } = data;
+
+      // Set counts
+      document.getElementById('stat-students').textContent = totals.students;
+      document.getElementById('stat-teachers').textContent = totals.teachers;
+      document.getElementById('stat-classes').textContent  = totals.classes;
+      document.getElementById('stat-subjects').textContent = totals.subjects;
+
+      // Today day
+      const dayKey = `day.${(todayName || '').toLowerCase()}`;
+      const dayDisplay = window.I18n ? I18n.t(dayKey, todayName) : todayName;
+      const todayEl = document.getElementById('today-day-name');
+      if (todayEl) {
+        todayEl.textContent = dayDisplay;
+        todayEl.setAttribute('data-i18n', dayKey);
+      }
+
+      // Recent students table
+      const studentsTbody = document.getElementById('recent-students-tbody');
+      if (recentStudents && recentStudents.length > 0) {
+        studentsTbody.innerHTML = recentStudents.map(s => {
+          const classDisplay = s.class_code 
+            ? s.class_code 
+            : `<span data-i18n="status.unassigned">${window.I18n ? I18n.t('status.unassigned') : 'Unassigned'}</span>`;
+          const nameHtml = window.formatPersonName ? window.formatPersonName(s.full_name, s.full_name_kh, lang) : `<div class="name-en">${s.full_name}</div>`;
+          return `
+          <tr>
+            <td><strong>${s.student_id}</strong></td>
+            <td>${nameHtml}</td>
+            <td><span class="badge badge-primary">${classDisplay}</span></td>
+          </tr>
+        `}).join('');
+      } else {
+        studentsTbody.innerHTML = '<tr><td colspan="3" class="text-center" style="padding:2rem;" data-i18n="msg.no_students">' + (window.I18n ? I18n.t('msg.no_students') : 'No students found.') + '</td></tr>';
+      }
+
+      // Today schedule table
+      const schedTbody = document.getElementById('today-schedules-tbody');
+      if (todaySchedules && todaySchedules.length > 0) {
+        schedTbody.innerHTML = todaySchedules.map(sch => {
+          const roomDisplay = sch.room 
+            ? sch.room 
+            : `<span data-i18n="status.tbd">${window.I18n ? I18n.t('status.tbd') : 'TBD'}</span>`;
+          const teacherHtml = window.formatPersonName ? window.formatPersonName(sch.teacher_name, null, lang) : sch.teacher_name;
+          const subjDisplay = window.formatBilingualText ? window.formatBilingualText(sch.subject_name, lang) : sch.subject_name;
+          return `
+          <tr>
+            <td><span class="badge badge-info">${formatTime(sch.start_time)} - ${formatTime(sch.end_time)}</span></td>
+            <td><strong>${subjDisplay}</strong></td>
+            <td>${sch.class_code} · <small style="color:var(--text-muted);">${roomDisplay}</small></td>
+            <td>${teacherHtml}</td>
+          </tr>
+        `}).join('');
+      } else {
+        schedTbody.innerHTML = `<tr><td colspan="4" class="text-center" style="padding:2rem; color:var(--text-muted);" data-i18n="msg.no_schedules">${window.I18n ? I18n.t('msg.no_schedules') : 'No classes scheduled for today.'}</td></tr>`;
+      }
+
+      // Class enrollment cards
+      const classesGrid = document.getElementById('classes-grid');
+      if (classStats && classStats.length > 0) {
+        const studentsLabel = window.I18n ? I18n.t('table.students_count') : 'Students';
+        const yearLabel = window.I18n ? I18n.t('table.year_prefix') : 'Year';
+        classesGrid.innerHTML = classStats.map(c => {
+          const classNameDisplay = window.formatBilingualText ? window.formatBilingualText(c.class_name, lang) : c.class_name;
+          return `
+          <div style="border:1px solid var(--border-color); border-radius:var(--radius); padding:1rem; background:var(--bg-light);">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem;">
+              <strong style="font-size:1.1rem; color:var(--primary);">${c.class_code}</strong>
+              <span class="badge badge-success">${c.student_count} <span data-i18n="table.students_count">${studentsLabel}</span></span>
+            </div>
+            <div style="font-size:0.875rem; color:var(--text-dark);">${classNameDisplay}</div>
+            <div style="font-size:0.75rem; color:var(--text-muted); margin-top:0.25rem;"><span data-i18n="table.year_prefix">${yearLabel}</span>: ${c.academic_year}</div>
+          </div>
+        `}).join('');
+      } else {
+        classesGrid.innerHTML = '<div class="text-center" style="padding:1rem;" data-i18n="msg.no_classes">' + (window.I18n ? I18n.t('msg.no_classes') : 'No classes found.') + '</div>';
+      }
+
+      if (window.I18n) {
+        window.I18n.autoTranslate(document.getElementById('main-content'));
       }
     }
   </script>

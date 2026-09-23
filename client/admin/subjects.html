@@ -215,7 +215,7 @@
 
   <script src="/js/api.js?v=2.6"></script>
   <script src="/js/auth.js?v=2.6"></script>
-  <script src="/js/dashboard.js?v=2.7"></script>
+  <script src="/js/dashboard.js?v=2.8"></script>
   <script src="/js/admin.js?v=2.6"></script>
   <script>
     var allSubjects = [];
@@ -247,12 +247,17 @@
         return;
       }
 
-      tbody.innerHTML = subjects.map(s => `
+      const lang = window.I18n ? window.I18n.getCurrentLang() : (localStorage.getItem('duc_lang') || 'km');
+      tbody.innerHTML = subjects.map(s => {
+        const nameDisplay = window.formatBilingualText ? window.formatBilingualText(s.subject_name, lang) : s.subject_name;
+        const descDisplay = window.formatBilingualText ? window.formatBilingualText(s.description, lang) : (s.description || '—');
+
+        return `
         <tr>
           <td><strong style="color:var(--primary);">${s.subject_code}</strong></td>
-          <td><div style="font-weight:600;">${s.subject_name}</div></td>
+          <td><div style="font-weight:600;">${nameDisplay}</div></td>
           <td><span class="badge badge-info">${s.credits || 3} <span data-i18n="table.credits">Credits</span></span></td>
-          <td><small style="color:var(--text-muted);">${s.description || '—'}</small></td>
+          <td><small style="color:var(--text-muted);">${descDisplay}</small></td>
           <td style="text-align:right;">
             <div style="display:inline-flex; gap:0.25rem;">
               <button class="btn btn-sm btn-secondary" onclick="openEditSubjectModal(${s.id})"><span data-i18n="action.edit">✏️ Edit</span></button>
@@ -260,7 +265,7 @@
             </div>
           </td>
         </tr>
-      `).join('');
+      `}).join('');
 
       if (window.I18n) window.I18n.autoTranslate(tbody);
     }
