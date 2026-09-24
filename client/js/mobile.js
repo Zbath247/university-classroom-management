@@ -20,8 +20,40 @@
   function initMobileExperience() {
     setupSidebarOverlaySafety();
     setupTouchGestures();
+    setupMobileTopbarBrand();
     setupMobileBottomDock();
   }
+
+  // ─── Mobile Topbar Brand (University Logo + DUC Abbreviation) ───────────────
+  function setupMobileTopbarBrand() {
+    const topbarLeft = document.querySelector('.topbar-left');
+    if (!topbarLeft) return;
+    if (topbarLeft.querySelector('.mobile-topbar-brand')) return;
+
+    const path = window.location.pathname;
+    let dashUrl = '/student/dashboard.html';
+    if (path.includes('/admin/')) dashUrl = '/admin/dashboard.html';
+    else if (path.includes('/teacher/')) dashUrl = '/teacher/dashboard.html';
+
+    const brandLink = document.createElement('a');
+    brandLink.href = dashUrl;
+    brandLink.className = 'mobile-topbar-brand';
+    brandLink.id = 'mobile-topbar-brand';
+    brandLink.setAttribute('aria-label', 'DUC Classroom');
+    brandLink.title = 'DUC Classroom';
+    brandLink.innerHTML = `
+      <img src="/assets/duc-logo.png" alt="DUC Logo" class="mobile-topbar-logo" />
+      <span class="mobile-topbar-name">DUC</span>
+    `;
+
+    const toggleBtn = topbarLeft.querySelector('.sidebar-toggle');
+    if (toggleBtn) {
+      topbarLeft.insertBefore(brandLink, toggleBtn);
+    } else {
+      topbarLeft.prepend(brandLink);
+    }
+  }
+  window.setupMobileTopbarBrand = setupMobileTopbarBrand;
 
   // ─── 1. Ensure Sidebar Overlay Safety ─────────────────────────────────────────
   function setupSidebarOverlaySafety() {

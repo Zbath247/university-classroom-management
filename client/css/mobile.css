@@ -218,15 +218,45 @@ html, body {
   }
 
   .sidebar-toggle {
-    width: 38px !important;
-    height: 38px !important;
-    flex-shrink: 0 !important;
-    border-radius: 10px !important;
-    font-size: 1.15rem !important;
-    display: flex !important;
+    display: none !important;
+  }
+
+  .mobile-topbar-brand {
+    display: inline-flex !important;
     align-items: center !important;
-    justify-content: center !important;
-    cursor: pointer !important;
+    gap: 0.35rem !important;
+    text-decoration: none !important;
+    flex-shrink: 0 !important;
+    padding: 2px 4px !important;
+    border-radius: 8px !important;
+    user-select: none !important;
+    transition: transform 0.15s ease !important;
+  }
+
+  .mobile-topbar-brand:active {
+    transform: scale(0.94) !important;
+  }
+
+  .mobile-topbar-logo {
+    width: 28px !important;
+    height: 28px !important;
+    object-fit: contain !important;
+    border-radius: 6px !important;
+    display: block !important;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.15)) !important;
+  }
+
+  .mobile-topbar-name {
+    font-family: var(--font-heading, 'Plus Jakarta Sans', sans-serif) !important;
+    font-size: 1.15rem !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.5px !important;
+    color: #1e40af !important;
+    line-height: 1 !important;
+  }
+
+  [data-theme="dark"] .mobile-topbar-name {
+    color: #60a5fa !important;
   }
 
   .topbar-title {

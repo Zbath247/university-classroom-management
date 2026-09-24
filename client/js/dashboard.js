@@ -390,7 +390,40 @@ function setupSidebar() {
       }
     });
   }
+
+  setupMobileTopbarBrand();
 }
+
+// ─── Mobile Topbar Brand (University Logo + DUC Abbreviation) ───────────────
+function setupMobileTopbarBrand() {
+  const topbarLeft = document.querySelector('.topbar-left');
+  if (!topbarLeft) return;
+  if (topbarLeft.querySelector('.mobile-topbar-brand')) return;
+
+  const path = window.location.pathname;
+  let dashUrl = '/student/dashboard.html';
+  if (path.includes('/admin/')) dashUrl = '/admin/dashboard.html';
+  else if (path.includes('/teacher/')) dashUrl = '/teacher/dashboard.html';
+
+  const brandLink = document.createElement('a');
+  brandLink.href = dashUrl;
+  brandLink.className = 'mobile-topbar-brand';
+  brandLink.id = 'mobile-topbar-brand';
+  brandLink.setAttribute('aria-label', 'DUC Classroom');
+  brandLink.title = 'DUC Classroom';
+  brandLink.innerHTML = `
+    <img src="/assets/duc-logo.png" alt="DUC Logo" class="mobile-topbar-logo" />
+    <span class="mobile-topbar-name">DUC</span>
+  `;
+
+  const toggleBtn = topbarLeft.querySelector('.sidebar-toggle');
+  if (toggleBtn) {
+    topbarLeft.insertBefore(brandLink, toggleBtn);
+  } else {
+    topbarLeft.prepend(brandLink);
+  }
+}
+window.setupMobileTopbarBrand = setupMobileTopbarBrand;
 
 // ─── Active Nav Link ──────────────────────────────────────────────────────────
 // Automatically highlights the current page's nav link
@@ -1009,6 +1042,7 @@ async function navigateToPage(url, pushState = true) {
 
     // Re-bind topbar & branding
     setupSidebar();
+    setupMobileTopbarBrand();
     populateUserUI();
     if (window.ThemeManager) {
       window.ThemeManager.injectControls();
@@ -1177,7 +1211,7 @@ function initMobileEnhancements() {
   if (document.getElementById('mobile-enhancements-script')) return;
   const script = document.createElement('script');
   script.id = 'mobile-enhancements-script';
-  script.src = '/js/mobile.js?v=2.8';
+  script.src = '/js/mobile.js?v=2.9';
   document.head.appendChild(script);
 }
 
