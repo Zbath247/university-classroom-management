@@ -58,7 +58,8 @@ async function loadClassDropdowns(selectIds = ['class_id']) {
         res.data.forEach(c => {
           const opt = document.createElement('option');
           opt.value = c.id;
-          opt.textContent = `${c.class_code} (${c.class_name})`;
+          opt.textContent = c.class_code;
+          opt.title = `${c.class_code} (${c.class_name})`;
           el.appendChild(opt);
         });
         if (currentVal) el.value = currentVal;
