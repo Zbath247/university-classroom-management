@@ -477,32 +477,73 @@
 
     /* Responsive */
     @media (max-width: 480px) {
+      body {
+        padding: 1.25rem 0.85rem;
+      }
+
       .univ-top-banner {
-        padding: 8px 16px 8px 12px;
+        padding: 8px 14px 8px 10px;
         gap: 10px;
-        margin-bottom: 1.5rem;
+        margin-bottom: 1.25rem;
+        max-width: 95vw;
       }
 
       .univ-banner-logo {
-        width: 34px;
-        height: 34px;
+        width: 32px;
+        height: 32px;
       }
 
       .univ-banner-title {
-        font-size: 0.85rem;
+        font-size: 0.82rem;
       }
 
       .univ-banner-sub {
-        font-size: 0.7rem;
+        font-size: 0.68rem;
       }
 
       .login-card {
-        padding: 2.25rem 1.5rem 2rem;
-        border-radius: 28px;
+        padding: 2rem 1.25rem 1.75rem;
+        border-radius: 26px;
+      }
+
+      .avatar-circle-wrap {
+        width: 80px;
+        height: 80px;
+        margin-bottom: 1rem;
+      }
+
+      .avatar-icon-orange {
+        width: 40px;
+        height: 40px;
+      }
+
+      .login-headline {
+        font-size: 1.25rem;
       }
 
       .options-row {
-        font-size: 0.78rem;
+        font-size: 0.76rem;
+      }
+
+      .pill-input {
+        font-size: 16px !important; /* Avoid iOS auto zoom */
+      }
+    }
+
+    @media (max-width: 360px) {
+      .univ-banner-title {
+        font-size: 0.74rem;
+      }
+      .univ-banner-sub {
+        font-size: 0.62rem;
+      }
+      .login-card {
+        padding: 1.75rem 1rem 1.5rem;
+      }
+      .options-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
       }
     }
   </style>
