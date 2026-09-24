@@ -276,7 +276,7 @@
   <script>
     var allStudents = [];
     var currentPage = 1;
-    const pageSize = 10;
+    var studentPageSize = 10;
 
     document.addEventListener('DOMContentLoaded', async () => {
       initDashboard('admin');
@@ -335,12 +335,12 @@
       }
 
       const total = allStudents.length;
-      const totalPages = Math.ceil(total / pageSize) || 1;
+      const totalPages = Math.ceil(total / studentPageSize) || 1;
       if (currentPage > totalPages) currentPage = totalPages;
       if (currentPage < 1) currentPage = 1;
 
-      const startIdx = (currentPage - 1) * pageSize;
-      const endIdx = Math.min(startIdx + pageSize, total);
+      const startIdx = (currentPage - 1) * studentPageSize;
+      const endIdx = Math.min(startIdx + studentPageSize, total);
       const pagedStudents = allStudents.slice(startIdx, endIdx);
 
       const lang = window.I18n ? window.I18n.getCurrentLang() : (localStorage.getItem('duc_lang') || 'km');
@@ -440,7 +440,7 @@
     }
 
     function goToPage(page) {
-      const totalPages = Math.ceil(allStudents.length / pageSize) || 1;
+      const totalPages = Math.ceil(allStudents.length / studentPageSize) || 1;
       if (page < 1 || page > totalPages) return;
       currentPage = page;
       renderStudentsTable();
