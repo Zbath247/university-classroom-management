@@ -18,7 +18,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@300;400;500;600;700;800&family=Kantumruy+Pro:wght@400;500;600;700&family=Battambang:wght@400;700;900&family=Moul&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/css/style.css?v=2.6" />
-  <link rel="stylesheet" href="/css/dashboard.css?v=2.6" />
+  <link rel="stylesheet" href="/css/dashboard.css?v=2.9" />
   <script src="/js/icons.js?v=2.6"></script>
   <script src="/js/i18n.js?v=2.6"></script>
   <script src="/js/theme.js?v=2.8"></script>
@@ -184,6 +184,8 @@
             </table>
           </div>
         </div>
+        <!-- Pagination Controls -->
+        <div id="pagination-container" class="pagination-container" style="display:none;"></div>
       </div>
     </main>
   </div>
@@ -273,6 +275,8 @@
   <script src="/js/admin.js?v=2.9"></script>
   <script>
     var allStudents = [];
+    var currentPage = 1;
+    const pageSize = 10;
 
     document.addEventListener('DOMContentLoaded', async () => {
       initDashboard('admin');
@@ -281,10 +285,18 @@
 
       // Search debounce
       document.getElementById('search-input').addEventListener('input', () => {
+        currentPage = 1;
         loadStudents();
       });
       document.getElementById('filter-class').addEventListener('change', () => {
+        currentPage = 1;
         loadStudents();
+      });
+
+      window.addEventListener('languageChanged', () => {
+        if (allStudents && allStudents.length > 0) {
+          renderStudentsTable();
+        }
       });
     });
 
@@ -301,23 +313,38 @@
         const res = await api.get(url);
         if (res.success) {
           allStudents = res.data;
-          renderStudentsTable(allStudents);
+          currentPage = 1;
+          renderStudentsTable();
         }
       } catch (err) {
         console.error('Failed to load students:', err);
         tbody.innerHTML = '<tr><td colspan="7" class="text-center" style="padding:2rem; color:var(--danger);">Error loading students.</td></tr>';
+        const pag = document.getElementById('pagination-container');
+        if (pag) pag.style.display = 'none';
       }
     }
 
-    function renderStudentsTable(students) {
+    function renderStudentsTable() {
       const tbody = document.getElementById('students-tbody');
-      if (students.length === 0) {
+      const pagContainer = document.getElementById('pagination-container');
+
+      if (!allStudents || allStudents.length === 0) {
         tbody.innerHTML = '<tr><td colspan="7" class="text-center" style="padding:2rem;" data-i18n="msg.no_students">' + (window.I18n ? I18n.t('msg.no_students') : 'No students found matching your criteria.') + '</td></tr>';
+        if (pagContainer) pagContainer.style.display = 'none';
         return;
       }
 
+      const total = allStudents.length;
+      const totalPages = Math.ceil(total / pageSize) || 1;
+      if (currentPage > totalPages) currentPage = totalPages;
+      if (currentPage < 1) currentPage = 1;
+
+      const startIdx = (currentPage - 1) * pageSize;
+      const endIdx = Math.min(startIdx + pageSize, total);
+      const pagedStudents = allStudents.slice(startIdx, endIdx);
+
       const lang = window.I18n ? window.I18n.getCurrentLang() : (localStorage.getItem('duc_lang') || 'km');
-      tbody.innerHTML = students.map(s => {
+      tbody.innerHTML = pagedStudents.map(s => {
         const phoneDisplay = s.phone && s.phone.includes('t.me') 
           ? `<a href="https://${s.phone.replace(/^https?:\/\//, '')}" target="_blank" rel="noopener noreferrer" style="color:#0284c7; text-decoration:none; font-weight:500; display:inline-flex; align-items:center; gap:4px;">
                <span style="font-size:0.85rem;">✈️</span> ${s.phone.replace('t.me/', '@')}
@@ -347,11 +374,86 @@
       `}).join('');
 
       if (window.I18n) window.I18n.autoTranslate(tbody);
+
+      renderPagination(total, totalPages, startIdx + 1, endIdx);
+    }
+
+    function renderPagination(total, totalPages, startNum, endNum) {
+      const container = document.getElementById('pagination-container');
+      if (!container) return;
+
+      container.style.display = 'flex';
+
+      const isKm = (window.I18n ? window.I18n.getCurrentLang() : (localStorage.getItem('duc_lang') || 'km')) === 'km';
+      const infoText = isKm 
+        ? `បង្ហាញពី <strong>${startNum}</strong> ដល់ <strong>${endNum}</strong> នៃសិស្សសរុប <strong>${total}</strong> នាក់ (ទំព័រ ${currentPage}/${totalPages})`
+        : `Showing <strong>${startNum}</strong> to <strong>${endNum}</strong> of <strong>${total}</strong> students (Page ${currentPage}/${totalPages})`;
+
+      const prevText = isKm ? '◀ ថយក្រោយ' : '◀ Prev';
+      const nextText = isKm ? 'បន្ទាប់ ▶' : 'Next ▶';
+
+      let buttonsHtml = `
+        <button type="button" class="pagination-btn" onclick="goToPage(${currentPage - 1})" ${currentPage <= 1 ? 'disabled' : ''} title="${prevText}">
+          ${prevText}
+        </button>
+      `;
+
+      const maxButtons = 5;
+      let startPage = Math.max(1, currentPage - 2);
+      let endPage = Math.min(totalPages, startPage + maxButtons - 1);
+      if (endPage - startPage + 1 < maxButtons) {
+        startPage = Math.max(1, endPage - maxButtons + 1);
+      }
+
+      if (startPage > 1) {
+        buttonsHtml += `<button type="button" class="pagination-btn" onclick="goToPage(1)">1</button>`;
+        if (startPage > 2) {
+          buttonsHtml += `<span class="pagination-ellipsis">…</span>`;
+        }
+      }
+
+      for (let i = startPage; i <= endPage; i++) {
+        buttonsHtml += `
+          <button type="button" class="pagination-btn ${i === currentPage ? 'active' : ''}" onclick="goToPage(${i})">
+            ${i}
+          </button>
+        `;
+      }
+
+      if (endPage < totalPages) {
+        if (endPage < totalPages - 1) {
+          buttonsHtml += `<span class="pagination-ellipsis">…</span>`;
+        }
+        buttonsHtml += `<button type="button" class="pagination-btn" onclick="goToPage(${totalPages})">${totalPages}</button>`;
+      }
+
+      buttonsHtml += `
+        <button type="button" class="pagination-btn" onclick="goToPage(${currentPage + 1})" ${currentPage >= totalPages ? 'disabled' : ''} title="${nextText}">
+          ${nextText}
+        </button>
+      `;
+
+      container.innerHTML = `
+        <div class="pagination-info">${infoText}</div>
+        <div class="pagination-controls">${buttonsHtml}</div>
+      `;
+    }
+
+    function goToPage(page) {
+      const totalPages = Math.ceil(allStudents.length / pageSize) || 1;
+      if (page < 1 || page > totalPages) return;
+      currentPage = page;
+      renderStudentsTable();
+      const card = document.querySelector('.card:has(#students-tbody)') || document.getElementById('students-tbody');
+      if (card) {
+        card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
     }
 
     function resetFilters() {
       document.getElementById('search-input').value = '';
       document.getElementById('filter-class').value = '';
+      currentPage = 1;
       loadStudents();
     }
 

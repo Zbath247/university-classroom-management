@@ -1939,4 +1939,112 @@ html, body {
   }
 }
 
+/* ─── 15. PAGINATION STYLES ───────────────────────────────────────────────── */
+.pagination-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.875rem 1.25rem;
+  border-top: 1px solid var(--border);
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  background: var(--card-bg, #ffffff);
+  border-bottom-left-radius: var(--radius-lg, 12px);
+  border-bottom-right-radius: var(--radius-lg, 12px);
+}
+
+.pagination-info {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+}
+
+.pagination-controls {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.pagination-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 36px;
+  height: 36px;
+  padding: 0 0.65rem;
+  border-radius: 8px;
+  border: 1px solid var(--border, #e2e8f0);
+  background: var(--card-bg, #ffffff);
+  color: var(--text, #1e293b);
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.pagination-btn:hover:not(:disabled) {
+  border-color: var(--primary, #2563eb);
+  color: var(--primary, #2563eb);
+  background: rgba(37, 99, 235, 0.08);
+}
+
+.pagination-btn.active {
+  background: var(--primary, #2563eb) !important;
+  border-color: var(--primary, #2563eb) !important;
+  color: #ffffff !important;
+  font-weight: 600;
+  box-shadow: 0 2px 6px rgba(37, 99, 235, 0.3);
+}
+
+.pagination-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.pagination-ellipsis {
+  padding: 0 0.35rem;
+  color: var(--text-muted);
+  user-select: none;
+  font-weight: 600;
+}
+
+[data-theme="dark"] .pagination-container {
+  background: var(--card-bg, #1e293b);
+  border-top-color: #334155;
+}
+
+[data-theme="dark"] .pagination-btn {
+  background: #1e293b;
+  border-color: #334155;
+  color: #f1f5f9;
+}
+
+[data-theme="dark"] .pagination-btn:hover:not(:disabled) {
+  background: #334155;
+  border-color: #60a5fa;
+  color: #60a5fa;
+}
+
+[data-theme="dark"] .pagination-btn.active {
+  background: #2563eb !important;
+  border-color: #3b82f6 !important;
+  color: #ffffff !important;
+}
+
+@media (max-width: 640px) {
+  .pagination-container {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.75rem;
+    padding: 0.85rem 0.5rem;
+  }
+  .pagination-controls {
+    width: 100%;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+}
+
 
