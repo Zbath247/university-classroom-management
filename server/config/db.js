@@ -32,7 +32,9 @@ async function autoMigrate(connection) {
     `ALTER TABLE resources ADD COLUMN IF NOT EXISTS file_size INT UNSIGNED NULL`,
     `ALTER TABLE resources MODIFY COLUMN resource_type VARCHAR(50) DEFAULT 'document'`,
     `ALTER TABLE students MODIFY COLUMN phone VARCHAR(100)`,
-    `ALTER TABLE teachers MODIFY COLUMN phone VARCHAR(100)`
+    `ALTER TABLE teachers MODIFY COLUMN phone VARCHAR(100)`,
+    `UPDATE teachers SET full_name = 'Mr. Koeun Mesa (គឿន មេសា)' WHERE teacher_id = 'TCH-003' OR full_name LIKE '%Phoeun Mesa%' OR full_name LIKE '%ភឿន មេសា%'`,
+    `UPDATE subjects SET description = 'Cloud Architecture & Infrastructure (CA) — លោកគ្រូ គឿន មេសា' WHERE subject_code = 'CA' OR description LIKE '%ភឿន មេសា%'`
   ];
   for (const sql of migrations) {
     try {

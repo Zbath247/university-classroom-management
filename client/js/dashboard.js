@@ -195,13 +195,13 @@ function formatBilingualText(text, targetLang) {
       return text
         .replace(/លោកគ្រូ\s*ឈាង\s*វុទ្ធី/g, 'Instructor Chheang Vuthey')
         .replace(/លោកគ្រូ\s*សែម\s*វ៉ាវី/g, 'Instructor Sem Vavy')
-        .replace(/លោកគ្រូ\s*ភឿន\s*មេសា/g, 'Instructor Phoeun Mesa')
+        .replace(/លោកគ្រូ\s*(?:ភឿន|គឿន)\s*មេសា/g, 'Instructor Koeun Mesa')
         .replace(/លោកគ្រូ/g, 'Instructor');
     } else {
       return text
         .replace(/Instructor Chheang Vuthey|Mr\. Chheang Vuthey/g, 'លោកគ្រូ ឈាង វុទ្ធី')
         .replace(/Instructor Sem Vavy|Mr\. Sem Vavy/g, 'លោកគ្រូ សែម វ៉ាវី')
-        .replace(/Instructor Phoeun Mesa|Mr\. Phoeun Mesa/g, 'លោកគ្រូ ភឿន មេសា')
+        .replace(/Instructor (?:Phoeun|Koeun) Mesa|Mr\.\s*(?:Phoeun|Koeun) Mesa/g, 'លោកគ្រូ គឿន មេសា')
         .replace(/Instructor\s+/g, 'លោកគ្រូ ');
     }
   }

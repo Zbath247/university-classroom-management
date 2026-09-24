@@ -226,7 +226,7 @@
       'timetable.subjects_included': 'មុខវិជ្ជាដែលត្រូវសិក្សារួមមាន៖',
       'lecturer.chheang_vuthea': 'លោកគ្រូ ឈាង វុទ្ធី',
       'lecturer.sem_vavy': 'លោកគ្រូ សែម វ៉ាវី',
-      'lecturer.phoeun_mesa': 'លោកគ្រូ ភឿន មេសា',
+      'lecturer.phoeun_mesa': 'លោកគ្រូ គឿន មេសា',
 
       // Page Titles & Headings
       'page.admin_dashboard': 'ផ្ទាំងគ្រប់គ្រងទូទៅ',
@@ -679,7 +679,7 @@
       'timetable.subjects_included': 'Enrolled subjects include:',
       'lecturer.chheang_vuthea': 'Lecturer Chheang Vuthea',
       'lecturer.sem_vavy': 'Lecturer Sem Vavy',
-      'lecturer.phoeun_mesa': 'Lecturer Phoeun Mesa',
+      'lecturer.phoeun_mesa': 'Lecturer Koeun Mesa',
 
       // Page Titles & Headings
       'page.admin_dashboard': 'Admin Dashboard',

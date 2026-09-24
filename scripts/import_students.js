@@ -77,7 +77,7 @@ INSERT INTO subjects (id, subject_code, subject_name, description, credits) VALU
 (1, 'SAD',   'System Analyze and Design', 'System Analysis & Design (SAD) — លោកគ្រូ ឈាង វុទ្ធី', 3),
 (2, 'ITPM',  'IT Project Management',     'Information Technology Project Management (ITPM) — លោកគ្រូ សែម វ៉ាវី', 3),
 (3, 'CSC.V', 'Cisco V',                   'Cisco Networking V (CSC.V) — លោកគ្រូ សែម វ៉ាវី', 3),
-(4, 'CA',    'Cloud Architecture',        'Cloud Architecture & Infrastructure (CA) — លោកគ្រូ ភឿន មេសា', 3);
+(4, 'CA',    'Cloud Architecture',        'Cloud Architecture & Infrastructure (CA) — លោកគ្រូ គឿន មេសា', 3);
 
 -- 3. USERS
 INSERT INTO users (id, username, email, password, role) VALUES
@@ -102,7 +102,7 @@ students.forEach((s, idx) => {
 sql += `\n-- 4. TEACHERS\nINSERT INTO teachers (id, user_id, teacher_id, full_name, gender, email, department) VALUES\n`;
 sql += `(1, 2, 'TCH-001', 'Mr. Chheang Vuthey (ឈាង វុទ្ធី)', 'male', 'vuthey@duc.edu.kh', 'Computer Network & Security'),\n`;
 sql += `(2, 3, 'TCH-002', 'Mr. Sem Vavy (សែម វ៉ាវី)',         'male', 'vavy@duc.edu.kh',   'Computer Network & Security'),\n`;
-sql += `(3, 4, 'TCH-003', 'Mr. Phoeun Mesa (ភឿន មេសា)',       'male', 'mesa@duc.edu.kh',   'Cloud & Infrastructure');\n\n`;
+sql += `(3, 4, 'TCH-003', 'Mr. Koeun Mesa (គឿន មេសា)',        'male', 'mesa@duc.edu.kh',   'Cloud & Infrastructure');\n\n`;
 
 sql += `-- 5. STUDENTS (Total ${students.length + 1} students)\nINSERT INTO students (id, user_id, student_id, full_name, full_name_kh, gender, phone, email, class_id) VALUES\n`;
 sql += `(1, 5, 'DUC2024-0001', 'Mok Sambath', 'ម៉ុក សម្បត្តិ', 'male', 't.me/moksambath', 'sambath@duc.edu.kh', 1),\n`;
@@ -118,7 +118,7 @@ sql += `\n-- 6. SCHEDULES (Class G1-NW-B official timetable in Room DUC3)\nINSER
 sql += `(1, 1, 1, 'Friday',   '08:00:00', '11:00:00', 'DUC3'),  -- SAD by Chheang Vuthey\n`;
 sql += `(1, 2, 2, 'Friday',   '13:00:00', '15:00:00', 'DUC3'),  -- ITPM by Sem Vavy\n`;
 sql += `(1, 3, 2, 'Friday',   '15:00:00', '16:30:00', 'DUC3'),  -- CSC.V by Sem Vavy\n`;
-sql += `(1, 4, 3, 'Saturday', '08:00:00', '11:00:00', 'DUC3');  -- CA by Phoeun Mesa\n\n`;
+sql += `(1, 4, 3, 'Saturday', '08:00:00', '11:00:00', 'DUC3');  -- CA by Koeun Mesa\n\n`;
 
 sql += `SELECT 'Import Completed Successfully!' AS Status;\n`;
 sql += `SELECT COUNT(*) AS total_users FROM users;\n`;
