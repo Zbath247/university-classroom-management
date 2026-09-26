@@ -115,6 +115,7 @@
     const dock = document.createElement('nav');
     dock.className = 'mobile-bottom-dock';
     dock.setAttribute('aria-label', 'Mobile Bottom Navigation');
+    dock.setAttribute('data-no-i18n', 'true');
 
     let tabs = [];
 

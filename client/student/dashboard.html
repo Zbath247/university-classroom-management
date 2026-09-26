@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -188,7 +188,7 @@
           </div>
           <div class="card-body" style="padding:0;">
             <div class="table-responsive">
-              <table class="table" style="margin:0;">
+              <table class="table mobile-card-table" style="margin:0;">
                 <thead>
                   <tr>
                     <th data-i18n="table.time">Time</th>
@@ -213,7 +213,7 @@
           </div>
           <div class="card-body" style="padding:0;">
             <div class="table-responsive">
-              <table class="table" style="margin:0;">
+              <table class="table mobile-card-table" style="margin:0;">
                 <thead>
                   <tr>
                     <th data-i18n="table.assignment_title">Assignment</th>
@@ -284,10 +284,13 @@
         if (todaySchedule && todaySchedule.length > 0) {
           schedTbody.innerHTML = todaySchedule.map(s => `
             <tr>
-              <td><span class="badge badge-info">${formatTime(s.start_time)} - ${formatTime(s.end_time)}</span></td>
+              <td>
+                <span class="badge badge-info">${formatTime(s.start_time)} - ${formatTime(s.end_time)}</span>
+                <span class="mobile-only-pill badge badge-gray">${s.room || '<span data-i18n="status.tbd">TBD</span>'}</span>
+              </td>
               <td><strong>${s.subject_name}</strong> <small style="color:var(--text-muted);">(${s.subject_code})</small></td>
-              <td>${s.teacher_name}</td>
-              <td><span class="badge badge-gray">${s.room || '<span data-i18n="status.tbd">TBD</span>'}</span></td>
+              <td><span style="color:var(--text-muted); font-size:0.85rem;">👨‍🏫 ${s.teacher_name}</span></td>
+              <td class="desktop-only-cell"><span class="badge badge-gray">${s.room || '<span data-i18n="status.tbd">TBD</span>'}</span></td>
             </tr>
           `).join('');
         } else {

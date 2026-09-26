@@ -1695,15 +1695,33 @@ body.lang-km {
   font-family: var(--font-battambang);
 }
 
-body.lang-km .topbar-title,
-body.lang-km .card-title,
-body.lang-km h1,
-body.lang-km h2,
-body.lang-km h3 {
+/* Moul is reserved ONLY for formal ceremonial / national / university decree headers */
+body.lang-km .doc-gov-title,
+body.lang-km .doc-univ-title,
+body.lang-km .ceremonial-title,
+body.lang-km h1.ceremonial {
   font-family: var(--font-khmer-moul);
   font-weight: normal;
   letter-spacing: normal;
   line-height: 1.5;
+}
+
+/* Card titles, topbar title, and standard headings use modern, legible Battambang / Kantumruy Pro */
+body.lang-km .topbar-title,
+body.lang-km .card-title,
+body.lang-km .card-header h1,
+body.lang-km .card-header h2,
+body.lang-km .card-header h3,
+body.lang-km h1:not(.ceremonial),
+body.lang-km h2:not(.ceremonial),
+body.lang-km h3,
+body.lang-km h4,
+body.lang-km h5,
+body.lang-km h6 {
+  font-family: var(--font-battambang, 'Kantumruy Pro', sans-serif);
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  line-height: 1.35;
 }
 
 body.lang-en {

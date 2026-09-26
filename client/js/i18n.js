@@ -1259,7 +1259,7 @@
           if (tag === 'SCRIPT' || tag === 'STYLE' || tag === 'TEXTAREA' || tag === 'NOSCRIPT') {
             return NodeFilter.FILTER_REJECT;
           }
-          if (parent.closest('#sidebar-controls') || parent.closest('#login-card') || parent.classList.contains('sidebar-avatar') || parent.classList.contains('topbar-avatar')) {
+          if (parent.closest('#sidebar-controls') || parent.closest('#login-card') || parent.closest('.mobile-bottom-dock') || parent.closest('[data-no-i18n]') || parent.classList.contains('sidebar-avatar') || parent.classList.contains('topbar-avatar')) {
             return NodeFilter.FILTER_REJECT;
           }
           const txt = node.nodeValue.trim();
@@ -1343,6 +1343,8 @@
     `);
 
     candidates.forEach(el => {
+      if (el.closest('.mobile-bottom-dock') || el.closest('[data-no-i18n]')) return;
+
       if (el.tagName === 'INPUT' && el.placeholder && !el.hasAttribute('data-i18n-placeholder')) {
         const norm = normalize(el.placeholder);
         if (PHRASE_TO_KEY[norm]) {

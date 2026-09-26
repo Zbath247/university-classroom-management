@@ -1481,19 +1481,39 @@ html, body {
 }
 
 @media (max-width: 480px) {
+  .topbar {
+    height: 52px !important;
+    padding: 0 0.5rem !important;
+    gap: 0.25rem !important;
+  }
+  .topbar-title {
+    font-size: 0.72rem !important;
+    max-width: 100px !important;
+  }
   .topbar-controls-cluster {
-    gap: 3px;
-    padding: 2px 4px;
+    gap: 2px;
+    padding: 1px 3px;
   }
   .topbar-controls-cluster .btn-lang-toggle {
-    height: 26px;
+    height: 24px;
     padding: 0 6px;
-    font-size: 0.72rem;
+    font-size: 0.7rem;
   }
   .topbar-controls-cluster .btn-theme-toggle {
-    width: 26px;
-    height: 26px;
-    font-size: 0.85rem;
+    width: 24px;
+    height: 24px;
+    font-size: 0.8rem;
+  }
+  .topbar-avatar {
+    width: 28px !important;
+    height: 28px !important;
+    font-size: 0.75rem !important;
+  }
+}
+
+@media (max-width: 360px) {
+  .topbar-title {
+    display: none !important; /* Leave generous breathing room for branding, toggles, and avatar */
   }
 }
 
@@ -1597,37 +1617,121 @@ html, body {
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 640px) {
   .stats-grid {
-    grid-template-columns: 1fr 1fr !important;
-    gap: 0.75rem !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 0.6rem !important;
   }
 
   .stat-card {
-    padding: 0.85rem !important;
-    border-radius: 14px !important;
+    padding: 0.75rem 0.8rem !important;
+    border-radius: 12px !important;
+    min-height: 72px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    margin-bottom: 0 !important;
   }
 
   .stat-value {
-    font-size: 1.45rem !important;
+    font-size: 1.25rem !important;
+    line-height: 1.2 !important;
+    font-weight: 800 !important;
   }
 
   .stat-title,
   .stat-label {
-    font-size: 0.75rem !important;
+    font-size: 0.7rem !important;
+    line-height: 1.25 !important;
+    margin-top: 2px !important;
   }
 
   .stat-icon {
-    width: 38px !important;
-    height: 38px !important;
-    border-radius: 10px !important;
-    font-size: 1.25rem !important;
+    width: 34px !important;
+    height: 34px !important;
+    border-radius: 9px !important;
+    font-size: 1.15rem !important;
+    flex-shrink: 0 !important;
   }
 }
 
-@media (max-width: 380px) {
-  .stats-grid {
-    grid-template-columns: 1fr !important;
+/* ─── Modern Mobile Card Table Format ─────────────────────────────────────── */
+.mobile-only-pill {
+  display: none;
+}
+
+@media (max-width: 580px) {
+  .mobile-only-pill {
+    display: inline-block;
+  }
+
+  .desktop-only-cell {
+    display: none !important;
+  }
+
+  .table.mobile-card-table thead {
+    display: none !important;
+  }
+
+  .table.mobile-card-table {
+    display: block !important;
+    min-width: 100% !important;
+    width: 100% !important;
+    border: none !important;
+  }
+
+  .table.mobile-card-table tbody {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0.55rem !important;
+    padding: 0.65rem 0.75rem !important;
+  }
+
+  .table.mobile-card-table tbody tr {
+    display: flex !important;
+    flex-direction: column !important;
+    padding: 0.85rem !important;
+    background: rgba(255, 255, 255, 0.03) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    border-radius: 12px !important;
+    gap: 0.35rem !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15) !important;
+  }
+
+  [data-theme="light"] .table.mobile-card-table tbody tr {
+    background: #ffffff !important;
+    border-color: #e2e8f0 !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04) !important;
+  }
+
+  .table.mobile-card-table tbody td {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    padding: 0 !important;
+    border: none !important;
+    font-size: 0.84rem !important;
+    width: 100% !important;
+    white-space: normal !important;
+  }
+
+  .card-header:has(.btn) {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    flex-wrap: wrap !important;
+    gap: 0.5rem !important;
+    padding: 0.85rem 1rem !important;
+  }
+
+  .card-header h3 {
+    font-size: 0.95rem !important;
+  }
+
+  .card-header .btn {
+    font-size: 0.72rem !important;
+    padding: 0.35rem 0.65rem !important;
+    min-height: 30px !important;
   }
 }
 
