@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -329,7 +329,7 @@
 
     if (photoDisplay) {
       if (avatarUrl) {
-        photoDisplay.innerHTML = `<img src="${avatarUrl}" alt="Profile Photo" class="avatar-img" onerror="this.onerror=null;this.parentElement.textContent='${initial}';" />`;
+        photoDisplay.innerHTML = `<img src="${avatarUrl}" alt="Profile Photo" class="avatar-img" onerror="this.onerror=null;if(this.parentElement)this.parentElement.textContent='${initial}';" />`;
         photoDisplay.style.padding = '0';
       } else {
         photoDisplay.textContent = initial;

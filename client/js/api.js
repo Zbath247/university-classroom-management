@@ -114,6 +114,12 @@ async function request(endpoint, method = 'GET', body = null, skipCache = false)
 
   // If the server returned an error status (4xx or 5xx), throw an error
   if (!response.ok) {
+    if (response.status === 401) {
+      clearAuthData();
+      if (!window.location.pathname.endsWith('login.html') && !window.location.pathname.endsWith('login')) {
+        window.location.href = '/login.html?expired=1';
+      }
+    }
     const error = new Error(data.message || 'Request failed');
     error.status = response.status;
     error.data = data;

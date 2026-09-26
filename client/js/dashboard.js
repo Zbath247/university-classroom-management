@@ -252,7 +252,7 @@ function populateUserUI(user) {
   function renderAvatarElement(el, fallbackText) {
     if (!el) return;
     if (avatarUrl) {
-      el.innerHTML = `<img src="${avatarUrl}" alt="Avatar" class="avatar-img" onerror="this.onerror=null;this.parentElement.textContent='${fallbackText}';" />`;
+      el.innerHTML = `<img src="${avatarUrl}" alt="Avatar" class="avatar-img" onerror="this.onerror=null;if(this.parentElement)this.parentElement.textContent='${fallbackText}';" />`;
       el.style.overflow = 'hidden';
       el.style.padding = '0';
     } else {
@@ -320,7 +320,7 @@ function updateUIAvatar(newAvatarUrl) {
   [sidebarAvatar, topbarAvatar].forEach(el => {
     if (!el) return;
     if (newAvatarUrl) {
-      el.innerHTML = `<img src="${newAvatarUrl}" alt="Avatar" class="avatar-img" onerror="this.onerror=null;this.parentElement.textContent='${initial}';" />`;
+      el.innerHTML = `<img src="${newAvatarUrl}" alt="Avatar" class="avatar-img" onerror="this.onerror=null;if(this.parentElement)this.parentElement.textContent='${initial}';" />`;
       el.style.overflow = 'hidden';
       el.style.padding = '0';
     } else {

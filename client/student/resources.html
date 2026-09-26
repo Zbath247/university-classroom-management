@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -260,8 +260,13 @@
       console.error(err);
       container.innerHTML = `
         <div class="card">
-          <div class="card-body text-center" style="padding:2.5rem; color:var(--danger);" data-i18n="msg.error">
-            Failed to load resources. Please try again.
+          <div class="card-body text-center" style="padding:2.5rem; color:var(--danger);">
+            <div style="font-size:2.5rem; margin-bottom:0.75rem;">⚠️</div>
+            <h3 data-i18n="error.load_resources">Failed to load resources.</h3>
+            <p style="margin-top:0.5rem; color:var(--text-muted);" data-i18n="msg.error">Please try again or log in again.</p>
+            <div style="margin-top:1.25rem;">
+              <a href="/login.html" class="btn btn-sm btn-primary" data-i18n="nav.signout">Log In Again</a>
+            </div>
           </div>
         </div>
       `;

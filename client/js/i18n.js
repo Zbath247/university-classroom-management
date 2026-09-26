@@ -469,7 +469,11 @@
       'theme.dark': 'របៀបងងឹត',
       'theme.light': 'របៀបភ្លឺ',
       'lang.khmer': 'ភាសាខ្មែរ',
-      'lang.english': 'English'
+      'lang.english': 'English',
+      'msg.error': 'មិនអាចទាញយកទិន្នន័យបានទេ សូមព្យាយាមម្តងទៀត',
+      'error.load_resources': 'មិនអាចទាញយកឯកសារមេរៀនបានទេ។ សូមព្យាយាមម្តងទៀត ឬចូលប្រព័ន្ធឡើងវិញ។',
+      'msg.no_resources': 'មិនមានឯកសារមេរៀនទេ',
+      'msg.no_resources_sub': 'មិនទាន់មានឯកសារមេរៀនដែលត្រូវនឹងលក្ខខណ្ឌស្វែងរកនេះនៅឡើយទេ។'
     },
 
     en: {
@@ -922,7 +926,11 @@
       'theme.dark': 'Dark Mode',
       'theme.light': 'Light Mode',
       'lang.khmer': 'ភាសាខ្មែរ',
-      'lang.english': 'English'
+      'lang.english': 'English',
+      'msg.error': 'Failed to load data. Please try again.',
+      'error.load_resources': 'Failed to load study resources. Please try again or log in again.',
+      'msg.no_resources': 'No learning resources found',
+      'msg.no_resources_sub': 'No materials have been shared matching your filter criteria.'
     }
   };
 
@@ -1188,7 +1196,7 @@
    */
   function applyTranslationToElement(el, key) {
     const translated = t(key);
-    if (!translated) return;
+    if (!translated || translated === key) return;
 
     // 1. If element has designated text span
     const textSpan = el.querySelector('.nav-label, .btn-text, .i18n-text');
