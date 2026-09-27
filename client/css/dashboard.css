@@ -3197,8 +3197,9 @@ html, body {
 }
 
 @media (max-width: 768px) {
-  /* Remove heavy official paper document / table on mobile */
-  .official-schedule-card {
+  /* Remove heavy official paper document / table & bottom records table on mobile */
+  .official-schedule-card,
+  .schedules-records-card {
     display: none !important;
   }
 
