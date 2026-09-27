@@ -668,7 +668,8 @@ html, body {
   }
 }
 
-/* ─── Student Toolbar Grid (Row 1: Button + Class, Row 2: Full Search) ─────── */
+/* ─── Action Toolbar Grid (Row 1: Button + Filter, Row 2: Full Width) ─────── */
+.action-toolbar-grid,
 .student-toolbar-grid {
   display: flex;
   flex-direction: column;
@@ -676,6 +677,7 @@ html, body {
   width: 100%;
 }
 
+.action-toolbar-row1,
 .student-toolbar-row1 {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -683,8 +685,13 @@ html, body {
   width: 100%;
 }
 
+.action-toolbar-row1 .btn,
+.action-toolbar-row1 select,
+.action-toolbar-row1 input,
 .student-toolbar-row1 .btn,
 .student-toolbar-row1 select,
+.action-toolbar-row2 input,
+.action-toolbar-row2 select,
 .student-toolbar-row2 input {
   min-height: 34px !important;
   height: 34px !important;
@@ -692,6 +699,7 @@ html, body {
   border-radius: 8px !important;
 }
 
+.action-toolbar-row1 .btn,
 .student-toolbar-row1 .btn {
   padding: 0.25rem 0.5rem !important;
   white-space: nowrap !important;
@@ -701,17 +709,20 @@ html, body {
   width: 100% !important;
 }
 
+.action-toolbar-row2,
 .student-toolbar-row2 {
   width: 100%;
 }
 
 @media (min-width: 769px) {
+  .action-toolbar-grid,
   .student-toolbar-grid {
     flex-direction: row;
     align-items: center;
     gap: 0.75rem;
   }
 
+  .action-toolbar-row1,
   .student-toolbar-row1 {
     display: flex;
     flex: 0 0 auto;
@@ -720,15 +731,18 @@ html, body {
     order: 2;
   }
 
+  .action-toolbar-row1 select,
   .student-toolbar-row1 select {
     width: 200px !important;
   }
 
+  .action-toolbar-row1 .btn,
   .student-toolbar-row1 .btn {
     width: auto !important;
     padding: 0.45rem 1rem !important;
   }
 
+  .action-toolbar-row2,
   .student-toolbar-row2 {
     flex: 1;
     order: 1;
@@ -736,8 +750,13 @@ html, body {
 }
 
 @media (max-width: 480px) {
+  .action-toolbar-row1 .btn,
+  .action-toolbar-row1 select,
+  .action-toolbar-row1 input,
   .student-toolbar-row1 .btn,
   .student-toolbar-row1 select,
+  .action-toolbar-row2 input,
+  .action-toolbar-row2 select,
   .student-toolbar-row2 input {
     min-height: 32px !important;
     height: 32px !important;

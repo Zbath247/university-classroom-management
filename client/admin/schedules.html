@@ -18,7 +18,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@300;400;500;600;700;800&family=Kantumruy+Pro:wght@400;500;600;700&family=Battambang:wght@400;700;900&family=Moul&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/css/style.css?v=2.6" />
-  <link rel="stylesheet" href="/css/dashboard.css?v=3.5" />
+  <link rel="stylesheet" href="/css/dashboard.css?v=3.6" />
   <script src="/js/icons.js?v=2.6"></script>
   <script src="/js/i18n.js?v=2.6"></script>
   <script src="/js/theme.js?v=2.8"></script>
@@ -134,29 +134,31 @@
     </header>
 
     <main class="page-content fade-in">
-      <div class="page-header" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; margin-bottom:1.5rem;">
+      <div class="page-header" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; margin-bottom:1rem;">
         <div>
           <h1 class="page-title" style="font-size:1.75rem; font-weight:700;" data-i18n="page.class_timetables">Class Timetables</h1>
           <p class="page-subtitle" style="color:var(--text-muted); margin-top:0.25rem;" data-i18n="sub.schedules">
             Assign teachers, subjects, days, and classrooms to each class cohort
           </p>
         </div>
-        <button class="btn btn-primary" onclick="openAddScheduleModal()" data-i18n="btn.add_new_schedule">
-          ➕ Add New Schedule
-        </button>
       </div>
 
-      <!-- Filters -->
+      <!-- Filters & Actions Toolbar -->
       <div class="card filter-card" style="margin-bottom:1rem;">
         <div class="card-body" style="padding:0.5rem 0.65rem;">
-          <div class="filter-row-horizontal" style="display:grid; grid-template-columns:1fr 1fr; gap:0.45rem; width:100%;">
-            <div style="min-width:0; width:100%;">
-              <select id="filter-class" class="form-control" style="width:100%;">
+          <div class="action-toolbar-grid">
+            <!-- Row 1: Add Schedule + Class Filter side-by-side -->
+            <div class="action-toolbar-row1">
+              <button class="btn btn-primary" onclick="openAddScheduleModal()" data-i18n="btn.add_new_schedule">
+                ➕ Add New Schedule
+              </button>
+              <select id="filter-class" class="form-control">
                 <option value="" data-i18n="filter.all_classes">All Classes</option>
               </select>
             </div>
-            <div style="min-width:0; width:100%;">
-              <select id="filter-day" class="form-control" style="width:100%;">
+            <!-- Row 2: Day Filter Full Width -->
+            <div class="action-toolbar-row2">
+              <select id="filter-day" class="form-control">
                 <option value="" data-i18n="filter.all_days">All Days</option>
                 <option value="Monday" data-i18n="day.monday">Monday</option>
                 <option value="Tuesday" data-i18n="day.tuesday">Tuesday</option>
