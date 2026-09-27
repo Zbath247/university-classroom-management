@@ -1546,13 +1546,61 @@ html, body {
     margin-top: 0.2rem !important;
   }
 
-  .page-header .btn {
-    width: 100% !important;
+  /* Compact Action Button Groups in Page Header */
+  .page-header-actions,
+  .page-header > div:not(:first-child) {
     display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    align-items: center !important;
+    gap: 0.45rem !important;
+    width: 100% !important;
+  }
+
+  .page-header-actions .btn,
+  .page-header > div:not(:first-child) .btn {
+    flex: 1 1 calc(33.333% - 0.45rem) !important;
+    width: auto !important;
+    min-width: 0 !important;
+    min-height: 36px !important;
+    padding: 0.4rem 0.35rem !important;
+    font-size: 0.76rem !important;
+    font-weight: 600 !important;
+    border-radius: 8px !important;
+    white-space: nowrap !important;
+    text-align: center !important;
+    display: inline-flex !important;
     align-items: center !important;
     justify-content: center !important;
-    min-height: 44px !important;
-    font-size: 0.9rem !important;
+  }
+
+  /* Single Standalone Button inside Page Header */
+  .page-header > .btn {
+    width: auto !important;
+    max-width: 100% !important;
+    align-self: flex-start !important;
+    min-height: 36px !important;
+    padding: 0.4rem 0.85rem !important;
+    font-size: 0.82rem !important;
+    border-radius: 8px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  /* General fallback for any .page-header .btn */
+  .page-header .btn {
+    min-height: 36px !important;
+    font-size: 0.8rem !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .page-header-actions .btn,
+  .page-header > div:not(:first-child) .btn {
+    font-size: 0.72rem !important;
+    padding: 0.35rem 0.2rem !important;
+    min-height: 34px !important;
   }
 }
 
