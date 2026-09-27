@@ -71,6 +71,7 @@
       this.onDayChange = options.onDayChange || null;
       this.onEditSchedule = options.onEditSchedule || null;
       this.teacherId = options.teacherId || null;
+      this.hasUserClickedFilter = false;
 
       this.initModal();
     }
@@ -92,12 +93,14 @@
 
     selectClass(classId) {
       this.selectedClassId = classId ? Number(classId) : '';
+      this.hasUserClickedFilter = Boolean(this.selectedClassId || this.selectedDay);
       if (this.onClassChange) this.onClassChange(this.selectedClassId);
       this.render();
     }
 
     selectDay(dayKey, triggerPopup = true) {
       this.selectedDay = dayKey || '';
+      this.hasUserClickedFilter = Boolean(this.selectedClassId || this.selectedDay);
       if (this.onDayChange) this.onDayChange(this.selectedDay);
       this.render();
 
@@ -356,72 +359,91 @@
       }
 
       // Generate Clean Mobile-Friendly Schedule View (Shown ONLY on mobile screens <= 768px)
-      const activeDays = DAYS.filter(d => (dayCounts[d.key.toLowerCase()] || 0) > 0);
-      const daysToDisplay = this.selectedDay
-        ? DAYS.filter(d => d.key.toLowerCase() === this.selectedDay.toLowerCase())
-        : (activeDays.length > 0 ? activeDays : DAYS);
+      // "ពេលuserចុច ថ្នាក់ ឬថ្ងៃចាំបង្ហាញ" -> Only display on mobile when user clicked class or day
+      const showMobileSchedule = Boolean(this.hasUserClickedFilter || this.selectedClassId || this.selectedDay);
 
       let mobileCardsHtml = '';
-      if (daysToDisplay.length === 0 || (this.selectedDay && (dayCounts[this.selectedDay.toLowerCase()] || 0) === 0)) {
-        const selectedDayObj = DAYS.find(d => d.key.toLowerCase() === (this.selectedDay || '').toLowerCase());
-        const dName = selectedDayObj ? (lang === 'km' ? `ថ្ងៃ${selectedDayObj.kh}` : selectedDayObj.en) : '';
+      if (!showMobileSchedule) {
         mobileCardsHtml = `
-          <div class="card p-4 text-center" style="border-radius:14px; background:var(--card-bg, #ffffff); border:1px solid var(--border, #e2e8f0); box-shadow:0 2px 8px rgba(0,0,0,0.04);">
-            <div style="font-size:2rem; margin-bottom:8px;">🌴</div>
-            <div style="font-weight:700; color:var(--text-dark, #0f172a); font-size:1rem;">
-              ${lang === 'km' ? `${dName} នេះគ្មានម៉ោងសិក្សាទេ (ថ្ងៃសម្រាក)` : `No classes on ${dName} (Free day)`}
+          <div class="mobile-select-prompt" style="padding: 2.25rem 1.25rem; text-align: center; background: var(--card-bg, #ffffff); border: 1.5px dashed var(--border, #cbd5e1); border-radius: 14px; margin: 0.5rem 0; box-shadow: 0 2px 8px rgba(0,0,0,0.02);">
+            <div style="font-size: 2.4rem; margin-bottom: 0.5rem;">👆</div>
+            <div style="font-weight: 700; font-size: 1.05rem; color: var(--text-dark, #0f172a);">
+              ${lang === 'km' ? 'សូមចុចជ្រើសរើស ថ្នាក់ ឬ ថ្ងៃ ខាងលើ' : 'Please select a Class or Day above'}
             </div>
-            <div style="font-size:0.85rem; color:var(--text-muted, #64748b); margin-top:6px;">
-              ${lang === 'km' ? 'សូមជ្រើសរើសថ្ងៃផ្សេង ឬចុច "ទាំងអស់"' : 'Select another day or tap "All Days"'}
+            <div style="font-size: 0.85rem; color: var(--text-muted, #64748b); margin-top: 0.35rem; line-height: 1.5;">
+              ${lang === 'km' 
+                ? 'ចុចលើប៊ូតុងថ្នាក់ (G1-NW-B, G1-PG-A, G1-PG-B) ឬចុចលើថ្ងៃ ដើម្បីបង្ហាញកាលវិភាគម៉ោងរៀន' 
+                : 'Tap any class cohort or day pill above to view the schedule.'}
             </div>
           </div>
         `;
       } else {
-        mobileCardsHtml = daysToDisplay.map(d => {
-          const dayName = lang === 'km' ? `ថ្ងៃ${d.kh}` : d.en;
-          const daySlots = filtered.filter(s => (s.day_of_week || '').toLowerCase() === d.key.toLowerCase())
-            .sort((a, b) => (a.start_time || '').localeCompare(b.start_time || ''));
+        const activeDays = DAYS.filter(d => (dayCounts[d.key.toLowerCase()] || 0) > 0);
+        const daysToDisplay = this.selectedDay
+          ? DAYS.filter(d => d.key.toLowerCase() === this.selectedDay.toLowerCase())
+          : (activeDays.length > 0 ? activeDays : DAYS);
 
-          if (daySlots.length === 0) return '';
-
-          return `
-            <div class="mobile-day-group">
-              <div class="mobile-day-header">
-                <div style="display:flex; align-items:center; gap:8px;">
-                  <span class="day-icon">📅</span>
-                  <span class="day-title">${dayName}</span>
-                </div>
-                <span class="day-badge-count">${daySlots.length} ${lang === 'km' ? 'ម៉ោងរៀន' : 'Classes'}</span>
+        if (daysToDisplay.length === 0 || (this.selectedDay && (dayCounts[this.selectedDay.toLowerCase()] || 0) === 0)) {
+          const selectedDayObj = DAYS.find(d => d.key.toLowerCase() === (this.selectedDay || '').toLowerCase());
+          const dName = selectedDayObj ? (lang === 'km' ? `ថ្ងៃ${selectedDayObj.kh}` : selectedDayObj.en) : '';
+          mobileCardsHtml = `
+            <div class="card p-4 text-center" style="border-radius:14px; background:var(--card-bg, #ffffff); border:1px solid var(--border, #e2e8f0); box-shadow:0 2px 8px rgba(0,0,0,0.04);">
+              <div style="font-size:2rem; margin-bottom:8px;">🌴</div>
+              <div style="font-weight:700; color:var(--text-dark, #0f172a); font-size:1rem;">
+                ${lang === 'km' ? `${dName} នេះគ្មានម៉ោងសិក្សាទេ (ថ្ងៃសម្រាក)` : `No classes on ${dName} (Free day)`}
               </div>
-              <div class="mobile-sessions-list">
-                ${daySlots.map(s => {
-                  const startTime = formatTimeDisplay(s.start_time);
-                  const endTime = formatTimeDisplay(s.end_time);
-                  const theme = getSubjectThemeClass(s.subject_code);
-                  const room = s.room || 'DUC';
-                  const teacher = s.teacher_name || 'TBD';
-
-                  return `
-                    <div class="mobile-session-card ${theme}" onclick="window.ducTimetable.selectDay('${d.key}', true)">
-                      <div class="mobile-session-top">
-                        <span class="mobile-time-pill">⏰ ${startTime} - ${endTime}</span>
-                        <span class="mobile-room-pill">🏛️ ${room}</span>
-                      </div>
-                      <div class="mobile-subject-title">
-                        <strong class="mobile-subject-code">${s.subject_code}</strong>
-                        <span>${s.subject_name || ''}</span>
-                      </div>
-                      <div class="mobile-teacher-row">
-                        <span>👨‍🏫 ${teacher}</span>
-                        ${s.class_code ? `<span class="badge badge-purple" style="font-size:0.72rem;">${s.class_code}</span>` : ''}
-                      </div>
-                    </div>
-                  `;
-                }).join('')}
+              <div style="font-size:0.85rem; color:var(--text-muted, #64748b); margin-top:6px;">
+                ${lang === 'km' ? 'សូមជ្រើសរើសថ្ងៃផ្សេង ឬចុច "ទាំងអស់"' : 'Select another day or tap "All Days"'}
               </div>
             </div>
           `;
-        }).join('');
+        } else {
+          mobileCardsHtml = daysToDisplay.map(d => {
+            const dayName = lang === 'km' ? `ថ្ងៃ${d.kh}` : d.en;
+            const daySlots = filtered.filter(s => (s.day_of_week || '').toLowerCase() === d.key.toLowerCase())
+              .sort((a, b) => (a.start_time || '').localeCompare(b.start_time || ''));
+
+            if (daySlots.length === 0) return '';
+
+            return `
+              <div class="mobile-day-group">
+                <div class="mobile-day-header">
+                  <div style="display:flex; align-items:center; gap:8px;">
+                    <span class="day-icon">📅</span>
+                    <span class="day-title">${dayName}</span>
+                  </div>
+                  <span class="day-badge-count">${daySlots.length} ${lang === 'km' ? 'ម៉ោងរៀន' : 'Classes'}</span>
+                </div>
+                <div class="mobile-sessions-list">
+                  ${daySlots.map(s => {
+                    const startTime = formatTimeDisplay(s.start_time);
+                    const endTime = formatTimeDisplay(s.end_time);
+                    const theme = getSubjectThemeClass(s.subject_code);
+                    const room = s.room || 'DUC';
+                    const teacher = s.teacher_name || 'TBD';
+
+                    return `
+                      <div class="mobile-session-card ${theme}" onclick="window.ducTimetable.selectDay('${d.key}', true)">
+                        <div class="mobile-session-top">
+                          <span class="mobile-time-pill">⏰ ${startTime} - ${endTime}</span>
+                          <span class="mobile-room-pill">🏛️ ${room}</span>
+                        </div>
+                        <div class="mobile-subject-title">
+                          <strong class="mobile-subject-code">${s.subject_code}</strong>
+                          <span>${s.subject_name || ''}</span>
+                        </div>
+                        <div class="mobile-teacher-row">
+                          <span>👨‍🏫 ${teacher}</span>
+                          ${s.class_code ? `<span class="badge badge-purple" style="font-size:0.72rem;">${s.class_code}</span>` : ''}
+                        </div>
+                      </div>
+                    `;
+                  }).join('')}
+                </div>
+              </div>
+            `;
+          }).join('');
+        }
       }
 
       let html = `
@@ -484,18 +506,20 @@
           <div class="mobile-schedule-view">
             ${mobileCardsHtml}
 
-            <!-- Mobile Exam Notice & Legend -->
-            <div class="mobile-notice-card">
-              <div class="mobile-notice-title">
-                📌 ${lang === 'km' ? 'បញ្ជាក់៖ ការប្រឡងពាក់កណ្ដាលឆមាស' : 'Midterm Examination Notice'}
+            ${showMobileSchedule ? `
+              <!-- Mobile Exam Notice & Legend -->
+              <div class="mobile-notice-card">
+                <div class="mobile-notice-title">
+                  📌 ${lang === 'km' ? 'បញ្ជាក់៖ ការប្រឡងពាក់កណ្ដាលឆមាស' : 'Midterm Examination Notice'}
+                </div>
+                <div class="mobile-notice-text">
+                  ${lang === 'km' ? 'ចាប់ផ្ដើមពីថ្ងៃទី២៦ ខែតុលា ឆ្នាំ២០២៦ ដល់ថ្ងៃទី១ ខែវិច្ឆិកា ឆ្នាំ២០២៦' : 'From 26 October 2026 to 01 November 2026'}
+                </div>
+                <div class="mobile-legend-wrap" style="margin-top:10px; padding-top:10px; border-top:1px dashed #cbd5e1;">
+                  ${legendHtml}
+                </div>
               </div>
-              <div class="mobile-notice-text">
-                ${lang === 'km' ? 'ចាប់ផ្ដើមពីថ្ងៃទី២៦ ខែតុលា ឆ្នាំ២០២៦ ដល់ថ្ងៃទី១ ខែវិច្ឆិកា ឆ្នាំ២០២៦' : 'From 26 October 2026 to 01 November 2026'}
-              </div>
-              <div class="mobile-legend-wrap" style="margin-top:10px; padding-top:10px; border-top:1px dashed #cbd5e1;">
-                ${legendHtml}
-              </div>
-            </div>
+            ` : ''}
           </div>
 
           <!-- 4. Official DUC Timetable Document Card (Desktop only, hidden on mobile <= 768px) -->
