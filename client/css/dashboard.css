@@ -2909,6 +2909,26 @@ html, body {
 }
 
 /* Subject Themes */
+.theme-maf {
+  background: #eff6ff !important;
+  border: 1.5px solid #93c5fd !important;
+  color: #1e40af !important;
+}
+.theme-spd {
+  background: #f0fdf4 !important;
+  border: 1.5px solid #86efac !important;
+  color: #15803d !important;
+}
+.theme-ec {
+  background: #faf5ff !important;
+  border: 1.5px solid #d8b4fe !important;
+  color: #7e22ce !important;
+}
+.theme-ctn {
+  background: #fffbeb !important;
+  border: 1.5px solid #fcd34d !important;
+  color: #b45309 !important;
+}
 .theme-sad {
   background: #eff6ff !important;
   border: 1.5px solid #93c5fd !important;
@@ -3130,25 +3150,29 @@ html, body {
   color: #93c5fd;
 }
 
-[data-theme="dark"] .theme-sad {
+[data-theme="dark"] .theme-sad,
+[data-theme="dark"] .theme-maf {
   background: #172554 !important;
   border-color: #1e40af !important;
   color: #93c5fd !important;
 }
 
-[data-theme="dark"] .theme-itpm {
+[data-theme="dark"] .theme-itpm,
+[data-theme="dark"] .theme-spd {
   background: #052e16 !important;
   border-color: #166534 !important;
   color: #86efac !important;
 }
 
-[data-theme="dark"] .theme-csc {
+[data-theme="dark"] .theme-csc,
+[data-theme="dark"] .theme-ec {
   background: #3b0764 !important;
   border-color: #6b21a8 !important;
   color: #d8b4fe !important;
 }
 
-[data-theme="dark"] .theme-ca {
+[data-theme="dark"] .theme-ca,
+[data-theme="dark"] .theme-ctn {
   background: #451a03 !important;
   border-color: #9a3412 !important;
   color: #fcd34d !important;

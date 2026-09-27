@@ -2,6 +2,7 @@
 // ─────────────────────────────────────────────────────────────────────────────
 // PURPOSE: Interactive Multi-Class & Dynamic Day Selection Timetable Engine
 //          Digital University of Cambodia · DUC Classroom Management
+//          Matches official Ministry-compliant timetables for G1-PG-A, G1-PG-B, G1-NW-B
 // ─────────────────────────────────────────────────────────────────────────────
 
 (function (window) {
@@ -20,6 +21,10 @@
   function getSubjectThemeClass(subjectCode) {
     if (!subjectCode) return 'theme-default';
     const code = subjectCode.toUpperCase();
+    if (code.includes('MAF')) return 'theme-maf';
+    if (code.includes('SPD')) return 'theme-spd';
+    if (code.includes('E-C') || code.includes('EC')) return 'theme-ec';
+    if (code.includes('CTN')) return 'theme-ctn';
     if (code.includes('SAD')) return 'theme-sad';
     if (code.includes('ITPM')) return 'theme-itpm';
     if (code.includes('CSC')) return 'theme-csc';
@@ -28,18 +33,22 @@
   }
 
   function getMajorDescription(classCode, rawName) {
-    if (!classCode) return 'កម្រិតបរិញ្ញាបត្រ · Digital University of Cambodia';
-    const code = classCode.toUpperCase();
-    if (code.includes('G1-NW-A')) {
-      return 'កម្រិតបរិញ្ញាបត្រ ជំនាញ បណ្តាញកុំព្យូទ័រ និងប្រព័ន្ធសុវត្ថិភាព A';
+    const code = (classCode || '').toUpperCase();
+    if (code.includes('PG') || code.includes('SD')) {
+      return 'កម្រិតបរិញ្ញាបត្រ ជំនាញអភិវឌ្ឍន៍កម្មវិធីសហ្វវែរ';
     }
-    if (code.includes('G1-NW-B')) {
-      return 'កម្រិតបរិញ្ញាបត្រ ជំនាញ បណ្តាញកុំព្យូទ័រ និងប្រព័ន្ធសុវត្ថិភាព B';
-    }
-    if (code.includes('G1-SD-A') || code.includes('SD')) {
-      return 'កម្រិតបរិញ្ញាបត្រ ជំនាញ អភិវឌ្ឍន៍កម្មវិធីសហ្វវែរ A';
+    if (code.includes('NW')) {
+      return 'កម្រិតបរិញ្ញាបត្រ ជំនាញ បណ្តាញកុំព្យូទ័រ និងប្រព័ន្ធសុវត្ថិភាព';
     }
     return rawName || `កម្រិតបរិញ្ញាបត្រ ថ្នាក់ ${classCode}`;
+  }
+
+  function getTimetableDuration(classCode) {
+    const code = (classCode || '').toUpperCase();
+    if (code.includes('PG') || code.includes('SD')) {
+      return 'ចាប់ផ្ដើមពីថ្ងៃទី៥ ខែកញ្ញា ឆ្នាំ២០២៦ បញ្ចប់ថ្ងៃទី២៧ ខែធ្នូ ឆ្នាំ២០២៦';
+    }
+    return 'ចាប់ផ្ដើមពីថ្ងៃទី៤ ខែកញ្ញា ឆ្នាំ២០២៦ បញ្ចប់ថ្ងៃទី២៧ ខែធ្នូ ឆ្នាំ២០២៦';
   }
 
   function formatTimeDisplay(t) {
@@ -108,7 +117,6 @@
     getSelectedClassInfo() {
       if (!this.selectedClassId) {
         if (this.classes.length > 0) {
-          // If a class is not specifically selected, find default or first
           return this.classes[0];
         }
         return {
@@ -159,7 +167,6 @@
         setTimeout(() => { if (m) m.style.display = 'none'; }, 200);
       };
 
-      // Close on backdrop click
       const modalEl = document.getElementById('day-schedule-modal');
       modalEl.addEventListener('click', (e) => {
         if (e.target === modalEl) window.closeDayScheduleModal();
@@ -184,7 +191,6 @@
       const classInfo = this.getSelectedClassInfo();
       const classDisplay = this.selectedClassId ? `ថ្នាក់ ${classInfo.class_code}` : 'ថ្នាក់ទាំងអស់ (All Classes)';
 
-      // Header labels
       document.getElementById('day-modal-day-title').textContent = lang === 'km' 
         ? `កាលវិភាគម៉ោងរៀន · ${dayName}` 
         : `Daily Class Schedule · ${dayName}`;
@@ -262,6 +268,7 @@
       const lang = window.I18n ? window.I18n.getCurrentLang() : (localStorage.getItem('duc_lang') || 'km');
       const filtered = this.getFilteredSchedules();
       const classInfo = this.getSelectedClassInfo();
+      const classCode = (classInfo.class_code || '').toUpperCase();
 
       // Count classes per day for this cohort
       const dayCounts = {};
@@ -271,38 +278,82 @@
         if (dayCounts[k] !== undefined) dayCounts[k]++;
       });
 
-      // Distinct Time Slots
-      const slotMap = new Map();
-      filtered.forEach(s => {
-        if (!s.start_time || !s.end_time) return;
-        const key = `${formatTimeDisplay(s.start_time)} - ${formatTimeDisplay(s.end_time)}`;
-        if (!slotMap.has(key)) {
-          slotMap.set(key, { start: s.start_time, end: s.end_time, label: key });
+      // Tailored Row Slots depending on cohort
+      let slotRows = [];
+      if (classCode.includes('PG-A')) {
+        slotRows = [
+          { label: '7:00 - 10:00', start: '07:00:00', end: '10:00:00' },
+          { label: '10:00 - 12:00', start: '10:00:00', end: '12:00:00' },
+          { label: '1:00 - 3:00', start: '13:00:00', end: '15:00:00' },
+          { label: '5:00 - 8:00', start: '17:00:00', end: '20:30:00' }
+        ];
+      } else if (classCode.includes('PG-B')) {
+        slotRows = [
+          { label: '7:00 - 10:00', start: '07:00:00', end: '10:00:00' },
+          { label: '10:00 - 12:00', start: '10:00:00', end: '12:00:00' },
+          { label: '3:00 - 5:00', start: '15:00:00', end: '17:00:00' },
+          { label: '5:30 - 8:30', start: '17:30:00', end: '20:30:00' }
+        ];
+      } else if (classCode.includes('NW')) {
+        slotRows = [
+          { label: '8:00 - 11:00', start: '08:00:00', end: '11:00:00' },
+          { label: '13:00 - 15:00', start: '13:00:00', end: '15:00:00' },
+          { label: '15:00 - 16:30', start: '15:00:00', end: '16:30:00' }
+        ];
+      } else {
+        // Dynamic deduction from database slots
+        const slotMap = new Map();
+        filtered.forEach(s => {
+          if (!s.start_time || !s.end_time) return;
+          const key = `${formatTimeDisplay(s.start_time)} - ${formatTimeDisplay(s.end_time)}`;
+          if (!slotMap.has(key)) {
+            slotMap.set(key, { start: s.start_time, end: s.end_time, label: key });
+          }
+        });
+        if (slotMap.size > 0) {
+          slotRows = Array.from(slotMap.values()).sort((a, b) => (a.start || '').localeCompare(b.start || ''));
+        } else {
+          slotRows = [
+            { label: '8:00 - 11:00', start: '08:00:00', end: '11:00:00' },
+            { label: '13:00 - 15:00', start: '13:00:00', end: '15:00:00' },
+            { label: '15:00 - 16:30', start: '15:00:00', end: '16:30:00' }
+          ];
         }
-      });
-
-      // Default Standard DUC Slots if empty
-      if (slotMap.size === 0) {
-        slotMap.set('08:00 - 11:00', { start: '08:00:00', end: '11:00:00', label: '8:00 - 11:00' });
-        slotMap.set('13:00 - 15:00', { start: '13:00:00', end: '15:00:00', label: '13:00 - 15:00' });
-        slotMap.set('15:00 - 16:30', { start: '15:00:00', end: '16:30:00', label: '15:00 - 16:30' });
       }
 
-      const sortedSlots = Array.from(slotMap.values()).sort((a, b) => (a.start || '').localeCompare(b.start || ''));
-
-      // Unique subjects for legend
-      const legendMap = new Map();
-      filtered.forEach(s => {
-        if (s.subject_code && !legendMap.has(s.subject_code)) {
-          legendMap.set(s.subject_code, {
-            code: s.subject_code,
-            name: s.subject_name,
-            teacher: s.teacher_name
-          });
-        }
-      });
-
       const majorTitle = getMajorDescription(classInfo.class_code, classInfo.class_name);
+      const durationTitle = getTimetableDuration(classInfo.class_code);
+
+      // Subject legend specific to cohort
+      let legendHtml = '';
+      if (classCode.includes('PG-A')) {
+        legendHtml = `
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:10px; font-family:var(--font-battambang); font-size:0.88rem; color:var(--text-body, #475569);">
+            <div><strong style="color:#1e40af;">-[MAF.II]=</strong> Mobile Application Framework II <span style="color:#1e40af; font-weight:600;">លោកគ្រូ ភ តុលា</span></div>
+            <div><strong style="color:#15803d;">-[E-C]=</strong> E-Commerce <span style="color:#1e40af; font-weight:600;">SAN SEN</span></div>
+            <div><strong style="color:#7e22ce;">-[SPD.II]=</strong> Software Project Development II <span style="color:#1e40af; font-weight:600;">លោកគ្រូ ជុំ ដារ៉ូណែ</span></div>
+            <div><strong style="color:#b45309;">-[CTN]=</strong> Containers <span style="color:#1e40af; font-weight:600;">លោកគ្រូ គឿន មេសា</span></div>
+          </div>
+        `;
+      } else if (classCode.includes('PG-B')) {
+        legendHtml = `
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:10px; font-family:var(--font-battambang); font-size:0.88rem; color:var(--text-body, #475569);">
+            <div><strong style="color:#1e40af;">-[MAF.II]=</strong> Mobile Application Framework II <span style="color:#1e40af; font-weight:600;">លោកគ្រូ ភ តុលា</span></div>
+            <div><strong style="color:#15803d;">-[E-C]=</strong> E-Commerce <span style="color:#1e40af; font-weight:600;">SAN SEN</span></div>
+            <div><strong style="color:#b45309;">-[CTN]=</strong> Containers <span style="color:#1e40af; font-weight:600;">លោកគ្រូ គឿន មេសា</span></div>
+            <div><strong style="color:#7e22ce;">-[SPD.II]=</strong> Software Project Development II <span style="color:#1e40af; font-weight:600;">លោកគ្រូ ជុំ ដារ៉ូណែ</span></div>
+          </div>
+        `;
+      } else {
+        legendHtml = `
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:10px; font-family:var(--font-battambang); font-size:0.88rem; color:var(--text-body, #475569);">
+            <div><strong style="color:#1e40af;">-[SAD]=</strong> System Analyze and Design <span style="color:#1e40af; font-weight:600;">លោកគ្រូ ឈាង វុទ្ធី</span></div>
+            <div><strong style="color:#7e22ce;">-[CSC.V]=</strong> Cisco V <span style="color:#1e40af; font-weight:600;">លោកគ្រូ សែម វ៉ាវី</span></div>
+            <div><strong style="color:#15803d;">-[ITPM]=</strong> IT Project Management <span style="color:#1e40af; font-weight:600;">លោកគ្រូ សែម វ៉ាវី</span></div>
+            <div><strong style="color:#b45309;">-[CA]=</strong> Cloud Architecture <span style="color:#1e40af; font-weight:600;">លោកគ្រូ គឿន មេសា</span></div>
+          </div>
+        `;
+      }
 
       let html = `
         <div class="timetable-interactive-container">
@@ -386,7 +437,7 @@
                   ${majorTitle}
                 </div>
                 <div style="font-family:var(--font-battambang); color:var(--text-muted, #64748b); font-size:0.88rem;">
-                  ចាប់ផ្ដើមពីថ្ងៃទី៤ ខែកញ្ញា ឆ្នាំ២០២៦ បញ្ចប់ថ្ងៃទី២៧ ខែធ្នូ ឆ្នាំ២០២៦
+                  ${durationTitle}
                 </div>
                 <div style="margin-top:10px;">
                   <span class="badge badge-primary" style="font-size:0.95rem; padding:6px 20px; font-weight:700; letter-spacing:0.5px;">
@@ -419,7 +470,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                    ${sortedSlots.map(slot => {
+                    ${slotRows.map(slot => {
                       return `
                         <tr>
                           <td style="font-weight:700; background:var(--bg-light, #f8fafc); border:1px solid #cbd5e1; padding:12px 8px; font-size:0.88rem;">
@@ -427,12 +478,18 @@
                           </td>
                           ${DAYS.map(d => {
                             const isColActive = (this.selectedDay || '').toLowerCase() === d.key.toLowerCase();
-                            // Find schedules matching this day and approximate time
+                            
+                            // Match schedules for this day and slot range
                             const matchingSlots = filtered.filter(s => {
                               if ((s.day_of_week || '').toLowerCase() !== d.key.toLowerCase()) return false;
-                              const sStart = formatTimeDisplay(s.start_time);
-                              const slotStart = slot.label.split(' - ')[0].trim();
-                              return sStart === slotStart || (s.start_time >= slot.start && s.start_time < slot.end);
+                              const sStart = (s.start_time || '').substring(0, 5);
+                              const slotStart = (slot.start || '').substring(0, 5);
+                              
+                              // Exact or overlapping slot check
+                              if (sStart === slotStart) return true;
+                              if (s.start_time >= slot.start && s.start_time < slot.end) return true;
+                              if (s.start_time <= slot.start && s.end_time >= slot.end) return true;
+                              return false;
                             });
 
                             if (matchingSlots.length === 0) {
@@ -451,14 +508,23 @@
                                 ${matchingSlots.map(s => {
                                   const theme = getSubjectThemeClass(s.subject_code);
                                   const room = s.room ? s.room : 'DUC';
-                                  const startTime = formatTimeDisplay(s.start_time);
-                                  const endTime = formatTimeDisplay(s.end_time);
+                                  
+                                  // Detailed custom slot label matching the screenshots
+                                  let customExtra = '';
+                                  const sStart = (s.start_time || '').substring(0, 5);
+                                  const sEnd = (s.end_time || '').substring(0, 5);
+                                  if (s.subject_code === 'MAF.II' && sStart === '13:00') customExtra = '(1:00 - 5:00)';
+                                  if (s.subject_code === 'MAF.II' && sStart === '08:00') customExtra = '(8:00 - 12:00)';
+                                  if (s.subject_code === 'CTN' && (sStart === '17:30' || sStart === '17:00')) customExtra = '(5:30 - 8:30)';
+                                  
+                                  const timeBadge = customExtra || `${formatTimeDisplay(s.start_time)} - ${formatTimeDisplay(s.end_time)}`;
+
                                   return `
                                     <div class="timetable-slot-card ${theme}" 
                                          onclick="window.ducTimetable.selectDay('${d.key}', true)"
                                          title="${s.subject_name || s.subject_code} · ${s.teacher_name || ''}">
                                       <div class="slot-code">${s.subject_code} (${room})</div>
-                                      <div class="slot-time">${startTime} - ${endTime}</div>
+                                      <div class="slot-time">${timeBadge}</div>
                                     </div>
                                   `;
                                 }).join('')}
@@ -475,31 +541,12 @@
               <!-- Document Footer / Subject & Exam Notes -->
               <div class="doc-footer-notes" style="margin-top:1.5rem; padding:1.25rem; background:var(--bg-light, #f8fafc); border-radius:10px; border-left:4px solid #f59e0b;">
                 <div style="font-family:var(--font-battambang); font-weight:700; color:#b45309; font-size:0.92rem; margin-bottom:8px; line-height:1.5;">
-                  ⚠️ បញ្ជាក់៖ ការប្រឡងពាក់កណ្ដាលឆមាសចាប់ផ្ដើមពីថ្ងៃទី២៦ ខែតុលា ឆ្នាំ២០២៦ ដល់ថ្ងៃទី១ ខែវិច្ឆិកា ឆ្នាំ២០២៦
+                  បញ្ជាក់៖ ការប្រឡងពាក់កណ្ដាលឆមាសចាប់ផ្ដើមពីថ្ងៃទី២៦ ខែតុលា ឆ្នាំ២០២៦ ដល់ថ្ងៃទី១ ខែវិច្ឆិកា ឆ្នាំ២០២៦
                 </div>
                 <div style="font-family:var(--font-battambang); font-weight:700; color:var(--text-dark, #334155); font-size:0.9rem; margin-bottom:8px;">
                   មុខវិជ្ជាដែលត្រូវសិក្សារួមមាន៖
                 </div>
-                <div class="doc-subjects-grid" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:10px; font-family:var(--font-battambang); font-size:0.88rem; color:var(--text-body, #475569);">
-                  ${legendMap.size > 0 ? Array.from(legendMap.values()).map(sub => {
-                    const theme = getSubjectThemeClass(sub.code);
-                    let color = '#1e40af';
-                    if (theme === 'theme-itpm') color = '#15803d';
-                    if (theme === 'theme-csc') color = '#7e22ce';
-                    if (theme === 'theme-ca') color = '#b45309';
-                    return `
-                      <div>
-                        <strong style="color:${color};">[${sub.code}]</strong> = ${sub.name || sub.code} · 
-                        <span style="color:#1e40af; font-weight:600;">${sub.teacher || 'លោកគ្រូ'}</span>
-                      </div>
-                    `;
-                  }).join('') : `
-                    <div><strong>[SAD]</strong> = System Analyze and Design · <span style="color:#1e40af; font-weight:600;">លោកគ្រូ ឈាង វុទ្ធី</span></div>
-                    <div><strong>[ITPM]</strong> = IT Project Management · <span style="color:#1e40af; font-weight:600;">លោកគ្រូ សែម វ៉ាវី</span></div>
-                    <div><strong>[CSC.V]</strong> = Cisco V · <span style="color:#1e40af; font-weight:600;">លោកគ្រូ សែម វ៉ាវី</span></div>
-                    <div><strong>[CA]</strong> = Cloud Architecture · <span style="color:#1e40af; font-weight:600;">លោកគ្រូ គឿន មេសា</span></div>
-                  `}
-                </div>
+                ${legendHtml}
               </div>
 
             </div>
