@@ -232,7 +232,7 @@
       'page.admin_dashboard': 'ផ្ទាំងគ្រប់គ្រងទូទៅ',
       'page.teacher_dashboard': 'ផ្ទាំងគ្រប់គ្រងសាស្ត្រាចារ្យ',
       'page.student_dashboard': 'ផ្ទាំងព័ត៌មាននិស្សិត',
-      'page.schedules': 'កាលវិភាគសិក្សា & កម្មវិធីបង្រៀន',
+      'page.schedules': 'កាលវិភាគសិក្សា',
       'page.class_timetables': 'កាលវិភាគថ្នាក់សិក្សា',
       'page.students': 'គ្រប់គ្រងព័ត៌មាននិស្សិត',
       'page.teachers': 'គ្រប់គ្រងព័ត៌មានសាស្ត្រាចារ្យ',
