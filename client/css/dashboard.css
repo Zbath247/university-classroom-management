@@ -1973,7 +1973,7 @@ html, body {
   }
 }
 
-/* ─── Action Toolbar Grid (Row 1: Button + Filter, Row 2: Full Width) ─────── */
+/* ─── Action Toolbar Grid (Responsive 2-Tier Mobile, Unified Row Desktop) ─── */
 .action-toolbar-grid,
 .student-toolbar-grid {
   display: flex;
@@ -1997,71 +1997,124 @@ html, body {
   box-sizing: border-box !important;
 }
 
-.action-toolbar-row1 .btn,
-.action-toolbar-row1 select,
-.action-toolbar-row1 input,
-.student-toolbar-row1 .btn,
-.student-toolbar-row1 select,
-.action-toolbar-row2 input,
-.action-toolbar-row2 select,
-.student-toolbar-row2 input {
-  min-height: 34px !important;
-  height: 34px !important;
-  font-size: 0.8rem !important;
-  border-radius: 8px !important;
-}
-
-.action-toolbar-row1 .btn,
-.student-toolbar-row1 .btn {
-  padding: 0.25rem 0.5rem !important;
-  white-space: nowrap !important;
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  width: 100% !important;
-  min-width: 0 !important;
-  max-width: 100% !important;
-  box-sizing: border-box !important;
-}
-
 .action-toolbar-row2,
 .student-toolbar-row2 {
   width: 100%;
 }
 
+/* Mobile Sizing (<= 768px): Compact 36px with adequate vertical room for Khmer subscripts */
+@media (max-width: 768px) {
+  .action-toolbar-row1 .btn,
+  .action-toolbar-row1 select,
+  .action-toolbar-row1 input,
+  .student-toolbar-row1 .btn,
+  .student-toolbar-row1 select,
+  .action-toolbar-row2 input,
+  .action-toolbar-row2 select,
+  .student-toolbar-row2 input {
+    min-height: 36px !important;
+    height: 36px !important;
+    font-size: 0.82rem !important;
+    line-height: 1.4 !important;
+    padding: 0.2rem 0.55rem !important;
+    border-radius: 8px !important;
+    box-sizing: border-box !important;
+  }
+
+  .action-toolbar-row1 .btn,
+  .student-toolbar-row1 .btn {
+    padding: 0.25rem 0.5rem !important;
+    white-space: nowrap !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+  }
+}
+
+/* Desktop Layout & Sizing (>= 769px): Full 40px height with comfortable line-height for Khmer script */
 @media (min-width: 769px) {
   .action-toolbar-grid,
   .student-toolbar-grid {
     flex-direction: row;
     align-items: center;
+    justify-content: space-between;
     gap: 0.75rem;
+    width: 100%;
   }
 
   .action-toolbar-row1,
   .student-toolbar-row1 {
     display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.75rem;
     flex: 0 0 auto;
     width: auto;
-    gap: 0.75rem;
     order: 2;
   }
 
+  /* In row 1 on desktop, select comes first and button is pushed right */
   .action-toolbar-row1 select,
   .student-toolbar-row1 select {
+    order: 1;
     width: 200px !important;
+    min-width: 180px !important;
+    flex: 0 0 auto !important;
   }
 
   .action-toolbar-row1 .btn,
   .student-toolbar-row1 .btn {
+    order: 2;
     width: auto !important;
-    padding: 0.45rem 1rem !important;
+    padding: 0.45rem 1.25rem !important;
+    flex: 0 0 auto !important;
+    margin-left: auto;
   }
 
   .action-toolbar-row2,
   .student-toolbar-row2 {
-    flex: 1;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.75rem;
+    flex: 1 1 auto;
+    width: auto;
     order: 1;
   }
+
+  /* When row 2 contains a select (e.g. Day filter or Type filter), do not stretch it */
+  .action-toolbar-row2 select {
+    width: 200px !important;
+    min-width: 180px !important;
+    flex: 0 0 auto !important;
+  }
+
+  /* When row 2 contains an input (e.g. Search input), let it expand cleanly */
+  .action-toolbar-row2 input {
+    flex: 1 !important;
+    width: 100% !important;
+    max-width: 450px !important;
+  }
+
+  /* Desktop Form Controls Height & Padding: eliminates any clipping of Khmer letters */
+  .action-toolbar-row1 .btn,
+  .action-toolbar-row1 select,
+  .action-toolbar-row1 input,
+  .student-toolbar-row1 .btn,
+  .student-toolbar-row1 select,
+  .action-toolbar-row2 input,
+  .action-toolbar-row2 select,
+  .student-toolbar-row2 input {
+    min-height: 40px !important;
+    height: 40px !important;
+    font-size: 0.88rem !important;
+    line-height: 1.5 !important;
+    padding: 0.35rem 0.85rem !important;
+    border-radius: 8px !important;
+    box-sizing: border-box !important;
+  }
+}
 
   /* Desktop Attendance Filter Form (Single Horizontal Row) */
   #filter-form {
