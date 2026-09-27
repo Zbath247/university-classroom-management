@@ -1335,7 +1335,7 @@ html, body {
     gap: 0.45rem !important;
     flex: 1 1 auto !important;
     min-width: 0 !important;
-    overflow: hidden !important;
+    overflow: visible !important;
   }
 
   .sidebar-toggle {
@@ -1382,11 +1382,11 @@ html, body {
 
   .topbar-title {
     font-family: var(--font-battambang, 'Kantumruy Pro', 'Inter', sans-serif) !important;
-    font-size: 0.78rem !important;
+    font-size: 0.8rem !important;
     font-weight: 600 !important;
     white-space: nowrap !important;
-    overflow: hidden !important;
-    text-overflow: ellipsis !important;
+    overflow: visible !important;
+    text-overflow: clip !important;
     max-width: none !important;
     flex: 1 1 auto !important;
     min-width: 0 !important;
@@ -1396,9 +1396,13 @@ html, body {
 
   body.lang-km .topbar-title {
     font-family: var(--font-battambang, 'Kantumruy Pro', sans-serif) !important;
-    font-size: 0.78rem !important;
+    font-size: 0.8rem !important;
     font-weight: 600 !important;
     line-height: 1.2 !important;
+    white-space: nowrap !important;
+    overflow: visible !important;
+    text-overflow: clip !important;
+    max-width: none !important;
   }
 
   .topbar-right {
@@ -1487,8 +1491,11 @@ html, body {
     gap: 0.25rem !important;
   }
   .topbar-title {
-    font-size: 0.72rem !important;
-    max-width: 100px !important;
+    font-size: 0.78rem !important;
+    max-width: none !important;
+    white-space: nowrap !important;
+    overflow: visible !important;
+    text-overflow: clip !important;
   }
   .topbar-controls-cluster {
     gap: 2px;
@@ -1513,7 +1520,11 @@ html, body {
 
 @media (max-width: 360px) {
   .topbar-title {
-    display: none !important; /* Leave generous breathing room for branding, toggles, and avatar */
+    font-size: 0.72rem !important;
+    max-width: none !important;
+    white-space: nowrap !important;
+    overflow: visible !important;
+    text-overflow: clip !important;
   }
 }
 

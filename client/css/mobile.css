@@ -214,7 +214,7 @@ html, body {
     gap: 0.45rem !important;
     flex: 1 1 auto !important;
     min-width: 0 !important;
-    overflow: hidden !important;
+    overflow: visible !important;
   }
 
   .sidebar-toggle {
@@ -261,11 +261,11 @@ html, body {
 
   .topbar-title {
     font-family: var(--font-battambang, 'Kantumruy Pro', 'Inter', sans-serif) !important;
-    font-size: 0.78rem !important;
+    font-size: 0.8rem !important;
     font-weight: 600 !important;
     white-space: nowrap !important;
-    overflow: hidden !important;
-    text-overflow: ellipsis !important;
+    overflow: visible !important;
+    text-overflow: clip !important;
     max-width: none !important;
     flex: 1 1 auto !important;
     min-width: 0 !important;
@@ -275,9 +275,13 @@ html, body {
 
   body.lang-km .topbar-title {
     font-family: var(--font-battambang, 'Kantumruy Pro', sans-serif) !important;
-    font-size: 0.78rem !important;
+    font-size: 0.8rem !important;
     font-weight: 600 !important;
     line-height: 1.2 !important;
+    white-space: nowrap !important;
+    overflow: visible !important;
+    text-overflow: clip !important;
+    max-width: none !important;
   }
 
   .topbar-right {
@@ -360,6 +364,13 @@ html, body {
 }
 
 @media (max-width: 480px) {
+  .topbar-title {
+    font-size: 0.78rem !important;
+    max-width: none !important;
+    white-space: nowrap !important;
+    overflow: visible !important;
+    text-overflow: clip !important;
+  }
   .topbar-controls-cluster {
     gap: 3px;
     padding: 2px 4px;
