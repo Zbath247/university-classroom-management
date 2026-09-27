@@ -2674,4 +2674,498 @@ html, body {
   }
 }
 
+/* ─── 13. INTERACTIVE MULTI-CLASS & DAY TIMETABLE SYSTEM ─────────────────── */
+.timetable-interactive-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  margin-bottom: 2rem;
+}
+
+/* Class Tabs Switcher */
+.timetable-class-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  background: var(--card-bg, #ffffff);
+  border: 1px solid var(--border, #e2e8f0);
+  border-radius: 14px;
+  padding: 0.85rem 1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.timetable-bar-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--text-dark, #0f172a);
+}
+
+.timetable-bar-label svg,
+.timetable-bar-label .bar-icon {
+  font-size: 1.05rem;
+  color: var(--primary, #1e40af);
+}
+
+.timetable-pill-scroll {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+}
+
+.timetable-pill-scroll::-webkit-scrollbar {
+  height: 4px;
+}
+.timetable-pill-scroll::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.4);
+  border-radius: 4px;
+}
+
+/* Class Pill Button */
+.class-pill-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.5rem 1rem;
+  background: var(--bg-light, #f1f5f9);
+  color: var(--text-body, #334155);
+  border: 1.5px solid transparent;
+  border-radius: 30px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  user-select: none;
+}
+
+.class-pill-btn:hover {
+  background: #e2e8f0;
+  color: #0f172a;
+  transform: translateY(-1px);
+}
+
+.class-pill-btn.active {
+  background: linear-gradient(135deg, #1e40af, #2563eb);
+  color: #ffffff;
+  border-color: #1e3a8a;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.35);
+}
+
+.class-pill-btn .pill-badge {
+  background: rgba(255, 255, 255, 0.22);
+  color: inherit;
+  font-size: 0.72rem;
+  padding: 2px 7px;
+  border-radius: 20px;
+  font-weight: 700;
+}
+
+.class-pill-btn:not(.active) .pill-badge {
+  background: rgba(0, 0, 0, 0.08);
+  color: var(--text-muted, #64748b);
+}
+
+/* Day Tabs Switcher */
+.timetable-day-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  background: var(--card-bg, #ffffff);
+  border: 1px solid var(--border, #e2e8f0);
+  border-radius: 14px;
+  padding: 0.85rem 1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.day-pill-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.45rem 0.95rem;
+  background: var(--bg-light, #f8fafc);
+  color: var(--text-body, #334155);
+  border: 1.5px solid var(--border, #cbd5e1);
+  border-radius: 30px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  user-select: none;
+}
+
+.day-pill-btn:hover {
+  background: #f1f5f9;
+  border-color: #94a3b8;
+  color: #0f172a;
+  transform: translateY(-1px);
+}
+
+.day-pill-btn.active {
+  background: linear-gradient(135deg, #0284c7, #0ea5e9);
+  color: #ffffff;
+  border-color: #0369a1;
+  box-shadow: 0 4px 12px rgba(14, 165, 233, 0.35);
+}
+
+.day-pill-btn.has-classes:not(.active) {
+  border-color: #93c5fd;
+  background: #eff6ff;
+  color: #1e40af;
+}
+
+.day-pill-btn .day-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 5px;
+  border-radius: 10px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  background: rgba(0, 0, 0, 0.08);
+  color: inherit;
+}
+
+.day-pill-btn.active .day-badge {
+  background: rgba(255, 255, 255, 0.3);
+  color: #ffffff;
+}
+
+.day-pill-btn.has-classes:not(.active) .day-badge {
+  background: #1e40af;
+  color: #ffffff;
+}
+
+/* Interactive Timetable Grid Enhancements */
+.matrix-interactive-table th.day-th-interactive {
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+  user-select: none;
+}
+
+.matrix-interactive-table th.day-th-interactive:hover {
+  background: #1e3a8a !important;
+  color: #ffd166 !important;
+  box-shadow: inset 0 -3px 0 #ffd166;
+}
+
+.matrix-interactive-table th.day-th-interactive.active-day-col {
+  background: #1d4ed8 !important;
+  color: #ffd166 !important;
+  box-shadow: inset 0 -4px 0 #ffd166;
+}
+
+.matrix-interactive-table td.col-highlight {
+  background: rgba(59, 130, 246, 0.08) !important;
+}
+
+[data-theme="dark"] .matrix-interactive-table td.col-highlight {
+  background: rgba(59, 130, 246, 0.2) !important;
+}
+
+/* Timetable Slot Cards */
+.timetable-slot-card {
+  display: block;
+  border-radius: 8px;
+  padding: 8px 10px;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+}
+
+.timetable-slot-card:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+}
+
+.slot-code {
+  font-weight: 800;
+  font-size: 0.95rem;
+  line-height: 1.25;
+}
+
+.slot-room {
+  font-size: 0.78rem;
+  font-weight: 700;
+  opacity: 0.9;
+  margin-top: 2px;
+}
+
+.slot-time {
+  font-size: 0.72rem;
+  margin-top: 3px;
+  opacity: 0.8;
+}
+
+/* Subject Themes */
+.theme-sad {
+  background: #eff6ff !important;
+  border: 1.5px solid #93c5fd !important;
+  color: #1e40af !important;
+}
+.theme-itpm {
+  background: #f0fdf4 !important;
+  border: 1.5px solid #86efac !important;
+  color: #15803d !important;
+}
+.theme-csc {
+  background: #faf5ff !important;
+  border: 1.5px solid #d8b4fe !important;
+  color: #7e22ce !important;
+}
+.theme-ca {
+  background: #fffbeb !important;
+  border: 1.5px solid #fcd34d !important;
+  color: #b45309 !important;
+}
+.theme-default {
+  background: #f8fafc !important;
+  border: 1.5px solid #cbd5e1 !important;
+  color: #334155 !important;
+}
+
+/* Day Schedule Popup Modal ("លោតមក") */
+.day-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid var(--border, #e2e8f0);
+}
+
+.day-modal-title {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: var(--text-dark, #0f172a);
+  margin: 0;
+}
+
+.day-modal-body {
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+.day-session-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 1.15rem 1.25rem;
+  border-radius: 12px;
+  background: var(--bg-light, #f8fafc);
+  border: 1.5px solid var(--border, #e2e8f0);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.day-session-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+}
+
+.session-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.session-time-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 4px 10px;
+  background: #1e40af;
+  color: #ffffff;
+  border-radius: 20px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+
+.session-room-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 4px 10px;
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  color: #334155;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.session-subject-title {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--text-dark, #0f172a);
+  line-height: 1.4;
+}
+
+.session-subject-code {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 6px;
+  background: rgba(30, 64, 175, 0.1);
+  color: #1e40af;
+  font-weight: 800;
+  font-size: 0.82rem;
+  margin-right: 0.4rem;
+}
+
+.session-meta-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  color: var(--text-muted, #64748b);
+  border-top: 1px dashed var(--border, #e2e8f0);
+  padding-top: 0.65rem;
+}
+
+.session-meta-item {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.session-meta-item strong {
+  color: var(--text-dark, #0f172a);
+}
+
+.day-empty-state {
+  text-align: center;
+  padding: 2.5rem 1rem;
+}
+
+.day-empty-icon {
+  font-size: 3rem;
+  margin-bottom: 0.75rem;
+  display: inline-block;
+}
+
+.day-empty-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-dark, #0f172a);
+  margin-bottom: 0.4rem;
+}
+
+.day-empty-desc {
+  font-size: 0.88rem;
+  color: var(--text-muted, #64748b);
+  max-width: 380px;
+  margin: 0 auto;
+}
+
+/* Dark mode adjustments */
+[data-theme="dark"] .timetable-class-bar,
+[data-theme="dark"] .timetable-day-bar {
+  background: #1e293b;
+  border-color: #334155;
+}
+
+[data-theme="dark"] .class-pill-btn {
+  background: #334155;
+  color: #cbd5e1;
+}
+
+[data-theme="dark"] .class-pill-btn:hover {
+  background: #475569;
+  color: #ffffff;
+}
+
+[data-theme="dark"] .day-pill-btn {
+  background: #1e293b;
+  border-color: #475569;
+  color: #cbd5e1;
+}
+
+[data-theme="dark"] .day-pill-btn:hover {
+  background: #334155;
+  color: #ffffff;
+}
+
+[data-theme="dark"] .day-pill-btn.has-classes:not(.active) {
+  background: #1e3a8a;
+  border-color: #3b82f6;
+  color: #bfdbfe;
+}
+
+[data-theme="dark"] .day-session-card {
+  background: #1e293b;
+  border-color: #334155;
+}
+
+[data-theme="dark"] .session-room-badge {
+  background: #334155;
+  border-color: #475569;
+  color: #e2e8f0;
+}
+
+[data-theme="dark"] .session-subject-title {
+  color: #f8fafc;
+}
+
+[data-theme="dark"] .session-subject-code {
+  background: rgba(96, 165, 250, 0.2);
+  color: #93c5fd;
+}
+
+[data-theme="dark"] .theme-sad {
+  background: #172554 !important;
+  border-color: #1e40af !important;
+  color: #93c5fd !important;
+}
+
+[data-theme="dark"] .theme-itpm {
+  background: #052e16 !important;
+  border-color: #166534 !important;
+  color: #86efac !important;
+}
+
+[data-theme="dark"] .theme-csc {
+  background: #3b0764 !important;
+  border-color: #6b21a8 !important;
+  color: #d8b4fe !important;
+}
+
+[data-theme="dark"] .theme-ca {
+  background: #451a03 !important;
+  border-color: #9a3412 !important;
+  color: #fcd34d !important;
+}
+
+@media (max-width: 640px) {
+  .day-modal-body {
+    padding: 1rem 0.75rem;
+  }
+  .day-session-card {
+    padding: 1rem;
+  }
+  .session-header-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+
 

@@ -17,8 +17,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@300;400;500;600;700;800&family=Kantumruy+Pro:wght@400;500;600;700&family=Battambang:wght@400;700;900&family=Moul&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/css/style.css?v=2.6" />
-  <link rel="stylesheet" href="/css/dashboard.css?v=4.0" />
+  <link rel="stylesheet" href="/css/style.css?v=2.7" />
+  <link rel="stylesheet" href="/css/dashboard.css?v=4.1" />
   <script src="/js/icons.js?v=2.6"></script>
   <script src="/js/i18n.js?v=2.6"></script>
   <script src="/js/theme.js?v=2.8"></script>
@@ -173,119 +173,14 @@
         </div>
       </div>
 
-      <!-- ══ Official DUC Timetable Document Card ════════════════════════════ -->
-      <div class="card" style="margin-bottom:2rem; border-top: 4px solid var(--primary); box-shadow:0 8px 24px rgba(0,0,0,0.06);">
-        <div class="card-body" style="padding:1.75rem 2rem;">
-          
-          <!-- Document Header -->
-          <div class="doc-header-wrap">
-            <div class="doc-header-gov">
-              <div class="doc-gov-title" data-i18n="gov.cambodia">ព្រះរាជាណាចក្រកម្ពុជា</div>
-              <div class="doc-gov-motto" data-i18n="gov.motto">ជាតិ សាសនា ព្រះមហាក្សត្រ</div>
-            </div>
-            <div class="doc-header-univ">
-              <div class="doc-univ-title" data-i18n="univ.name">សាកលវិទ្យាល័យឌីជីថលកម្ពុជា</div>
-              <div class="doc-univ-sub" data-i18n="univ.sub">Digital University of Cambodia</div>
-              <div class="doc-univ-office" data-i18n="univ.academic_office">ការិយាល័យសិក្សា</div>
-            </div>
-          </div>
-
-          <!-- Document Title & Cohort -->
-          <div style="text-align:center; margin:1.5rem 0 1.25rem;">
-            <h2 style="font-family:var(--font-moul); color:#10254a; font-size:1.18rem; font-weight:normal; margin-bottom:6px; letter-spacing:normal;" data-i18n="timetable.doc_title">កាលវិភាគសិក្សា ឆ្នាំទី៤ ឆមាសទី១ ជំនាន់ទី១</h2>
-            <div style="font-family:var(--font-battambang); font-weight:700; color:#1e293b; font-size:0.98rem; margin-bottom:4px;" data-i18n="timetable.major">
-              កម្រិតបរិញ្ញាបត្រ ជំនាញ បណ្តាញកុំព្យូទ័រ និងប្រព័ន្ធសុវត្ថិភាព
-            </div>
-            <div style="font-family:var(--font-battambang); color:#64748b; font-size:0.88rem;" data-i18n="timetable.duration">
-              ចាប់ផ្ដើមពីថ្ងៃទី៤ ខែកញ្ញា ឆ្នាំ២០២៦ បញ្ចប់ថ្ងៃទី២៧ ខែធ្នូ ឆ្នាំ២០២៦
-            </div>
-            <div style="margin-top:10px;">
-              <span class="badge badge-primary" style="font-size:0.95rem; padding:6px 20px; font-weight:700; letter-spacing:0.5px;" data-i18n="class.cohort_badge">ថ្នាក់ G1-NW-B</span>
-            </div>
-          </div>
-
-          <!-- Official Weekly Matrix Grid Table -->
-          <div class="table-responsive" style="margin-top:1rem; border:1px solid #cbd5e1; border-radius:8px; overflow:hidden;">
-            <table class="table" style="margin:0; text-align:center; border-collapse:collapse; width:100%;">
-              <thead>
-                <tr style="background:#10254a; color:#ffffff;">
-                  <th style="padding:12px; border:1px solid #1e3a8a; width:140px;" data-i18n="table.time_day">Time \ Day</th>
-                  <th style="padding:12px; border:1px solid #1e3a8a;" data-i18n="day.monday">Monday</th>
-                  <th style="padding:12px; border:1px solid #1e3a8a;" data-i18n="day.tuesday">Tuesday</th>
-                  <th style="padding:12px; border:1px solid #1e3a8a;" data-i18n="day.wednesday">Wednesday</th>
-                  <th style="padding:12px; border:1px solid #1e3a8a; background:#1e40af; color:#ffd166;" data-i18n="day.friday">Friday</th>
-                  <th style="padding:12px; border:1px solid #1e3a8a; background:#1e40af; color:#ffd166;" data-i18n="day.saturday">Saturday</th>
-                  <th style="padding:12px; border:1px solid #1e3a8a;" data-i18n="day.sunday">Sunday</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style="font-weight:700; background:#f8fafc; border:1px solid #cbd5e1; padding:12px 8px;">8:00 - 11:00</td>
-                  <td style="color:#94a3b8; border:1px solid #cbd5e1;">✕</td>
-                  <td style="color:#94a3b8; border:1px solid #cbd5e1;">✕</td>
-                  <td style="color:#94a3b8; border:1px solid #cbd5e1;">✕</td>
-                  <td style="background:#eff6ff; border:1px solid #cbd5e1; padding:10px 6px;">
-                    <div style="font-weight:800; color:#1e40af; font-size:1rem;">SAD (DUC3)</div>
-                    <div style="font-size:0.75rem; color:#64748b; margin-top:2px;">08:00 - 11:00</div>
-                  </td>
-                  <td style="background:#fef3c7; border:1px solid #cbd5e1; padding:10px 6px;">
-                    <div style="font-weight:800; color:#b45309; font-size:1rem;">CA (DUC3)</div>
-                    <div style="font-size:0.75rem; color:#78350f; margin-top:2px;">08:00 - 11:00</div>
-                  </td>
-                  <td style="color:#94a3b8; border:1px solid #cbd5e1;">✕</td>
-                </tr>
-                <tr>
-                  <td style="font-weight:700; background:#f8fafc; border:1px solid #cbd5e1; padding:12px 8px;">13:00 - 15:00</td>
-                  <td style="color:#94a3b8; border:1px solid #cbd5e1;">✕</td>
-                  <td style="color:#94a3b8; border:1px solid #cbd5e1;">✕</td>
-                  <td style="color:#94a3b8; border:1px solid #cbd5e1;">✕</td>
-                  <td style="background:#f0fdf4; border:1px solid #cbd5e1; padding:10px 6px;">
-                    <div style="font-weight:800; color:#15803d; font-size:1rem;">ITPM (DUC3)</div>
-                    <div style="font-size:0.75rem; color:#166534; margin-top:2px;">13:00 - 15:00</div>
-                  </td>
-                  <td style="color:#94a3b8; border:1px solid #cbd5e1;">✕</td>
-                  <td style="color:#94a3b8; border:1px solid #cbd5e1;">✕</td>
-                </tr>
-                <tr>
-                  <td style="font-weight:700; background:#f8fafc; border:1px solid #cbd5e1; padding:12px 8px;">15:00 - 16:30</td>
-                  <td style="color:#94a3b8; border:1px solid #cbd5e1;">✕</td>
-                  <td style="color:#94a3b8; border:1px solid #cbd5e1;">✕</td>
-                  <td style="color:#94a3b8; border:1px solid #cbd5e1;">✕</td>
-                  <td style="background:#faf5ff; border:1px solid #cbd5e1; padding:10px 6px;">
-                    <div style="font-weight:800; color:#7e22ce; font-size:1rem;">CSC.V (DUC3)</div>
-                    <div style="font-size:0.75rem; color:#6b21a8; margin-top:2px;">15:00 - 16:30</div>
-                  </td>
-                  <td style="color:#94a3b8; border:1px solid #cbd5e1;">✕</td>
-                  <td style="color:#94a3b8; border:1px solid #cbd5e1;">✕</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <!-- Document Footer / Subject & Exam Notes -->
-          <div style="margin-top:1.5rem; padding:1.25rem; background:#f8fafc; border-radius:8px; border-left:4px solid #f59e0b;">
-            <div style="font-family:var(--font-battambang); font-weight:700; color:#b45309; font-size:0.92rem; margin-bottom:8px;" data-i18n="timetable.exam_notice">
-              ⚠️ បញ្ជាក់៖ ការប្រឡងពាក់កណ្ដាលឆមាសចាប់ផ្ដើមពីថ្ងៃទី២៦ ខែតុលា ឆ្នាំ២០២៦ ដល់ថ្ងៃទី១ ខែវិច្ឆិកា ឆ្នាំ២០២៦
-            </div>
-            <div style="font-family:var(--font-battambang); font-weight:700; color:#334155; font-size:0.9rem; margin-bottom:8px;" data-i18n="timetable.subjects_included">
-              មុខវិជ្ជាដែលត្រូវសិក្សារួមមាន៖
-            </div>
-            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:10px; font-family:var(--font-battambang); font-size:0.88rem; color:#475569;">
-              <div><strong>[SAD]</strong> = System Analyze and Design · <span style="color:#1e40af; font-weight:600;" data-i18n="lecturer.chheang_vuthea">លោកគ្រូ ឈាង វុទ្ធី</span></div>
-              <div><strong>[ITPM]</strong> = IT Project Management · <span style="color:#1e40af; font-weight:600;" data-i18n="lecturer.sem_vavy">លោកគ្រូ សែម វ៉ាវី</span></div>
-              <div><strong>[CSC.V]</strong> = Cisco V · <span style="color:#1e40af; font-weight:600;" data-i18n="lecturer.sem_vavy">លោកគ្រូ សែម វ៉ាវី</span></div>
-              <div><strong>[CA]</strong> = Cloud Architecture · <span style="color:#1e40af; font-weight:600;" data-i18n="lecturer.phoeun_mesa">លោកគ្រូ គឿន មេសា</span></div>
-            </div>
-          </div>
-
-        </div>
-      </div>
+      <!-- ══ Interactive Dynamic DUC Timetable System ════════════════════════ -->
+      <div id="timetable-interactive-wrap"></div>
 
       <!-- Schedules Table -->
       <div class="card">
         <div class="card-header" style="display:flex; justify-content:space-between; align-items:center;">
           <h3 style="font-size:1.1rem; font-weight:700; margin:0;" data-i18n="widget.all_timetables">📋 All Timetable Records</h3>
-          <span class="badge badge-primary" data-i18n="class.cohort_badge">Class G1-NW-B</span>
+          <span class="badge badge-primary" id="records-cohort-badge">ថ្នាក់ទាំងអស់ (All Classes)</span>
         </div>
         <div class="card-body" style="padding:0;">
           <div class="table-responsive">
@@ -390,8 +285,10 @@
   <script src="/js/auth.js?v=2.6"></script>
   <script src="/js/dashboard.js?v=2.9"></script>
   <script src="/js/admin.js?v=2.9"></script>
+  <script src="/js/timetable-interactive.js?v=4.1"></script>
   <script>
-    var allSchedules = [];
+    var allSchedulesRaw = [];
+    var allClasses = [];
 
     document.addEventListener('DOMContentLoaded', async () => {
       initDashboard('admin');
@@ -400,31 +297,89 @@
         loadSubjectDropdowns(['form-subject-id']),
         loadTeacherDropdowns(['form-teacher-id'])
       ]);
+
+      // Load classes for interactive timetable tabs
+      try {
+        const cRes = await api.get('/classes');
+        if (cRes.success) allClasses = cRes.data;
+      } catch (err) {
+        console.error('Error loading classes:', err);
+      }
+
+      // Initialize Interactive Timetable Engine
+      window.ducTimetable = new InteractiveTimetable({
+        role: 'admin',
+        containerId: 'timetable-interactive-wrap',
+        classes: allClasses,
+        schedules: [],
+        onClassChange: (classId) => {
+          document.getElementById('filter-class').value = classId || '';
+          updateCohortBadge(classId);
+          filterAndRenderRecordsTable();
+        },
+        onDayChange: (dayKey) => {
+          document.getElementById('filter-day').value = dayKey || '';
+          filterAndRenderRecordsTable();
+        }
+      });
+
       await loadSchedules();
 
-      document.getElementById('filter-class').addEventListener('change', () => loadSchedules());
-      document.getElementById('filter-day').addEventListener('change', () => loadSchedules());
+      document.getElementById('filter-class').addEventListener('change', (e) => {
+        const val = e.target.value;
+        if (window.ducTimetable) window.ducTimetable.selectClass(val);
+        updateCohortBadge(val);
+        filterAndRenderRecordsTable();
+      });
+
+      document.getElementById('filter-day').addEventListener('change', (e) => {
+        const val = e.target.value;
+        if (window.ducTimetable) window.ducTimetable.selectDay(val, false);
+        filterAndRenderRecordsTable();
+      });
     });
 
     async function loadSchedules() {
-      const classId = document.getElementById('filter-class').value;
-      const day = document.getElementById('filter-day').value;
       const tbody = document.getElementById('schedules-tbody');
-
       try {
-        let url = '/schedules?';
-        if (classId) url += `class_id=${encodeURIComponent(classId)}&`;
-        if (day) url += `day_of_week=${encodeURIComponent(day)}&`;
-
-        const res = await api.get(url);
+        const res = await api.get('/schedules');
         if (res.success) {
-          allSchedules = res.data;
-          renderSchedulesTable(allSchedules);
+          allSchedulesRaw = res.data || [];
+          if (window.ducTimetable) {
+            window.ducTimetable.setClasses(allClasses);
+            window.ducTimetable.setSchedules(allSchedulesRaw);
+          }
+          filterAndRenderRecordsTable();
         }
       } catch (err) {
         console.error(err);
         tbody.innerHTML = '<tr><td colspan="7" class="text-center" style="padding:2rem; color:var(--danger);">Error loading schedules.</td></tr>';
       }
+    }
+
+    function updateCohortBadge(classId) {
+      const badge = document.getElementById('records-cohort-badge');
+      if (!badge) return;
+      if (!classId) {
+        badge.textContent = 'ថ្នាក់ទាំងអស់ (All Classes)';
+        return;
+      }
+      const matched = allClasses.find(c => Number(c.id) === Number(classId));
+      badge.textContent = matched ? `ថ្នាក់ ${matched.class_code}` : `ថ្នាក់ #${classId}`;
+    }
+
+    function filterAndRenderRecordsTable() {
+      const classId = document.getElementById('filter-class').value;
+      const day = document.getElementById('filter-day').value;
+
+      let filtered = [...allSchedulesRaw];
+      if (classId) {
+        filtered = filtered.filter(s => Number(s.class_id) === Number(classId));
+      }
+      if (day) {
+        filtered = filtered.filter(s => (s.day_of_week || '').toLowerCase() === day.toLowerCase());
+      }
+      renderSchedulesTable(filtered);
     }
 
     function renderSchedulesTable(schedules) {
@@ -482,7 +437,7 @@
     }
 
     function openEditScheduleModal(id) {
-      const s = allSchedules.find(item => item.id === id);
+      const s = (allSchedulesRaw || []).find(item => item.id === id);
       if (!s) return;
 
       document.getElementById('schedule-id-field').value = s.id;

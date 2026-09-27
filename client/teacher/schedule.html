@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -17,8 +17,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@300;400;500;600;700;800&family=Kantumruy+Pro:wght@400;500;600;700&family=Battambang:wght@400;700;900&family=Moul&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/css/style.css?v=2.6" />
-  <link rel="stylesheet" href="/css/dashboard.css?v=4.0" />
+  <link rel="stylesheet" href="/css/style.css?v=2.7" />
+  <link rel="stylesheet" href="/css/dashboard.css?v=4.1" />
   <script src="/js/icons.js?v=2.6"></script>
   <script src="/js/i18n.js?v=2.6"></script>
   <script src="/js/theme.js?v=2.8"></script>
@@ -138,8 +138,15 @@
         <a href="/teacher/attendance.html" class="btn btn-primary" data-i18n="btn.take_today_attendance">✅ Take Today's Attendance</a>
       </div>
 
+      <!-- ══ Interactive Dynamic DUC Timetable System ════════════════════════ -->
+      <div id="timetable-interactive-wrap"></div>
+
       <!-- Schedule Table -->
-      <div class="card">
+      <div class="card" style="margin-top:1.5rem;">
+        <div class="card-header" style="display:flex; justify-content:space-between; align-items:center;">
+          <h3 style="font-size:1.1rem; font-weight:700; margin:0;" data-i18n="widget.my_teaching_slots">📋 My Assigned Teaching Slots</h3>
+          <span class="badge badge-primary" id="teacher-assigned-badge">Assigned Classes</span>
+        </div>
         <div class="card-body" style="padding:0;">
           <div class="table-responsive">
             <table class="table" style="margin:0;">
@@ -170,50 +177,90 @@
 <script src="/js/auth.js?v=2.6"></script>
 <script src="/js/dashboard.js?v=2.9"></script>
 <script src="/js/admin.js?v=2.6"></script>
+<script src="/js/timetable-interactive.js?v=4.1"></script>
 <script>
+  var allClasses = [];
+  var allSchedules = [];
+  var myTeacherSchedules = [];
+
   document.addEventListener('DOMContentLoaded', async () => {
     initDashboard('teacher');
-    await loadSchedule();
+    await loadScheduleData();
   });
 
-  async function loadSchedule() {
+  async function loadScheduleData() {
     const tbody = document.getElementById('schedule-tbody');
     try {
-      // Current user profile
       const user = getCurrentUser();
       const teacherId = user?.profile?.profileId || user?.profile?.id || '';
 
-      const res = await api.get(`/schedules?teacher_id=${teacherId}`);
-      if (res.success && res.data) {
-        if (res.data.length === 0) {
-          tbody.innerHTML = '<tr><td colspan="7" class="text-center" style="padding:2rem;" data-i18n="msg.no_assigned_schedules">No schedules assigned to your account.</td></tr>';
-          if (window.I18n) window.I18n.autoTranslate(tbody);
-          return;
-        }
+      const [cRes, sRes, myRes] = await Promise.all([
+        api.get('/classes'),
+        api.get('/schedules'),
+        teacherId ? api.get(`/schedules?teacher_id=${teacherId}`) : Promise.resolve({ success: true, data: [] })
+      ]);
 
-        tbody.innerHTML = res.data.map(s => `
-          <tr>
-            <td><span class="badge badge-primary" data-i18n="day.${s.day_of_week.toLowerCase()}">${s.day_of_week}</span></td>
-            <td><strong>${formatTime(s.start_time)} - ${formatTime(s.end_time)}</strong></td>
-            <td><span class="badge badge-purple">${s.class_code}</span></td>
-            <td>
-              <div style="font-weight:600;">${s.subject_name}</div>
-              <small style="color:var(--text-muted);">${s.subject_code}</small>
-            </td>
-            <td>${s.credits || 3}</td>
-            <td><span class="badge badge-gray">${s.room || '<span data-i18n="status.tbd">TBD</span>'}</span></td>
-            <td>
-              <a href="/teacher/attendance.html" class="btn btn-sm btn-secondary" data-i18n="action.record_attendance">Record Attendance</a>
-            </td>
-          </tr>
-        `).join('');
+      if (cRes.success) allClasses = cRes.data;
+      if (sRes.success) allSchedules = sRes.data;
+      myTeacherSchedules = (myRes && myRes.success) ? myRes.data : [];
 
-        if (window.I18n) window.I18n.autoTranslate(tbody);
+      // If teacher has assigned schedules, default to their first class, otherwise first class
+      let defaultClassId = '';
+      if (myTeacherSchedules.length > 0 && myTeacherSchedules[0].class_id) {
+        defaultClassId = myTeacherSchedules[0].class_id;
+      } else if (allClasses.length > 0) {
+        defaultClassId = allClasses[0].id;
       }
+
+      window.ducTimetable = new InteractiveTimetable({
+        role: 'teacher',
+        containerId: 'timetable-interactive-wrap',
+        classes: allClasses,
+        schedules: allSchedules,
+        defaultClassId: defaultClassId,
+        teacherId: teacherId
+      });
+
+      renderTeacherAssignedTable(myTeacherSchedules);
     } catch (err) {
       console.error(err);
       tbody.innerHTML = '<tr><td colspan="7" class="text-center" style="padding:2rem; color:var(--danger);">Failed to load schedule.</td></tr>';
     }
+  }
+
+  function renderTeacherAssignedTable(schedules) {
+    const tbody = document.getElementById('schedule-tbody');
+    const badge = document.getElementById('teacher-assigned-badge');
+
+    if (badge) {
+      badge.textContent = `${schedules.length} ម៉ោងបង្រៀន (${schedules.length} Slots)`;
+    }
+
+    if (!schedules || schedules.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="7" class="text-center" style="padding:2rem;" data-i18n="msg.no_assigned_schedules">No schedules assigned to your account.</td></tr>';
+      if (window.I18n) window.I18n.autoTranslate(tbody);
+      return;
+    }
+
+    const lang = window.I18n ? window.I18n.getCurrentLang() : (localStorage.getItem('duc_lang') || 'km');
+    tbody.innerHTML = schedules.map(s => `
+      <tr>
+        <td><span class="badge badge-primary" data-i18n="day.${(s.day_of_week || '').toLowerCase()}">${s.day_of_week}</span></td>
+        <td><strong>${formatTime(s.start_time)} - ${formatTime(s.end_time)}</strong></td>
+        <td><span class="badge badge-purple">${s.class_code}</span></td>
+        <td>
+          <div style="font-weight:600;">${s.subject_name}</div>
+          <small style="color:var(--text-muted);">${s.subject_code}</small>
+        </td>
+        <td>${s.credits || 3}</td>
+        <td><span class="badge badge-gray">${s.room || '<span data-i18n="status.tbd">TBD</span>'}</span></td>
+        <td>
+          <a href="/teacher/attendance.html" class="btn btn-sm btn-secondary" data-i18n="action.record_attendance">Record Attendance</a>
+        </td>
+      </tr>
+    `).join('');
+
+    if (window.I18n) window.I18n.autoTranslate(tbody);
   }
 </script>
 </body>
