@@ -18,7 +18,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@300;400;500;600;700;800&family=Kantumruy+Pro:wght@400;500;600;700&family=Battambang:wght@400;700;900&family=Moul&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/css/style.css?v=2.6" />
-  <link rel="stylesheet" href="/css/dashboard.css?v=3.3" />
+  <link rel="stylesheet" href="/css/dashboard.css?v=3.4" />
   <script src="/js/icons.js?v=2.6"></script>
   <script src="/js/i18n.js?v=2.6"></script>
   <script src="/js/theme.js?v=2.8"></script>
@@ -149,13 +149,13 @@
 
       <!-- Filters & Search Toolbar -->
       <div class="card filter-card" style="margin-bottom:1rem;">
-        <div class="card-body" style="padding:0.75rem 1rem;">
-          <div class="filter-toolbar" style="display:flex; gap:0.75rem; flex-wrap:wrap;">
-            <div style="flex:1; min-width:200px;">
-              <input type="text" id="search-input" class="form-control" placeholder="🔍 Search by name, student ID, email..." data-i18n-placeholder="placeholder.search_students" />
+        <div class="card-body" style="padding:0.5rem 0.65rem;">
+          <div class="filter-row-horizontal" style="display:grid; grid-template-columns:1fr 1fr; gap:0.45rem; width:100%;">
+            <div style="min-width:0; width:100%;">
+              <input type="text" id="search-input" class="form-control" placeholder="🔍 Search..." data-i18n-placeholder="placeholder.search_students" style="width:100%;" />
             </div>
-            <div style="width:180px;">
-              <select id="filter-class" class="form-control">
+            <div style="min-width:0; width:100%;">
+              <select id="filter-class" class="form-control" style="width:100%;">
                 <option value="" data-i18n="filter.all_classes">All Classes</option>
               </select>
             </div>

@@ -1807,21 +1807,37 @@ html, body {
   #filter-form,
   .filter-bar,
   .filter-row,
-  .filter-toolbar {
+  .filter-toolbar:not(.filter-row-horizontal) {
     display: flex !important;
     flex-direction: column !important;
     gap: 0.35rem !important;
     width: 100% !important;
   }
 
-  /* Two selects side-by-side in 1 row on mobile (e.g. Class + Day in schedules) */
+  /* Two inputs / selects side-by-side in 1 row (Left to Right) on mobile */
+  .filter-row-horizontal,
+  .filter-row-2col,
+  .card-body > div.filter-row-horizontal,
+  .card-body > div.filter-row-2col,
+  .card-body > div[style*="grid-template-columns"],
   .card-body > div[style*="display:flex"]:not(:has(input)) {
     display: grid !important;
     grid-template-columns: 1fr 1fr !important;
-    gap: 0.35rem !important;
+    gap: 0.4rem !important;
+    width: 100% !important;
   }
 
-  .card-body > div[style*="display:flex"] > div,
+  .filter-row-horizontal > div,
+  .filter-row-2col > div,
+  .card-body > div.filter-row-horizontal > div,
+  .card-body > div.filter-row-2col > div,
+  .card-body > div[style*="grid-template-columns"] > div {
+    width: 100% !important;
+    min-width: 0 !important;
+    flex: 1 1 auto !important;
+  }
+
+  .card-body > div[style*="display:flex"]:not(.filter-row-horizontal) > div,
   #filter-form > div {
     width: 100% !important;
     min-width: 0 !important;
