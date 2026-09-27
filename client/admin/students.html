@@ -18,7 +18,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@300;400;500;600;700;800&family=Kantumruy+Pro:wght@400;500;600;700&family=Battambang:wght@400;700;900&family=Moul&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/css/style.css?v=2.6" />
-  <link rel="stylesheet" href="/css/dashboard.css?v=3.4" />
+  <link rel="stylesheet" href="/css/dashboard.css?v=3.5" />
   <script src="/js/icons.js?v=2.6"></script>
   <script src="/js/i18n.js?v=2.6"></script>
   <script src="/js/theme.js?v=2.8"></script>
@@ -135,29 +135,31 @@
     </header>
 
     <main class="page-content fade-in">
-      <div class="page-header" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; margin-bottom:1.5rem;">
+      <div class="page-header" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; margin-bottom:1rem;">
         <div>
           <h1 class="page-title" style="font-size:1.75rem; font-weight:700;" data-i18n="page.students">Students</h1>
           <p class="page-subtitle" style="color:var(--text-muted); margin-top:0.25rem;" data-i18n="sub.students">
             Add, update, or remove student accounts and enrollment
           </p>
         </div>
-        <button class="btn btn-primary" onclick="openAddStudentModal()" data-i18n="btn.add_new_student">
-          ➕ Add New Student
-        </button>
       </div>
 
-      <!-- Filters & Search Toolbar -->
+      <!-- Filters & Actions Toolbar -->
       <div class="card filter-card" style="margin-bottom:1rem;">
         <div class="card-body" style="padding:0.5rem 0.65rem;">
-          <div class="filter-row-horizontal" style="display:grid; grid-template-columns:1fr 1fr; gap:0.45rem; width:100%;">
-            <div style="min-width:0; width:100%;">
-              <input type="text" id="search-input" class="form-control" placeholder="🔍 Search..." data-i18n-placeholder="placeholder.search_students" style="width:100%;" />
-            </div>
-            <div style="min-width:0; width:100%;">
-              <select id="filter-class" class="form-control" style="width:100%;">
+          <div class="student-toolbar-grid">
+            <!-- Row 1: Add New Student + Class Filter side-by-side -->
+            <div class="student-toolbar-row1">
+              <button class="btn btn-primary" onclick="openAddStudentModal()" data-i18n="btn.add_new_student">
+                ➕ Add New Student
+              </button>
+              <select id="filter-class" class="form-control">
                 <option value="" data-i18n="filter.all_classes">All Classes</option>
               </select>
+            </div>
+            <!-- Row 2: Full Width Search -->
+            <div class="student-toolbar-row2">
+              <input type="text" id="search-input" class="form-control" placeholder="🔍 Search by name, student ID, email..." data-i18n-placeholder="placeholder.search_students" />
             </div>
           </div>
         </div>

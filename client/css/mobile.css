@@ -668,6 +668,83 @@ html, body {
   }
 }
 
+/* ─── Student Toolbar Grid (Row 1: Button + Class, Row 2: Full Search) ─────── */
+.student-toolbar-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  width: 100%;
+}
+
+.student-toolbar-row1 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.45rem;
+  width: 100%;
+}
+
+.student-toolbar-row1 .btn,
+.student-toolbar-row1 select,
+.student-toolbar-row2 input {
+  min-height: 34px !important;
+  height: 34px !important;
+  font-size: 0.8rem !important;
+  border-radius: 8px !important;
+}
+
+.student-toolbar-row1 .btn {
+  padding: 0.25rem 0.5rem !important;
+  white-space: nowrap !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 100% !important;
+}
+
+.student-toolbar-row2 {
+  width: 100%;
+}
+
+@media (min-width: 769px) {
+  .student-toolbar-grid {
+    flex-direction: row;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .student-toolbar-row1 {
+    display: flex;
+    flex: 0 0 auto;
+    width: auto;
+    gap: 0.75rem;
+    order: 2;
+  }
+
+  .student-toolbar-row1 select {
+    width: 200px !important;
+  }
+
+  .student-toolbar-row1 .btn {
+    width: auto !important;
+    padding: 0.45rem 1rem !important;
+  }
+
+  .student-toolbar-row2 {
+    flex: 1;
+    order: 1;
+  }
+}
+
+@media (max-width: 480px) {
+  .student-toolbar-row1 .btn,
+  .student-toolbar-row1 select,
+  .student-toolbar-row2 input {
+    min-height: 32px !important;
+    height: 32px !important;
+    font-size: 0.76rem !important;
+  }
+}
+
 /* ─── 9. RESPONSIVE DATA TABLES WITH TOUCH MOMENTUM ───────────────────────── */
 .table-responsive {
   overflow-x: auto;
