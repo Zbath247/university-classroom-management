@@ -1804,7 +1804,6 @@ html, body {
 
   /* Filter toolbar flex layout */
   .card-body > div[style*="display:flex"][style*="gap:"],
-  #filter-form,
   .filter-bar,
   .filter-row,
   .filter-toolbar:not(.filter-row-horizontal) {
@@ -1837,11 +1836,37 @@ html, body {
     flex: 1 1 auto !important;
   }
 
-  .card-body > div[style*="display:flex"]:not(.filter-row-horizontal) > div,
-  #filter-form > div {
+  .card-body > div[style*="display:flex"]:not(.filter-row-horizontal) > div {
     width: 100% !important;
     min-width: 0 !important;
     flex: 1 1 auto !important;
+  }
+
+  /* Attendance Roster Filter Form (2x2 Horizontal Grid on Mobile) */
+  #filter-form {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 0.45rem 0.55rem !important;
+    width: 100% !important;
+    align-items: flex-end !important;
+  }
+
+  #filter-form > div {
+    width: 100% !important;
+    min-width: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-end !important;
+  }
+
+  #filter-form .form-label {
+    font-size: 0.78rem !important;
+    font-weight: 600 !important;
+    margin-bottom: 0.2rem !important;
+    line-height: 1.2 !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
   }
 
   /* Compact Filter Toolbars & Search Inputs on Mobile */
@@ -1972,6 +1997,48 @@ html, body {
     flex: 1;
     order: 1;
   }
+
+  /* Desktop Attendance Filter Form (Single Horizontal Row) */
+  #filter-form {
+    display: flex !important;
+    flex-direction: row !important;
+    gap: 1rem !important;
+    flex-wrap: wrap !important;
+    align-items: flex-end !important;
+  }
+
+  #filter-form > div {
+    width: auto !important;
+  }
+
+  #filter-form > div:nth-child(1) {
+    flex: 1 !important;
+    min-width: 180px !important;
+  }
+
+  #filter-form > div:nth-child(2) {
+    flex: 1 !important;
+    min-width: 200px !important;
+  }
+
+  #filter-form > div:nth-child(3) {
+    flex: 1 !important;
+    min-width: 160px !important;
+  }
+
+  #filter-form > div:nth-child(4) {
+    flex: 0 0 auto !important;
+    width: auto !important;
+  }
+
+  #filter-form .filter-btn-label {
+    display: none !important;
+  }
+
+  #filter-form .btn {
+    width: auto !important;
+    padding: 0.45rem 1.25rem !important;
+  }
 }
 
 @media (max-width: 480px) {
@@ -1982,7 +2049,9 @@ html, body {
   .student-toolbar-row1 select,
   .action-toolbar-row2 input,
   .action-toolbar-row2 select,
-  .student-toolbar-row2 input {
+  .student-toolbar-row2 input,
+  #filter-form .form-control,
+  #filter-form .btn {
     min-height: 32px !important;
     height: 32px !important;
     font-size: 0.76rem !important;
