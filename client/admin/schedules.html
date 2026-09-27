@@ -141,35 +141,10 @@
             Assign teachers, subjects, days, and classrooms to each class cohort
           </p>
         </div>
-      </div>
-
-      <!-- Filters & Actions Toolbar -->
-      <div class="card filter-card" style="margin-bottom:1rem;">
-        <div class="card-body" style="padding:0.5rem 0.65rem;">
-          <div class="action-toolbar-grid">
-            <!-- Row 1: Add Schedule + Class Filter side-by-side -->
-            <div class="action-toolbar-row1">
-              <button class="btn btn-primary" onclick="openAddScheduleModal()" data-i18n="btn.add_new_schedule">
-                ➕ Add New Schedule
-              </button>
-              <select id="filter-class" class="form-control">
-                <option value="" data-i18n="filter.all_classes">All Classes</option>
-              </select>
-            </div>
-            <!-- Row 2: Day Filter Full Width -->
-            <div class="action-toolbar-row2">
-              <select id="filter-day" class="form-control">
-                <option value="" data-i18n="filter.all_days">All Days</option>
-                <option value="Monday" data-i18n="day.monday">Monday</option>
-                <option value="Tuesday" data-i18n="day.tuesday">Tuesday</option>
-                <option value="Wednesday" data-i18n="day.wednesday">Wednesday</option>
-                <option value="Thursday" data-i18n="day.thursday">Thursday</option>
-                <option value="Friday" data-i18n="day.friday">Friday</option>
-                <option value="Saturday" data-i18n="day.saturday">Saturday</option>
-                <option value="Sunday" data-i18n="day.sunday">Sunday</option>
-              </select>
-            </div>
-          </div>
+        <div>
+          <button class="btn btn-primary" onclick="openAddScheduleModal()" data-i18n="btn.add_new_schedule">
+            ➕ Add New Schedule
+          </button>
         </div>
       </div>
 
@@ -289,11 +264,13 @@
   <script>
     var allSchedulesRaw = [];
     var allClasses = [];
+    var selectedClassIdFilter = '';
+    var selectedDayFilter = '';
 
     document.addEventListener('DOMContentLoaded', async () => {
       initDashboard('admin');
       await Promise.all([
-        loadClassDropdowns(['filter-class', 'form-class-id']),
+        loadClassDropdowns(['form-class-id']),
         loadSubjectDropdowns(['form-subject-id']),
         loadTeacherDropdowns(['form-teacher-id'])
       ]);
@@ -313,30 +290,17 @@
         classes: allClasses,
         schedules: [],
         onClassChange: (classId) => {
-          document.getElementById('filter-class').value = classId || '';
+          selectedClassIdFilter = classId || '';
           updateCohortBadge(classId);
           filterAndRenderRecordsTable();
         },
         onDayChange: (dayKey) => {
-          document.getElementById('filter-day').value = dayKey || '';
+          selectedDayFilter = dayKey || '';
           filterAndRenderRecordsTable();
         }
       });
 
       await loadSchedules();
-
-      document.getElementById('filter-class').addEventListener('change', (e) => {
-        const val = e.target.value;
-        if (window.ducTimetable) window.ducTimetable.selectClass(val);
-        updateCohortBadge(val);
-        filterAndRenderRecordsTable();
-      });
-
-      document.getElementById('filter-day').addEventListener('change', (e) => {
-        const val = e.target.value;
-        if (window.ducTimetable) window.ducTimetable.selectDay(val, false);
-        filterAndRenderRecordsTable();
-      });
     });
 
     async function loadSchedules() {
@@ -369,15 +333,12 @@
     }
 
     function filterAndRenderRecordsTable() {
-      const classId = document.getElementById('filter-class').value;
-      const day = document.getElementById('filter-day').value;
-
       let filtered = [...allSchedulesRaw];
-      if (classId) {
-        filtered = filtered.filter(s => Number(s.class_id) === Number(classId));
+      if (selectedClassIdFilter) {
+        filtered = filtered.filter(s => Number(s.class_id) === Number(selectedClassIdFilter));
       }
-      if (day) {
-        filtered = filtered.filter(s => (s.day_of_week || '').toLowerCase() === day.toLowerCase());
+      if (selectedDayFilter) {
+        filtered = filtered.filter(s => (s.day_of_week || '').toLowerCase() === selectedDayFilter.toLowerCase());
       }
       renderSchedulesTable(filtered);
     }
@@ -422,8 +383,12 @@
     }
 
     function resetFilters() {
-      document.getElementById('filter-class').value = '';
-      document.getElementById('filter-day').value = '';
+      selectedClassIdFilter = '';
+      selectedDayFilter = '';
+      if (window.ducTimetable) {
+        window.ducTimetable.selectClass('');
+        window.ducTimetable.selectDay('', false);
+      }
       loadSchedules();
     }
 
