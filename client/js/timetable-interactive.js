@@ -482,19 +482,6 @@
 
           <!-- 3. Mobile Optimized Schedule View (Shown ONLY on mobile <= 768px, replacing cramped table) -->
           <div class="mobile-schedule-view">
-            <div class="mobile-cohort-banner">
-              <div style="display:flex; justify-content:space-between; align-items:center;">
-                <span class="badge badge-primary" style="font-size:0.85rem; padding:4px 12px; font-weight:700;">
-                  ${this.selectedClassId ? `ថ្នាក់ ${classInfo.class_code}` : 'ថ្នាក់ទាំងអស់ (All Cohorts)'}
-                </span>
-                <span style="font-size:0.75rem; color:var(--text-muted, #64748b);">
-                  ${lang === 'km' ? 'ចុចលើម៉ោងរៀនដើម្បីមើលលម្អិត' : 'Tap session for details'}
-                </span>
-              </div>
-              <div class="mobile-cohort-major">${majorTitle}</div>
-              <div style="font-size:0.78rem; color:var(--text-muted, #64748b);">${durationTitle}</div>
-            </div>
-
             ${mobileCardsHtml}
 
             <!-- Mobile Exam Notice & Legend -->
