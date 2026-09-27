@@ -560,7 +560,24 @@ html, body {
 
 /* ─── 8. RESPONSIVE FILTER BARS & SEARCH TOOLBARS ──────────────────────────── */
 @media (max-width: 768px) {
-  /* Stack filter toolbars fluidly */
+  /* Compact Filter & Search Cards on Mobile */
+  .card:has(.form-control),
+  .card:has(select),
+  .card:has(input),
+  .filter-card {
+    margin-bottom: 0.65rem !important;
+    border-radius: 12px !important;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04) !important;
+  }
+
+  .card:has(.form-control) .card-body,
+  .card:has(select) .card-body,
+  .card:has(input) .card-body,
+  .filter-card .card-body {
+    padding: 0.45rem 0.65rem !important;
+  }
+
+  /* Filter toolbar flex layout */
   .card-body > div[style*="display:flex"][style*="gap:"],
   #filter-form,
   .filter-bar,
@@ -568,41 +585,70 @@ html, body {
   .filter-toolbar {
     display: flex !important;
     flex-direction: column !important;
-    gap: 0.45rem !important;
+    gap: 0.35rem !important;
     width: 100% !important;
+  }
+
+  /* Two selects side-by-side in 1 row on mobile (e.g. Class + Day in schedules) */
+  .card-body > div[style*="display:flex"]:not(:has(input)) {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 0.35rem !important;
   }
 
   .card-body > div[style*="display:flex"] > div,
   #filter-form > div {
     width: 100% !important;
     min-width: 0 !important;
-    flex: 1 1 100% !important;
+    flex: 1 1 auto !important;
   }
 
   /* Compact Filter Toolbars & Search Inputs on Mobile */
   .filter-bar .form-control,
+  .filter-toolbar .form-control,
+  .card-body .form-control,
   .card-body > div[style*="display:flex"] .form-control,
   #filter-form .form-control,
+  select.form-control,
+  input.form-control,
   #search-input,
-  #filter-class {
-    min-height: 36px !important;
-    height: 36px !important;
-    padding: 0.35rem 0.65rem !important;
-    font-size: 0.82rem !important;
+  #filter-class,
+  #filter-day,
+  #filter-role,
+  #filter-subject,
+  #filter-status {
+    min-height: 34px !important;
+    height: 34px !important;
+    padding: 0.25rem 0.6rem !important;
+    font-size: 0.8rem !important;
     border-radius: 8px !important;
+    line-height: 1.3 !important;
+    border: 1px solid var(--border) !important;
   }
 
   #filter-form .btn,
   .filter-bar .btn,
   .card-body > div[style*="display:flex"] .btn {
     width: 100% !important;
-    min-height: 36px !important;
-    font-size: 0.82rem !important;
-    padding: 0.4rem 0.75rem !important;
+    min-height: 34px !important;
+    font-size: 0.8rem !important;
+    padding: 0.35rem 0.65rem !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
     border-radius: 8px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .card-body .form-control,
+  #search-input,
+  #filter-class,
+  #filter-day {
+    min-height: 32px !important;
+    height: 32px !important;
+    padding: 0.2rem 0.55rem !important;
+    font-size: 0.76rem !important;
   }
 }
 
